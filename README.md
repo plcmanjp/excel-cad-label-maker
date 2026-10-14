@@ -4,9 +4,9 @@
 
 - 원개발자: **직장인** (닉네임)
 - Fork 및 후속 개발: **[plcmanjp](https://github.com/plcmanjp)**
-- 현재 배포 버전: **0.2.0**
+- 현재 배포 버전: **0.2.1**
 
-[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.0) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](release/package/CREDITS.md)
+[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.1) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](release/package/CREDITS.md)
 
 ## 사용 방법
 
@@ -25,15 +25,17 @@
 
 가져온 Python 원본은 따옴표, 콜론과 연산자 일부가 누락되어 현재 그대로는 실행하거나 다시 빌드할 수 없습니다. 원본은 project/original/에 보존합니다. 원본 소스와 EXE의 빌드 대응 관계도 확인되지 않았습니다. 후속 개발은 이 원본을 보존한 별도 구현에서 진행합니다.
 
-## 후속 복구 앱 0.2.0
+## 후속 복구 앱 0.2.1
 
 별도 `src/` 구현은 Excel 파일 드래그 앤 드롭, 입력 검사와 UTF-8 DXF 생성을 지원합니다. 탐색기에서 `.xlsx` 또는 `.xls` 한 개를 앱에 놓으면 파일 찾기 없이 선택할 수 있습니다. 규격을 확인한 뒤 `DXF 도면 생성 및 저장`을 누르세요.
 
 앱의 아이콘은 흰 라벨지에 ABC가 적힌 형태입니다. [아이콘 원본과 생성 정보](wiki/reference/app-icon.md)는 저장소에 보관하며 EXE와 앱 창에 적용합니다.
 
-버전 0.2.0은 시작 시 GitHub Releases에서 새 정식 버전을 확인합니다. 새 버전이 있으면 알림에서 릴리스 페이지를 열 수 있으며 `나중에`를 눌러 작업을 계속할 수 있습니다. 자동 설치는 하지 않습니다. 인터넷 연결 실패가 앱 사용을 막지 않습니다.
+앱은 시작 시 GitHub Releases에서 새 정식 버전을 확인합니다. 새 버전이 있으면 알림에서 릴리스 페이지를 열 수 있으며 `나중에`를 눌러 작업을 계속할 수 있습니다. 자동 설치는 하지 않습니다. 인터넷 연결 실패가 앱 사용을 막지 않습니다. 0.2.0 앱의 실제 시작에서 0.2.1 알림을 확인했습니다.
 
-`.venv` 구성, 소스 실행과 Windows 빌드는 [개발 안내](wiki/guides/development.md)를 따릅니다. 0.1.0 기준 배포와 0.2.0 후속 앱은 구분하며 CAD에서 직접 열기와 원본 이용 조건 확인이 남아 있습니다.
+0.2.1은 README, NOTICE 및 CREDITS와 외부 고지를 일반 텍스트 파일로 제공합니다. Excel 엔진을 직접 읽고 Windows x64용 드롭 모듈만 수집해 ZIP 크기를 기존 약 39.86MB에서 29.50MB로 줄였습니다. 외부 고지 원문은 보존합니다. [의존성 검토](wiki/reference/runtime-dependencies.md)와 [릴리스 QC](release/qc/release-v0.2.1.json)에 근거가 있습니다.
+
+`.venv` 구성, 소스 실행과 Windows 빌드는 [개발 안내](wiki/guides/development.md)를 따릅니다. 0.1.0 원본 기준 배포와 후속 복구 앱은 구분합니다. 복구 및 빌드 작업 #2는 완료됐으며 실제 CAD와 별도 PC 및 원본 조건 확인은 [후속 Issue #14](https://github.com/plcmanjp/excel-cad-label-maker/issues/14)에서 관리합니다.
 
 ## 개발 저장소
 

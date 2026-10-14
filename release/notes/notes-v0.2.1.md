@@ -17,8 +17,17 @@ Excel-CAD-Label-Maker-0.2.1-windows-x64.zip 전체를 새 폴더에 압축 해�
 
 ## 검증과 확인 범위
 
-Windows CI와 변환 및 빌드 보호 검사, 라이브러리 고지 및 hash와 독립 검수를 확인합니다. 최종 ZIP의 실제 앱에서 Excel 드롭과 DXF 저장 및 UTF-8, ABC 아이콘과 업데이트 조회를 확인한 결과는 릴리스 QC 기록에 연결합니다. converter import 측정을 실제 GUI 시작 시간이나 모든 Excel 파일의 성능 보장으로 표현하지 않습니다.
+Windows CI 77개 검사와 독립 읽기 전용 소스 및 artifact 검수를 통과했습니다. 최종 ZIP의 실제 앱에서 Excel 드롭과 DXF 저장 및 UTF-8과 ABC 아이콘 및 업데이트 조회를 확인했습니다. 라벨 4개, TEXT와 LWPOLYLINE 각 7개의 글자와 위치 및 스타일이 기존 검증 구현과 같고 AC1024 및 mm와 audit 오류 0건입니다. 안내는 TXT이며 외부 및 런타임 고지 63개 원문과 provenance 및 패키지 hash가 일치합니다. converter import 측정을 실제 GUI 시작 시간이나 모든 Excel 파일의 성능 보장으로 표현하지 않습니다.
 
 실제 사용하는 CAD에서의 글꼴과 도면 수용, Python 없는 별도 사용자 PC 실행, 원본 EXE 및 소스 대응과 원권리자의 세부 수정, 상업 이용 및 추가 재배포 조건은 [후속 Issue #14](https://github.com/plcmanjp/excel-cad-label-maker/issues/14)에 남아 있습니다. DWG 직접 출력은 지원하지 않습니다. 포함 NOTICE.txt의 권리 범위를 확인하세요. 원본에 임의 오픈소스 라이선스를 부여하지 않습니다.
 
 복구 및 빌드 작업은 Issue #2, 경량화는 Issue #12 및 PR #13, 이번 공개와 결과는 [Issue #15](https://github.com/plcmanjp/excel-cad-label-maker/issues/15)에서 확인할 수 있습니다.
+
+## 빌드와 QC 근거
+
+- Source commit: db1623962bee574d635ad6fccd93c0239c6b06fe
+- ZIP 크기: 29,501,691 bytes
+- ZIP SHA-256: 689d29719a38bc3400b11dc5b70c02d95b17b9964277dd669be49269842da54f
+- EXE SHA-256: cd1bb93a372bfcdbaa04833955f1523088a74bfe41826938d993c9419397dec4
+- Windows CI: https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38526974359
+- 작업 PR: https://github.com/plcmanjp/excel-cad-label-maker/pull/16
