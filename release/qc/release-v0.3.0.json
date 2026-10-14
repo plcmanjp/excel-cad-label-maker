@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "version": "0.3.0",
+  "release_id": 413214565,
+  "release_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.3.0",
+  "source_commit": "c7499c309a24dd48d83400e17983c03af98442f2",
+  "merged_pr": 21,
+  "followup_issue20": "OPEN",
+  "followup_issue14": "OPEN",
+  "verified_at": "2026-10-15T07:01:14+09:00",
+  "archive_name": "Excel-CAD-Label-Maker-0.3.0-windows-x64.zip",
+  "archive_sha256": "6778fc0a101465b4ad4efc864732f8c89c8f8b44f07a349efc36daefbf905e2b",
+  "archive_size": 29590511,
+  "archive_members": 1129,
+  "exe_sha256": "adc30466690dd45a151bbc07898cacfadd1d838e4ac89e96a35fa820e9c821bf",
+  "receipt_sha256": "8c0bc57a2dd599a0468dca3f308f570b1dea3d26448a00ba0d11f214746715a9",
+  "receipt_files_verified": 1127,
+  "manifest_files_verified": 1128,
+  "source_clean_at_build": true,
+  "sources": {
+    "project/src/accessibility.py": "fbbcdfd1de6290d20b3758101ee0c1bacef3e926e1a458c4a90b11beefe95496",
+    "project/src/app_version.py": "1c7a26668df7f6fb2ab3d527ac213a6fab8a5d0338e364f806cc06be13474411",
+    "project/src/converter.py": "03a489611f016ccb970316898b6213d1dc0ad3dd92a24a956d50eb2856392f6d",
+    "project/src/excel_cad_label.py": "ce6bd3b4de04a11947bf31b12027598c2163bef8411781240f72071799c681db",
+    "project/src/input_model.py": "03191bf0500bbe45d377ab9863945b3efb25f48f20b89fbbd1da48324da564fa",
+    "project/src/jobs.py": "1089257a03563093776e4c6fedf589745bb5587a98573d2fa6fef1fdfc5c7e62",
+    "project/src/label_editor.py": "3c23414a1137fb100bd4b7df62a4395994d876719997c844f7351245cc8ef8e6",
+    "project/src/label_ui.py": "d90a20629eba6f3a379ac542bf7da81726f79d2c2b247d42f06905e0d0976036",
+    "project/src/preview.py": "84363729adf11236b9a4bc08cf3d2c34a2aa6646f6766f4c35828d0410a0d3f0",
+    "project/src/settings_store.py": "7a64dff20d0b95cca03e82bed43ee8c666bae09a120801b17b0bf9ba9edac507",
+    "project/src/text_bitmap.py": "63e9835d76ae472a1a8992518677718689e5e75b1a51dab9e225377be70b264e",
+    "project/src/update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+    "project/src/update_notice.py": "aec4e3606cec6e390288ab69c33ed0c9dd0628071eecca91cd590ccc5ea985e5",
+    "project/src/working_data.py": "3b11efae86276997b0bc7d76bd962a721286a4c618df4f9eabe9887f33dfe494"
+  },
+  "source_assets": {
+    "project/src/assets/app-icon.ico": "2f3a13e348021f36d758d9b5b31012e7caedddbeae409bb78e5853c4816e480c",
+    "project/src/assets/app-icon.png": "de49beecf8b88293bf5f6ca9b6b85a68dbf7f141c555a04ddb4057085d6bbd77"
+  },
+  "markdown_files": 0,
+  "legal_original_notices_verified": 63,
+  "protected_original_notice_qc_journal_and_published_asset_hashes": 95,
+  "pandas_absent_from_pyz": true,
+  "independent_version_document_review": "PASS_AFTER_ONE_LOW_COPY_FIX",
+  "independent_artifact_review": "PASS",
+  "tests": {
+    "product": 99,
+    "main_release_guards": 16,
+    "main_harness": 22,
+    "main_repository_public_doc": "PASS",
+    "ignored_tk_errors": 0
+  },
+  "main_ci": {
+    "status": "PASS",
+    "source_commit": "c7499c309a24dd48d83400e17983c03af98442f2",
+    "url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38641009174",
+    "log_sha256": "60c5f99946a19f13ebf4f4d490eac64637ffd2ff0596c6bba9bf9f31673522bc"
+  },
+  "gui": [
+    {
+      "name": "inventory",
+      "status": "PASS",
+      "steps": 2,
+      "summary_sha256": "84b5bb42ec8a97a145a861313a701f06836515334c511d06f8a26ddb1e2e03ed",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 828,
+          "sha256": "0C5E569E6B324EFBFB05BFB60E1B52FF0CC1580D23F6545584BB1034C23F5789"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 601,
+          "sha256": "DF2FDCBD66F37D92F0879CD62DEBF0DC10CAA159DCAE7E3035DC8FFB3F608CA1"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 44811,
+          "sha256": "E71E0DB3EAC74442AF2B2CD3B74330AE4561EC0916C29797578F988408849AA2"
+        },
+        {
+          "name": "tree.json",
+          "bytes": 10073,
+          "sha256": "3027394D13BF70B69F2742CA6A3296FEACB5D5A7CE08A859567EEAC62C120C62"
+        }
+      ]
+    },
+    {
+      "name": "import-edit",
+      "status": "PASS",
+      "steps": 17,
+      "summary_sha256": "3bff602e622002c21fc8124e2604e474fdc42170939568f799d6e0f0eab41cc5",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 5686,
+          "sha256": "D2C1D753B62B481D6E95F1B3AD2D303270506495FD5D2E110756FB7603D6AF11"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 3533,
+          "sha256": "448E96464854C6B1CB3893893CB15E641512A4819B5C6AC1475E789934B80DC4"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 65835,
+          "sha256": "4520F95AD7A19DAE63F5129472745D9B8F971D8ED49AD2457B472C7136297795"
+        }
+      ]
+    },
+    {
+      "name": "manual-help",
+      "status": "PASS",
+      "steps": 25,
+      "summary_sha256": "a33b26f6ca1b8ef04bec9d183d3a177f394fc3089aa635199a46b6ed00a1b621",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 8228,
+          "sha256": "118472B762F891FE3336299188D3EE91CD74FA111044228BE54D6B982A53F207"
+        },
+        {
+          "name": "editor.png",
+          "bytes": 41635,
+          "sha256": "FA5849980DEB9250A4DA504E8A2C495D14FAE4947D9B0D72038CC71B041C9573"
+        },
+        {
+          "name": "help.png",
+          "bytes": 50872,
+          "sha256": "3EB504877E79FFAFECD2DEE681CE336A351EDAB16E0C864E31C29612D470062E"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 4893,
+          "sha256": "1633E7735DA21874D38B599B51CD10154D746738EE44614884853B474F8EE147"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 37129,
+          "sha256": "487609C3F3DD41215A58556775622F6DC19E8959CCED8E305F5B88C491239F10"
+        }
+      ]
+    },
+    {
+      "name": "update-feedback",
+      "status": "PASS",
+      "steps": 4,
+      "summary_sha256": "cbfb767d96ac187eea16826544b59f58019bbb508077afabc2f97f5262e451fd",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 1541,
+          "sha256": "05A8C208A097E76BFF3D54EF50DB40943235E09DF836B36B6DA04A04E53D0C77"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 1037,
+          "sha256": "E3C68D5E90BADCD937147700FE9EC4F5A918A123F20F70B2319EC33A669B4872"
+        },
+        {
+          "name": "update.png",
+          "bytes": 42138,
+          "sha256": "F425AB268233065C0ED3C8D24409B2A0E2011270F3C628E39D7A17BE8FAFE4B3"
+        }
+      ]
+    },
+    {
+      "name": "live-badge",
+      "status": "PASS",
+      "steps": 8,
+      "summary_sha256": "e59ada1d1f8c2b91a0e30f26d1fac2e60f02940548e84671773f83221daef1ca",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 2745,
+          "sha256": "B91F9F84A72E2E4710B7AE308ED53E7BCEF2C4F083237A1DBFBACBBDF83F764D"
+        },
+        {
+          "name": "badge.png",
+          "bytes": 27677,
+          "sha256": "D98370E2B44526FDF4C00E9E65A69F8ACDF8BE776AF3CFC098E611A8A28F46DA"
+        },
+        {
+          "name": "notice.png",
+          "bytes": 44909,
+          "sha256": "710F1CD58C9E99E0C44F0259745583BF9FDE589478ED1018ADB24152735EF838"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 1843,
+          "sha256": "AFAC9814216D41A76065549E452CDFA0B765DDC0660D604FB767E08E119D44CE"
+        }
+      ]
+    },
+    {
+      "name": "previous-public-focused",
+      "status": "PASS",
+      "steps": 5,
+      "summary_sha256": "c2ac29cc23ff16842a76bbce668af7ce4baa708804c812fefb1b53eb3bff686e",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 1873,
+          "sha256": "B855673BCA0D2BBA05E9CEC83B7513285B91405D58DA8816DC6D49A2D126BE23"
+        },
+        {
+          "name": "old-public-notice.png",
+          "bytes": 34515,
+          "sha256": "DE64DA23551A091D9483C5F93E1390962612BF747FEBBBA37A9871426A9BCF60"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 1396,
+          "sha256": "6F35E60E84019B7F35FB75105580B17F6AF978EC75B296EE45F4666DF1B71AB9"
+        }
+      ]
+    }
+  ],
+  "physical_drop": {
+    "transport": "INPUT_COMPLETED",
+    "product_acceptance": "PASS",
+    "labels": 20,
+    "cells": 60,
+    "source_and_protected_output_unchanged": true,
+    "receipt_sha256": "31adaf405da20e9da2e09562d45bcdd0e5249fa1305d7fc34552c15d2ad3a97b",
+    "engine_sha256": "a7cd3aee9e371c330904471bd3f4f10bf7b505856eb96940625a00236008889e"
+  },
+  "extracted_exe_qc": {
+    "status": "PASS",
+    "dxf_readback": [
+      {
+        "name": "edited.dxf",
+        "labels": 21,
+        "cells": 61,
+        "sha256": "3ebbb59a20a1b27cc7eb2340f34e0270106208a59740f67f2ca1048db747793e",
+        "layout_text_and_defaults_match": true,
+        "audit_errors": 0
+      },
+      {
+        "name": "manual.dxf",
+        "labels": 1,
+        "cells": 3,
+        "sha256": "053ce31183e33883921724bcb7f4c51c4886f0314ec84856e4afd32c2770cac0",
+        "layout_text_and_defaults_match": true,
+        "audit_errors": 0
+      }
+    ],
+    "original_excel_bytes_and_mtime_unchanged": true,
+    "all_package_files_unchanged": true,
+    "version_and_abc_icon": "OBSERVED_IN_UIA_CAPTURE",
+    "direct_input_edit_save": "PASS",
+    "import_edit_add_save": "PASS",
+    "help_credits": "OBSERVED_IN_UIA_CAPTURE",
+    "visual_quality_scope": "Director inspected screenshots; no Computer Use or novice-user visual acceptance claimed"
+  },
+  "live_update": {
+    "new_ui_previous_development_version": "0.2.2",
+    "new_ui_exe_sha256": "4bcd4075f536403bd7a7c05f8974915359162ea2c06b5d9be99f6dd8157ab5e2",
+    "new_ui_badge_no_auto_popup_and_manual_notice": "PASS_WITH_REAL_PUBLIC_API",
+    "previous_public_version": "0.2.2",
+    "previous_public_exe_sha256": "7960af7c0aba9b592f73256ee278b026e1ec2eab2cdf54a6bbfb55fc317baea7",
+    "previous_public_auto_notice": "PASS_WITH_REAL_PUBLIC_API"
+  },
+  "published_readback": {
+    "status": "PASS",
+    "release_id": 413214565,
+    "release_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.3.0",
+    "latest_tag": "v0.3.0",
+    "source_commit": "c7499c309a24dd48d83400e17983c03af98442f2",
+    "body_matches": true,
+    "asset_bytes_match": true,
+    "zip_members_match": 1129,
+    "current_version_result": {
+      "status": "current",
+      "release": {
+        "version": "0.3.0",
+        "tag": "v0.3.0",
+        "page_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.3.0",
+        "asset_name": "Excel-CAD-Label-Maker-0.3.0-windows-x64.zip"
+      },
+      "reason": ""
+    },
+    "older_version_result": {
+      "status": "available",
+      "release": {
+        "version": "0.3.0",
+        "tag": "v0.3.0",
+        "page_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.3.0",
+        "asset_name": "Excel-CAD-Label-Maker-0.3.0-windows-x64.zip"
+      },
+      "reason": ""
+    },
+    "assets": [
+      {
+        "id": 641775249,
+        "name": "Excel-CAD-Label-Maker-0.3.0-windows-x64.zip",
+        "state": "uploaded",
+        "size": 29590511,
+        "digest": "sha256:6778fc0a101465b4ad4efc864732f8c89c8f8b44f07a349efc36daefbf905e2b"
+      },
+      {
+        "id": 641775251,
+        "name": "SHA256SUMS.txt",
+        "state": "uploaded",
+        "size": 110,
+        "digest": "sha256:f6b25ec454169dc0fc76994dd18c8e38a8b921887c771d60fd663e1b5ddf8ecd"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "type": "Computer Use runtime",
+      "result": "NOT_RUN",
+      "detail": "Initialization and one reset retry failed before app input: kernel assets path missing, OS error 3. Shared UIA tool used; mouse double-click remains untested."
+    },
+    {
+      "type": "Physical drop preparation",
+      "result": "RESOLVED_BEFORE_INPUT",
+      "detail": "Explorer details-view row extended outside the window; measured geometry/ownership, observed exact window title/PID, changed only owned QC folder to list view, then single-file transfer and acceptance passed."
+    },
+    {
+      "type": "Draft readback",
+      "result": "RESOLVED_WITH_RELEASE_ID",
+      "detail": "Authenticated tag lookup returned 404 for draft; existing draft was resolved from release list and verified by ID. No duplicate create or uncertain publication retry."
+    }
+  ],
+  "open_gates": [
+    "Physical mouse double-click gesture",
+    "Actual Windows150% and200% scaling",
+    "Actual novice-user evaluation",
+    "Issue14 CAD rendering, second PC, original alignment and rights"
+  ],
+  "private_evidence_root": ".local/release-0.3.0"
+}
