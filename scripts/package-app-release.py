@@ -35,11 +35,11 @@ def safe_relative(name):
 
 
 def reject_links(root, path):
-    require(path.resolve().is_relative_to(root.resolve()), "Package paths must stay in the repository")
     for entry in (path, *path.parents):
         require(not entry.is_symlink() and not entry.is_junction(), "Linked package paths are refused")
         if entry == root:
             break
+    require(path.resolve().is_relative_to(root.resolve()), "Package paths must stay in the repository")
 
 
 def package_build(root, build, output):
