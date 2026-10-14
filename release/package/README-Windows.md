@@ -1,25 +1,27 @@
-# Excel CAD Label Maker 0.2.1
+# Excel CAD Label Maker 0.2.2
 
-Excel 파일의 문자를 전기함 덕트 라벨 DXF로 만드는 Windows x64 무설치 앱입니다. 원개발자는 직장인, Fork 및 후속 개발자는 plcmanjp입니다. 보존된 원본을 참고해 별도 src 구현으로 빌드한 후속 앱이며 제공받은 0.1.0 EXE와 같은 재빌드가 아닙니다.
+Excel의 글자를 전기함 덕트 라벨용 DXF 도면으로 만드는 Windows 64비트 앱입니다. Python을 별도로 설치할 필요가 없습니다.
 
-## 실행과 사용
+## 사용 방법
 
-1. ZIP 전체를 한 폴더에 압축 해제합니다. EXE와 `_internal`, `third_party` 및 다른 포함 파일을 함께 유지하세요.
-2. `Excel_CAD_Label.exe`를 실행합니다. 사용자 PC에 Python을 설치하지 않아도 되는 폴더형 배포물입니다.
-3. 탐색기에서 `.xlsx` 또는 `.xls` 파일 한 개를 앱에 드래그 앤 드롭합니다. 파일 찾기도 사용할 수 있습니다.
-4. 라벨 규격(mm), 간격과 글꼴 및 색상을 설정하고 `DXF 도면 생성 및 저장`을 누릅니다.
-5. 저장한 DXF를 사용하는 CAD에서 열어 확인합니다.
+1. ZIP 전체를 새 폴더에 압축 해제합니다. EXE와 _internal 및 third_party 폴더를 함께 유지하세요.
+2. Excel_CAD_Label.exe를 실행합니다.
+3. .xlsx 또는 .xls 파일 한 개를 앱에 끌어다 놓거나 파일 찾기로 선택합니다.
+4. 라벨 크기(mm), 간격, 글꼴과 색상을 지정하고 DXF 도면 생성 및 저장을 누릅니다.
+5. 저장한 DXF를 CAD에서 열어 글꼴과 치수를 확인합니다.
 
-앱은 시작 시 GitHub의 최신 정식 릴리스를 백그라운드로 조회하고 새 버전이 있으면 안내합니다. 하단 업데이트 확인으로 수동 조회할 수도 있습니다. 알림의 릴리스 페이지에서 새 ZIP을 내려받고 별도 폴더에 풀어 사용하세요. 자동 설치는 하지 않습니다. 네트워크 연결 실패가 라벨 작업을 막지 않습니다.
+첫 시트의 각 열을 위에서 아래로 읽으며 빈 셀이 라벨을 구분합니다. 수식을 사용하면 Excel에서 계산하고 저장한 파일을 선택하세요.
 
-## 검증과 범위
+## 업데이트
 
-합성 Excel 입력, 열 방향 및 빈 셀 구분, 긴 한글과 영문, 숫자, 가변 높이와 DXF 구조 및 UTF-8 읽기를 검사했습니다. Windows에서 실제 파일 드롭, DXF 저장, 업데이트 알림과 릴리스 페이지 열기 및 ABC 아이콘을 확인했습니다. 실제 CAD에서 글꼴과 도면 수용 및 Python 없는 별도 PC 실행은 별도 확인 항목입니다. DWG 직접 출력은 지원하지 않습니다.
+새 버전이 있으면 앱 중앙에 알림이 표시됩니다. 릴리스 페이지에서 새 ZIP을 받아 별도 폴더에 풀어 사용하세요. 자동 설치는 하지 않으며 인터넷 연결이 없어도 라벨 작업은 가능합니다.
 
-원본 이용 조건은 NOTICE.md, 원개발자와 후속 개발 표시는 CREDITS.md, 포함 외부 라이브러리 고지는 third_party/를 확인하세요. 별도의 원본 오픈소스 라이선스를 부여하지 않습니다. 실제 고객 자료를 공개 Issue에 올리지 마세요.
+## 지원 형식과 이용 조건
 
-이 버전은 안내와 출력 고지를 일반 텍스트 파일로 제공하고 Excel 엔진 직접 읽기 및 Windows x64용 드롭 모듈 수집으로 배포 용량을 줄였습니다. 외부 고지 원문은 확장자만 바꾸고 내용은 보존했습니다.
+입력은 .xlsx와 .xls, 출력은 DXF입니다. DWG는 CAD에서 변환해 주세요. CAD의 설치 글꼴에 따라 문자 표시가 달라질 수 있습니다. 글꼴 파일은 포함하지 않습니다.
 
-릴리스 ZIP은 함께 제공하는 SHA256SUMS.txt로 검증할 수 있습니다. release-manifest.json과 build-receipt.json에는 이 빌드의 commit, 버전 및 파일 hash가 있습니다.
+원개발자는 직장인, 개발 및 관리자는 plcmanjp입니다. 이용 조건은 NOTICE.txt, 크레딧은 CREDITS.txt, 포함 라이브러리의 라이선스는 third_party 폴더에서 확인하세요.
 
-[프로젝트와 작업 이슈](https://github.com/plcmanjp/excel-cad-label-maker)
+[사용 설명](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/guides/usage.md)
+
+[문제 보고](https://github.com/plcmanjp/excel-cad-label-maker/issues)

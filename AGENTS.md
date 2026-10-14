@@ -41,4 +41,9 @@ Codex and other tools manually Read all six sources at startup. Claude imports t
 - Claude reads AGENTS.md directly in a supported runtime. No CLAUDE.md adapter. .claude/ assets are owned by Claude; Codex does not create or modify them.
 - Native .claude/memory/ is reference-only for Codex. Do not modify or bulk-migrate it. No deployed blog-copy edits.
 - Shared skills live in .agents/skills/. Shared role bodies live in .agents/agents/; runtime adapters remain thin.
-- Read wiki/harness/harness-policy.md for the source registry and wiki/guides/releasing.md before release work.
+- Read .agents/docs/harness-policy.md for the source registry and wiki/guides/releasing.md before release work.
+
+## Public documentation
+- Write README, usage guides, package materials and release notes for app users: download, use, supported formats, updates, troubleshooting, credits and terms.
+- Keep agent operations, approvals, internal workflow, repair narratives and test reports out of user documents. Developer guides contain concise contributor procedures; operational history stays in its internal sources.
+- Preserve attribution, actual limitations and legal terms. Do not rewrite external license originals. Run the public-document check with the repository checks.

@@ -10,12 +10,21 @@
 | `wiki/poc/` | Durable folder bundles for directly executed proofs of concept |
 | `wiki/journal/YYYY-MM/r{NNN}-*.md` | Session journals |
 | `wiki/troubleshooting/` | Recurrence-prevention KB |
-| `wiki/guides/`, `wiki/reference/`, `wiki/harness/` | Development/release guides, references, and harness policy |
+| `wiki/guides/`, `wiki/reference/` | User and contributor guides and technical references |
+| `.agents/docs/` | Agent operating policy and generation provenance |
 | `project/original/`, `project/src/`, `project/tests/` | Preserved original, application source/assets, and unified product/build-guard tests. `project/INDEX.md` owns the flat single-app layout |
 | `project/scripts/`, `project/tests/`, `project/qc/` | Development tools, build guards, and product QC assets |
 | `release/` | Release configuration, package materials, preserved notices, packaging tools, and release QC. `release/INDEX.md` owns the layout |
 
 This repository uses **1 workspace = 1 app** and a flat `project/` layout. Keep application source, original input, and tests directly under the paths above. Product planning documents belong in `wiki/`; GitHub Issues own work instructions. Do not add an implementation-lineage directory without an explicitly approved structural task.
+
+## Readers and Published Copy
+
+- README, usage guides, package README/NOTICE/CREDITS, bundled library explanations and release notes are user documents. Explain the product, download, use, supported formats, updates, relevant limitations, credits and terms.
+- Exclude internal agent setup, approval conversations, repair history, workflow narratives and test reports from user documents. Do not link CURRENT, journals or harness policy from user entry points.
+- Developer guides provide concise reproducible commands and technical references for contributors. Agent operating policy and asset-generation prompts belong in `.agents/docs/`.
+- CURRENT, immutable journals and QC records remain internal continuity and evidence sources. Preserve their integrity and existing external legal originals; do not disguise an unverified capability as supported.
+- `.agents/scripts/check_public_docs.py` enforces the current user-document boundary through repository checks. Add newly introduced user entry points to its manifest.
 
 ## Work Journal (CURRENT.md)
 

@@ -1,14 +1,12 @@
 # Excel CAD Label Maker 0.1.0
 
-엑셀 문자를 전기함 작업용 덕트 라벨 DXF 도면으로 배치하는 Windows 앱의 원본 기준 배포입니다.
+Excel 문자를 덕트 라벨 DXF 도면으로 배치하는 Windows 앱입니다. 이 버전에는 제공된 원본 실행 파일이 변경 없이 포함됩니다.
 
 1. ZIP 전체를 압축 해제합니다.
-2. Excel_Cad_Label.exe를 실행하고 앱의 파일 찾기로 Excel 자료를 선택합니다.
-3. 라벨 규격과 배치 설정을 지정한 뒤 DXF 도면을 저장합니다.
-4. 사용하는 CAD에서 도면과 한글, 글꼴 및 mm 규격을 확인합니다.
+2. Excel_Cad_Label.exe를 실행하고 파일 찾기로 Excel 자료를 선택합니다.
+3. 라벨 규격과 배치를 설정하고 DXF 도면을 저장합니다.
+4. CAD에서 도면의 글꼴과 치수를 확인합니다.
 
-이 EXE는 전달받은 실행 파일을 변경 없이 보존한 것이며 이 저장소의 Python 소스로 다시 빌드한 결과가 아닙니다. 원본 소스에는 문법 손상이 있고 EXE와의 빌드 대응 관계는 확인되지 않았습니다. 0.1.0은 저장소의 배포 번호이며 EXE 내부 버전을 뜻하지 않습니다.
+DXF를 지원하며 DWG는 CAD에서 변환해야 합니다. 드래그 앤 드롭과 업데이트 알림을 사용하려면 [최신 앱](https://github.com/plcmanjp/excel-cad-label-maker/releases/latest)을 내려받으세요.
 
-DXF를 지원하며 DWG 직접 출력은 구현하거나 검증하지 않았습니다. 드래그 앤 드롭, 업데이트 알림과 ABC 아이콘은 별도 후속 앱의 기능입니다.
-
-원개발자 직장인과 Fork 및 후속 개발자 plcmanjp의 [크레딧](CREDITS.md) 및 [권리 고지](NOTICE.md)를 확인하세요. 원본에 임의 오픈소스 라이선스를 부여하지 않습니다. [최신 앱과 안내](https://github.com/plcmanjp/excel-cad-label-maker)는 저장소에서 확인합니다.
+원개발자 직장인과 개발 및 관리자 plcmanjp의 [크레딧](CREDITS.md) 및 [이용 조건](NOTICE.md)을 확인하세요.

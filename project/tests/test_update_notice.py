@@ -64,6 +64,24 @@ class UpdateNoticeTests(unittest.TestCase):
                 self.assertIsNone(notice.dialog)
                 message.assert_not_called()
 
+    def test_notice_is_centered_on_moved_and_resized_parent(self):
+        notice = self.notifier(UpdateResult("available", RELEASE))
+        for geometry in ["700x620+260+110", "940x760+610+80"]:
+            with self.subTest(geometry=geometry):
+                self.root.geometry(geometry)
+                self.root.deiconify()
+                self.root.update()
+                notice.show_notice(RELEASE)
+                self.pump(lambda: notice.dialog.winfo_viewable())
+                parent_x = self.root.winfo_rootx() + self.root.winfo_width() / 2
+                parent_y = self.root.winfo_rooty() + self.root.winfo_height() / 2
+                dialog_x = notice.dialog.winfo_rootx() + notice.dialog.winfo_width() / 2
+                dialog_y = notice.dialog.winfo_rooty() + notice.dialog.winfo_height() / 2
+                # Native borders differ between resizable and fixed Windows frames.
+                self.assertAlmostEqual(dialog_x, parent_x, delta=8)
+                self.assertAlmostEqual(dialog_y, parent_y, delta=8)
+                notice.dialog.destroy()
+
     def test_manual_current_feedback(self):
         notice = self.notifier(UpdateResult("current", RELEASE))
         with patch("update_notice.messagebox.showinfo") as message:

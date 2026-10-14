@@ -1,57 +1,37 @@
 # Excel CAD Label Maker
 
-엑셀에 입력한 문자를 전기함 작업용 덕트 라벨 DXF 도면으로 배치하는 Windows 무설치 앱입니다.
+Excel에 입력한 글자를 전기함 덕트 라벨용 DXF 도면으로 만드는 Windows 앱입니다.
 
-- 원개발자: **직장인** (닉네임)
-- Fork 및 후속 개발: **[plcmanjp](https://github.com/plcmanjp)**
-- 현재 배포 버전: **0.2.1**
+[Windows 앱 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/latest) | [사용 설명](wiki/guides/usage.md) | [문제 보고](https://github.com/plcmanjp/excel-cad-label-maker/issues)
 
-[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.1) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](release/package/CREDITS.md)
+## 시작하기
 
-## 사용 방법
+1. 최신 릴리스의 Windows ZIP을 내려받아 새 폴더에 압축을 풉니다.
+2. Excel_CAD_Label.exe를 실행합니다. 함께 들어 있는 폴더와 파일도 유지하세요.
+3. .xlsx 또는 .xls 파일 한 개를 앱에 끌어다 놓습니다. 파일 찾기로 선택할 수도 있습니다.
+4. 라벨 크기, 간격, 글꼴과 색상을 정한 뒤 DXF 도면 생성 및 저장을 누릅니다.
+5. 저장한 DXF를 사용하는 CAD에서 열어 확인합니다.
 
-1. 릴리스의 Windows ZIP 파일을 내려받아 압축을 풉니다.
-2. Excel_CAD_Label.exe를 실행하고 엑셀 파일을 앱에 놓거나 파일 찾기로 선택합니다. EXE와 `_internal` 및 같은 폴더의 파일을 함께 유지하세요.
-3. 라벨 크기(mm), 한 행에 배치할 라벨 수, 간격, 글꼴과 색상을 지정합니다.
-4. DXF 도면을 저장하고 사용하는 CAD에서 열어 확인합니다.
+Windows 64비트용이며 Python을 별도로 설치할 필요가 없습니다.
 
-엑셀의 각 열을 위에서 아래로 읽으며 빈 셀이 라벨 묶음을 구분합니다. 한 묶음 안의 각 문자는 라벨 한 칸이 됩니다. 라벨 줄 수에 따라 높이가 달라집니다. 글자가 길면 자동 축소 및 압축 옵션을 사용할 수 있습니다.
+## 주요 기능
 
-현재 원본은 **DXF를 생성**합니다. DWG 파일이 필요하면 DXF를 연 CAD의 다른 이름으로 저장 기능을 이용하세요. 앱 자체의 DWG 직접 생성과 CAD별 호환성은 검증되지 않았습니다.
+- Excel의 각 열을 위에서 아래로 읽고 빈 셀을 기준으로 라벨을 구분합니다.
+- 라벨 크기(mm), 한 행의 라벨 수와 가로 및 세로 간격을 설정합니다.
+- 글꼴과 색상을 선택하고 긴 글자를 라벨 폭에 맞게 축소합니다.
+- 한글을 포함한 DXF 도면을 저장합니다.
+- 새 버전이 나오면 업데이트 알림에서 다운로드 페이지를 열 수 있습니다.
 
-## 0.1.0의 범위
+## 지원 형식
 
-0.1.0은 전달받은 기존 EXE를 변경 없이 배포하는 기준 릴리스입니다. 배포 버전 0.1.0은 이 프로젝트에서 부여한 번호이며, EXE 내부 버전이나 이 저장소에서 새로 빌드한 결과를 의미하지 않습니다.
+입력은 .xlsx와 .xls, 출력은 DXF입니다. DWG가 필요하면 DXF를 CAD에서 열어 다른 이름으로 저장하세요. 앱에서 DWG를 직접 생성하지는 않습니다.
 
-가져온 Python 원본은 따옴표, 콜론과 연산자 일부가 누락되어 현재 그대로는 실행하거나 다시 빌드할 수 없습니다. 원본은 project/original/에 보존합니다. 원본 소스와 EXE의 빌드 대응 관계도 확인되지 않았습니다. 후속 개발은 이 원본을 보존한 별도 구현에서 진행합니다.
+글꼴 표시와 도면의 최종 치수는 사용하는 CAD에서 확인하세요. 상세 입력 규칙과 업데이트 방법은 [사용 설명](wiki/guides/usage.md)에 있습니다.
 
-## 후속 복구 앱 0.2.1
+## 크레딧과 라이선스
 
-별도 `src/` 구현은 Excel 파일 드래그 앤 드롭, 입력 검사와 UTF-8 DXF 생성을 지원합니다. 탐색기에서 `.xlsx` 또는 `.xls` 한 개를 앱에 놓으면 파일 찾기 없이 선택할 수 있습니다. 규격을 확인한 뒤 `DXF 도면 생성 및 저장`을 누르세요.
+원개발자: 직장인. 개발 및 관리: [plcmanjp](https://github.com/plcmanjp).
 
-앱의 아이콘은 흰 라벨지에 ABC가 적힌 형태입니다. [아이콘 원본과 생성 정보](wiki/reference/app-icon.md)는 저장소에 보관하며 EXE와 앱 창에 적용합니다.
+[크레딧](release/package/CREDITS.md)과 [이용 조건](release/package/NOTICE.md)을 확인하세요. 포함 라이브러리의 라이선스는 앱의 third_party 폴더에 있습니다.
 
-앱은 시작 시 GitHub Releases에서 새 정식 버전을 확인합니다. 새 버전이 있으면 알림에서 릴리스 페이지를 열 수 있으며 `나중에`를 눌러 작업을 계속할 수 있습니다. 자동 설치는 하지 않습니다. 인터넷 연결 실패가 앱 사용을 막지 않습니다. 0.2.0 앱의 실제 시작에서 0.2.1 알림을 확인했습니다.
-
-0.2.1은 README, NOTICE 및 CREDITS와 외부 고지를 일반 텍스트 파일로 제공합니다. Excel 엔진을 직접 읽고 Windows x64용 드롭 모듈만 수집해 ZIP 크기를 기존 약 39.86MB에서 29.50MB로 줄였습니다. 외부 고지 원문은 보존합니다. [의존성 검토](wiki/reference/runtime-dependencies.md)와 [릴리스 QC](release/qc/release-v0.2.1.json)에 근거가 있습니다.
-
-`.venv` 구성, 소스 실행과 Windows 빌드는 [개발 안내](wiki/guides/development.md)를 따릅니다. 0.1.0 원본 기준 배포와 후속 복구 앱은 구분합니다. 복구 및 빌드 작업 #2는 완료됐으며 실제 CAD와 별도 PC 및 원본 조건 확인은 [후속 Issue #14](https://github.com/plcmanjp/excel-cad-label-maker/issues/14)에서 관리합니다.
-
-## 개발 저장소
-
-이 공개 저장소에서 개발, 이슈와 릴리스를 함께 관리합니다. 하네스는 900 스타터의 단일 AGENTS.md, 중립 규칙, Codex 어댑터와 SessionStart 검증 구조를 사용합니다.
-
-| 경로 | 내용 |
-|---|---|
-| [wiki/](wiki/INDEX.md) | 개발과 릴리스 안내, 참고 자료, 하네스 정책과 작업 저널 |
-| [project/](project/INDEX.md) | 앱 소스, 테스트, 개발 스크립트와 고정 의존성 |
-| [release/](release/INDEX.md) | 버전 및 배포 구성, 패키징 스크립트, 사용자 고지와 릴리스 검수 |
-
-개발 빌드는 `project/dist/`, 빌드 캐시는 `project/build/`, 배포 산출물은 `release/artifacts/`에 생성하며 Git에서 제외합니다. `.venv`와 `.local` 및 도구 설정은 루트의 숨김 경로로 유지합니다.
-
-- [개발 안내](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/guides/development.md)
-- [릴리스 절차](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/guides/releasing.md)
-- [배포와 권리 범위](release/package/NOTICE.md)
-- [현재 진행 상태](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/journal/CURRENT.md)
-
-실제 고객의 엑셀 자료와 도면은 공개 저장소나 Issue에 올리지 마세요.
+개발에 참여하려면 [개발 안내](wiki/guides/development.md)를 참고하세요.

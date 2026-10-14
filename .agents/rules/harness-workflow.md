@@ -8,4 +8,4 @@ The Director may directly handle bounded approved work under multi-agent-delegat
 
 Update CURRENT on material state changes only within approved execution. On completion run relevant checks, review the scoped diff, verify attribution and secrets, commit and push the approved unit. Never publish an unverified rebuild claim.
 
-Before release work Read wiki/guides/releasing.md. Before harness structural changes Read wiki/harness/harness-policy.md. For UIA QC use the managed parent master when available; do not copy its engine.
+Before release work Read wiki/guides/releasing.md. Before harness structural changes Read .agents/docs/harness-policy.md. For UIA QC use the managed parent master when available; do not copy its engine.
