@@ -19,7 +19,7 @@ pandas, python-dateutil, six와 tzdata는 잠금 목록에서 제거했다. 앱�
 
 합성 xlsx와 xls 및 수식 캐시와 잘못된 worksheet dimension을 포함한 49개 workbook을 기존 구현과 대조해 라벨 묶음이 일치했다. 날짜, 시간, 오류, 첫 시트 및 bool과 0 및 1을 섞었을 때 기존 object reader의 열별 처리도 유지한다. XLS 날짜 반올림 경계는 1900 및 1904 epoch에 대한 별도 회귀 검사로 확인한다. read_only workbook은 finally에서 닫고 xlrd 리소스도 해제한다.
 
-같은 Windows PC와 Python 3.13.15에서 폴더 크기는 87,078,780 bytes에서 초기 최적화 빌드 65,536,853 bytes로 약 24.7% 줄었다. 이 크기는 receipt와 고지를 포함한 실제 파일 합계이며 ZIP 크기와 구분한다. 최종 검증 결과는 project/qc/runtime-optimization-results.json에 기록한다.
+같은 Windows PC와 Python 3.13.15에서 최종 폴더 크기는 87,078,780 bytes에서 65,536,735 bytes로 약 24.7% 줄었다. 이 크기는 receipt와 고지를 포함한 실제 파일 합계다. 같은 로컬 기준선의 ZIP은 39,863,064 bytes에서 29,500,045 bytes로 약 26.0% 줄었다. 기존 공개 ZIP을 교체하지 않았으며 이번 ZIP은 검증용 로컬 결과물이다. 최종 검증 결과는 [공개 QC 기록](../../project/qc/runtime-optimization-results.json)에 있다.
 
 20,000셀(2,000행, 10열)의 라벨 입력을 각 방식 5회 읽은 중앙값은 기존 0.1163초, 직접 읽기 0.1102초다. 이 작은 차이를 모든 파일에서의 성능 보장으로 확대하지 않는다. 새 Python 프로세스에서 converter import를 교차 7회 측정한 중앙값은 0.6929초에서 0.5856초로 약 15.5% 줄었다. OS 디스크 캐시는 비우지 않았으며 실제 frozen GUI 시작 시간의 측정 결과가 아니다.
 

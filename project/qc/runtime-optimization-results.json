@@ -178,7 +178,30 @@
     "result": "PASS"
   },
   "independent_review": "PASS: cumulative review and delta resolution of XLS date rounding and TXT collision findings",
-  "final_main_build": "PENDING",
+  "final_main_build": {
+    "version": "0.2.0",
+    "tag": "v0.2.0",
+    "source_commit": "35570717c4563740cea128cc53a1597276f17128",
+    "archive": "Excel-CAD-Label-Maker-0.2.0-windows-x64.zip",
+    "sha256": "87303832f9e3c029d261b466b3130044c65e0d629520fa75d65e85e399397f7f",
+    "size": 29500045,
+    "exe_sha256": "4b58b5877d24395744ec116f9b2d68a1b10b602f04ccc71b9a251770293105b4",
+    "members": 1129,
+    "folder_bytes": 65536735,
+    "folder_files": 1128,
+    "baseline_folder_bytes": 87078780,
+    "baseline_zip_bytes": 39863064,
+    "folder_reduction_percent": 24.73857006264901,
+    "zip_reduction_percent": 25.996544068965697,
+    "markdown_files": 0,
+    "pandas_absent_from_pyz": true,
+    "required_runtime_modules_present": true,
+    "receipt_and_extracted_hashes": "PASS",
+    "legal_hashes": "PASS",
+    "output": "release/artifacts/Excel_CAD_Label",
+    "archive_path": "release/artifacts/runtime-qc-3557071/Excel-CAD-Label-Maker-0.2.0-windows-x64.zip",
+    "public_release_published": false
+  },
   "public_assets_modified": false,
   "remaining_issue_2_gates": [
     "Actual CAD acceptance",
@@ -194,5 +217,50 @@
     "markdown_files": 0,
     "pe_icon_frames": 10,
     "tk_icon_matches": true
+  },
+  "final_packaged_gui_qc": {
+    "result": "PASS",
+    "drawing_sha256": "f733d666626d27102f2b55079107c6322766a031a165c79d5ba2f3411656ffb1",
+    "labels": 4,
+    "text_entities": 7,
+    "box_entities": 7,
+    "baseline_labels_positions_styles_equal": true,
+    "dxf_version": "AC1024",
+    "millimeters": true,
+    "audit_errors": 0,
+    "source_unchanged": true,
+    "package_files_unchanged_after_run": true,
+    "plain_guides_utf8_without_markdown": "PASS",
+    "exe_sha256": "4b58b5877d24395744ec116f9b2d68a1b10b602f04ccc71b9a251770293105b4",
+    "physical_drop": "PASS: measured Explorer drag and native selected-file observation",
+    "save": "PASS: selector filename readback and save, native four-label completion",
+    "engine_sha256": "a7cd3aee9e371c330904471bd3f4f10bf7b505856eb96940625a00236008889e"
+  },
+  "update_qc_build": {
+    "result": "PASS",
+    "exe_sha256": "8cf9f9e7cf403d3ec5d8b6740f4f7dcc0cbe2b0775bde3ab098bc788232e01f8",
+    "markdown_files": 0,
+    "actual_github_api": "PASS",
+    "comparison_version": "0.0.1",
+    "actual_release_version": "0.2.0",
+    "native_popup_and_later": "PASS",
+    "scope": "Separate QC entrypoint; no production version override"
+  },
+  "remote_ci": {
+    "branch_run": 38524116668,
+    "pr_run": 38524197085,
+    "main_run": 38524411843,
+    "result": "PASS",
+    "passed": 77,
+    "skipped": 0,
+    "implementation_head": "66bb0af247a09c197d37dd131b48defe3e5df485",
+    "merge_commit": "35570717c4563740cea128cc53a1597276f17128"
+  },
+  "integration": {
+    "pull_request": 13,
+    "state": "MERGED",
+    "issue_12_state": "CLOSED",
+    "issue_2_state": "OPEN",
+    "merge_commit": "35570717c4563740cea128cc53a1597276f17128"
   }
 }
