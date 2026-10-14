@@ -54,7 +54,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/make-app-ico
 
 ## 업데이트 알림
 
-앱 버전은 `project/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0`입니다. 원본 배포의 `release/baseline/VERSION` 및 `release/baseline/manifest.json`은 0.1.0 기준선으로 보존합니다.
+앱 버전은 `project/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.1`입니다. 원본 배포의 `release/baseline/VERSION` 및 `release/baseline/manifest.json`은 0.1.0 기준선으로 보존합니다.
 
 앱 시작 뒤 고정된 GitHub 최신 릴리스 API를 백그라운드에서 한 번 조회합니다. 설치 버전보다 새 정식 버전이 있을 때 `새 버전 알림`에 현재 및 최신 버전과 `릴리스 페이지 열기`, `나중에` 버튼을 표시합니다. 하단의 `업데이트 확인`으로 수동 조회할 수도 있습니다. 자동 다운로드나 실행 파일 교체는 하지 않습니다.
 
@@ -89,7 +89,7 @@ DXF는 R2010(AC1024), mm 단위, UTF-8이며 `LABEL_BOX`와 `TEXT_DATA` 레이�
 
 ~~~powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps1 -Release
-& .venv/Scripts/python.exe -B release/scripts/package-app-release.py --output release/artifacts/candidate-0.2.0
+& .venv/Scripts/python.exe -B release/scripts/package-app-release.py --output release/artifacts/candidate-0.2.1
 ~~~
 
 정식 빌드는 `release/artifacts/Excel_CAD_Label/Excel_CAD_Label.exe`와 Windows 사용자 안내 및 버전 파일을 생성하고 release-build receipt를 기록합니다. 패키징은 깨끗한 main, 현재 commit 및 소스와 자산, release receipt 및 모든 파일 hash를 확인합니다. 개발 receipt, 수정된 파일, 등록되지 않은 파일, 링크 경로와 기존 릴리스 파일 덮어쓰기는 거부합니다. ZIP과 SHA256SUMS.txt를 생성한 후 실제 압축 해제 앱의 QC 및 독립 검수를 마치고 승인된 버전을 공개합니다.
