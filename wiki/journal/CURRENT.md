@@ -2,12 +2,13 @@
 
 ## 목표
 
-- [Issue #17](https://github.com/plcmanjp/excel-cad-label-maker/issues/17)의 알림 중앙 배치와 사용자 문서 정리 및 0.2.2 배포를 완료했다.
+- [Issue #19](https://github.com/plcmanjp/excel-cad-label-maker/issues/19): 완료한 배포 세션의 워크스페이스 청소와 세션 마무리.
 
 ## 현재 상태
 
 - [PR #18](https://github.com/plcmanjp/excel-cad-label-maker/pull/18)은 main에 병합됐고 v0.2.2는 최신 정식 공개 버전이다. Issue #17과 #2는 CLOSED다.
-- 앱은 project/src, 원본은 project/original에서 관리한다. 사용자 안내는 wiki, 배포 자료는 release, 내부 운영 문서와 이미지 프롬프트는 .agents/docs에 있다. .venv와 .local은 루트에 유지한다.
+- 일회성 QC와 중복 빌드 및 Python bytecode 캐시를 휴지통으로 옮겼다. 병합 브랜치를 정리해 로컬과 원격에 main만 남고 등록 워크트리는 하나다.
+- 앱과 원본, 정식 릴리스 및 저장된 검증 기록과 개발환경은 보존한다. .local에는 원본 실행 파일인 baseline과 재사용 가능한 uia-qc-env만 남긴다.
 
 ## 주요 결정
 
@@ -19,6 +20,7 @@
 
 - main CI 78개와 독립 검수 및 최종 ZIP의 실제 Excel 드롭과 DXF 저장 및 재읽기가 PASS다. frozen 알림의 두 앱 위치와 크기에서 중앙 배치와 나중에 동작을 확인했다.
 - 공개 tag와 latest 및 본문과 자산, ZIP과 체크섬 재다운로드를 검증했다. 상세 결과와 hash는 [0.2.2 릴리스 QC](../../release/qc/release-v0.2.2.json)에 있다.
+- 청소 대상의 휴지통 항목과 보존 hash를 대조했고 저장소 검사와 개발환경 및 의존성 import가 PASS다. 현재 임시 빌드와 bytecode 캐시는 없고 워크트리 메타데이터 잔여도 없다.
 
 ## 미해결 사항
 
