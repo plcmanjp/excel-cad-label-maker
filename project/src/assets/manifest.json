@@ -1,7 +1,7 @@
 {
     "schema_version":  1,
     "generator":  "image_gen built-in",
-    "prompt_file":  "wiki/reference/app-icon.md",
+    "prompt_file":  ".agents/docs/app-icon-prompt.md",
     "ico_sizes":  [
                       16,
                       20,

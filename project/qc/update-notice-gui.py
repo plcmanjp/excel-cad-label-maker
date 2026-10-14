@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--scenario", choices=("live-older", "live-current"), default="live-older")
     parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--geometry", help="Window size and position for placement QC")
     args = parser.parse_args()
     current = "0.0.1" if args.scenario == "live-older" else APP_VERSION
     def checker(version):
@@ -29,6 +30,8 @@ def main():
     root = TkinterDnD.Tk()
     App(root, current_version=current, update_checker=checker)
     root.title(f"업데이트 알림 검수 (입력 버전 {current}, 실제 API)")
+    if args.geometry:
+        root.geometry(args.geometry)
     root.mainloop()
 
 

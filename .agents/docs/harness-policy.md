@@ -16,7 +16,8 @@
 | SessionStart 실행 본문 | .agents/hooks/session_start_status.py |
 | 로컬 훅 등록 | .codex/setup/register-hooks.ps1 |
 | 릴리스 운영 | wiki/guides/releasing.md |
-| 문서와 참고 자료 | wiki/guides/, wiki/reference/, wiki/harness/ |
+| 사용자와 개발 문서 | wiki/guides/, wiki/reference/ |
+| 에이전트 운영 자료 | .agents/docs/ |
 | 앱 개발 자산 | project/INDEX.md |
 | 배포 자산 | release/INDEX.md |
 | 원개발자와 후속 개발자 | release/package/CREDITS.md |

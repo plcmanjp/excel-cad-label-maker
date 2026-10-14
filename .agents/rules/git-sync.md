@@ -16,3 +16,7 @@
 큰 작업 단위를 검증한 뒤 경로를 지정해 stage하고 한국어 메시지로 commit 및 일반 push합니다. 다른 세션의 변경을 포함하지 않습니다. 관리형 부모 환경에서는 commit 직전에 부모 setup-git-env.ps1 -Mode Verify -RepositoryPath <repo>를 통과시킵니다. author와 committer는 검증된 plcmanjp 귀속을 사용하며 이메일을 문서나 일반 출력에 기록하지 않습니다.
 
 UTF-8 파일을 git commit -F <파일>에 전달하고 git log -1 --format=%s로 확인합니다. force push, remote 변경과 공개 릴리스는 사용자 승인 대상입니다. 이미 승인된 해당 버전의 공개 작업은 같은 범위에서 재승인을 요구하지 않습니다.
+
+## GitHub 비 ASCII 본문
+
+Windows PowerShell 5.1에서는 한국어 Issue 본문을 native CLI stdin으로 전달하지 않습니다. 부모 github-issue-text helper에 UTF-8 BOM 없는 LF body-file을 전달하고 exact API readback을 확인합니다. 독립 checkout은 gh의 body-file과 API readback을 사용합니다. 이 운영 절차를 사용자 안내에 넣지 않습니다.

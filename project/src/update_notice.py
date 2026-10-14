@@ -102,6 +102,7 @@ class UpdateNotifier:
             self.dialog.lift()
             return
         dialog = self.dialog = tk.Toplevel(self.root)
+        dialog.withdraw()
         dialog.title("새 버전 알림")
         dialog.transient(self.root)
         dialog.resizable(False, False)
@@ -115,6 +116,13 @@ class UpdateNotifier:
         ttk.Button(buttons, text="릴리스 페이지 열기", command=lambda: self.open_release(release)).pack(side="left")
         later = ttk.Button(buttons, text="나중에", command=dialog.destroy)
         later.pack(side="right")
+        dialog.update_idletasks()
+        width, height = dialog.winfo_reqwidth(), dialog.winfo_reqheight()
+        x = self.root.winfo_x() + (self.root.winfo_width() - width) // 2
+        y = self.root.winfo_y() + (self.root.winfo_height() - height) // 2
+        # Keep absolute positions on desktops with monitors left/above the primary.
+        dialog.geometry(f"{width}x{height}+{x}+{y}")
+        dialog.deiconify()
         later.focus_set()
         dialog.bind("<Escape>", lambda event: dialog.destroy())
 

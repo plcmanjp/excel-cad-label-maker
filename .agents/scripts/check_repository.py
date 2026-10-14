@@ -15,6 +15,8 @@ ICON_SIGNATURES = {'app-icon.png': b'\x89PNG\r\n\x1a\n', 'app-icon.ico': b'\x00\
 
 def main():
     errors = []
+    docs = runpy.run_path(str(ROOT / '.agents/scripts/check_public_docs.py'))
+    errors.extend(docs['public_document_errors'](ROOT))
     hook = runpy.run_path(str(ROOT / '.agents/hooks/session_start_status.py'))
     current = (ROOT / 'wiki/journal/CURRENT.md').read_text(encoding='utf-8')
     if 'INVALID STRUCTURE:' in hook['build_brief'](current):

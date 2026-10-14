@@ -53,7 +53,7 @@ try {
 $manifest = [ordered]@{
     schema_version = 1
     generator = 'image_gen built-in'
-    prompt_file = 'wiki/reference/app-icon.md'
+    prompt_file = '.agents/docs/app-icon-prompt.md'
     ico_sizes = $sizes
     sha256 = [ordered]@{
         'app-icon.png' = (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash.ToLowerInvariant()
