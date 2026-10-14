@@ -6,6 +6,7 @@
 
 ## 현재 상태
 
+- 사용자 배포 지시로 v0.3.0 정식 빌드/패키지 QC, 독립 릴리스 검수와 main 병합 및 공개를 진행한다. 검증된 Windows/DPI96 범위와 고배율/초보자/물리 더블클릭 미검증을 구분한다. Computer Use 런타임은 kernel assets 경로 오류로 초기화 실패했고 기존 공용 UIA 경로로 ZIP QC를 진행한다. 아직 공개하지 않았다.
 - 후속 지시의 기본 Standard 글꼴과 기본(검정) 색상, 기본 규격 중심 UI, 공통 편집/추가 모달과 Excel 없는 직접 입력, 상단 업데이트 버튼 색상 안내 및 도움말 크레딧을 구현했다. 로컬 검증과 독립 검수 및 e2c6097 작업 브랜치 commit/push를 완료했다. [원격 CI](https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38599865631)의 verify/product도 PASS다. 최종 기록은 같은 브랜치에 반영한다. 상세 범위는 [Issue 댓글](https://github.com/plcmanjp/excel-cad-label-maker/issues/20#issuecomment-6172241897)에 있다.
 - 작업 브랜치는 feat/issue-20-preview-presets이며 main 기준은 d8fa53c다. 선행 P1/P2와 GUI 보정은 7808086, 8e004a6, 16a60b9에 반영됐다. [기존 CI](https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38590746220)는 PASS다.
 - [PR #18](https://github.com/plcmanjp/excel-cad-label-maker/pull/18)은 main에 병합됐고 v0.2.2는 최신 정식 공개 버전이다. Issue #17과 #2는 CLOSED다. 이번 개발 빌드는 동일한 공개 버전 기준의 후보이며 새 공개 릴리스는 생성하지 않았다.

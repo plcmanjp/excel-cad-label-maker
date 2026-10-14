@@ -4,7 +4,7 @@
 
 [최신 릴리스](https://github.com/plcmanjp/excel-cad-label-maker/releases/latest)의 Windows ZIP을 새 폴더에 압축 해제하고 Excel_CAD_Label.exe를 실행하세요. EXE와 _internal 및 third_party 폴더를 함께 유지해야 합니다. Windows 64비트용이며 Python 설치는 필요하지 않습니다.
 
-공개 0.2.2는 기존 규격 입력과 생성 및 저장 화면을 제공합니다. 아래 설명은 현재 소스의 미리보기 화면 기준입니다. 기존 화면에서는 규격과 스타일을 정한 뒤 DXF 도면 생성 및 저장을 누르세요.
+이 안내는 0.3.0의 미리보기 및 라벨 편집 화면 기준입니다. 이전 앱은 상단 업데이트 확인 또는 다운로드 페이지에서 새 버전을 받을 수 있습니다.
 
 ## 빠르게 도면 만들기
 
