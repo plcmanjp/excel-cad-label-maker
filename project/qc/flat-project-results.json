@@ -19,7 +19,7 @@
     "harness": 22,
     "passed": 68,
     "skipped": 1,
-    "skip_reason": "Native symlink privilege unavailable locally; remote CI pending"
+    "skip_reason": "Native symlink privilege unavailable locally; remote Windows CI ran and passed it"
   },
   "development_build": {
     "output": "project/dist/Excel_CAD_Label_Dev",
@@ -37,5 +37,37 @@
   "independent_review": "PASS: obsolete original-source description corrected and delta reviewed",
   "ci_routing": "Unified project/tests35 runs once in build; release12 and harness22 retain total69",
   "existing_public_releases_modified": false,
-  "private_evidence": ".local/flatten-qc/"
+  "private_evidence": ".local/flatten-qc/",
+  "remote_ci": {
+    "branch_run": 38518873448,
+    "pr_run": 38518918434,
+    "main_run": 38519150398,
+    "passed": 69,
+    "skipped": 0,
+    "result": "PASS",
+    "implementation_head": "0557c7d150e966880657cedfaf159b95faf560a3",
+    "merge_commit": "d6ca19a83589fbb5e6e2b738d6675df2e580bdeb"
+  },
+  "integration": {
+    "pull_request": 11,
+    "state": "MERGED",
+    "issue_state": "CLOSED",
+    "merge_commit": "d6ca19a83589fbb5e6e2b738d6675df2e580bdeb"
+  },
+  "main_packaging": {
+    "version": "0.2.0",
+    "tag": "v0.2.0",
+    "source_commit": "d6ca19a83589fbb5e6e2b738d6675df2e580bdeb",
+    "archive": "Excel-CAD-Label-Maker-0.2.0-windows-x64.zip",
+    "sha256": "aaa1c64b788b8b1d7826a768cc83d99d74ec7bd19bf892809e8eb44106db23b8",
+    "size": 39863064,
+    "exe_sha256": "7d6583996764b48eb38c6c25634a3c8456585c1050ba7665c068293dadee9376",
+    "members": 1905,
+    "output": "release/artifacts/flat-qc-d6ca19a",
+    "source_dirty": false,
+    "all_member_hashes": "PASS",
+    "flat_receipt_paths": "PASS",
+    "published": false
+  },
+  "existing_release_remote_readback": "PASS: v0.1.0 and v0.2.0 original asset IDs, sizes and digests retained"
 }
