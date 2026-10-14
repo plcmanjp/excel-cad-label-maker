@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "python": "3.13.15",
+  "windows": "Windows-11-10.0.26300-SP0",
+  "baseline_ref": "d8fa53c07ed1fc198e2e8b4beadf1996be50d3f5",
+  "baseline_converter_sha256": "f35b2f98b5bb72ce2b705cd7128d668c19b2283e0fac103ecc4c27db38eeb917",
+  "repeats": 3,
+  "conditions": "Alternating fresh processes; same synthetic fixtures; OS cache not flushed; peak working set includes imports and conversion, before DXF readback",
+  "samples": [
+    {
+      "mode": "baseline",
+      "labels": 1000,
+      "cells": 3000,
+      "read_and_analyze_seconds": 0.035868699999809905,
+      "drawing_seconds": 0.10065120000035677,
+      "preview_layout_seconds": null,
+      "save_seconds": 0.167958500000168,
+      "total_seconds": 0.30447840000033466,
+      "memory_before": {
+        "working_set_bytes": 65593344,
+        "peak_working_set_bytes": 66625536
+      },
+      "memory_after": {
+        "working_set_bytes": 73089024,
+        "peak_working_set_bytes": 73089024
+      },
+      "dxf_audit_errors": 0
+    },
+    {
+      "mode": "candidate",
+      "labels": 1000,
+      "cells": 3000,
+      "read_and_analyze_seconds": 0.07654889999957959,
+      "drawing_seconds": 0.10145869999996648,
+      "preview_layout_seconds": 0.009197800000038114,
+      "save_seconds": 0.1561788000008164,
+      "total_seconds": 0.3341864000003625,
+      "memory_before": {
+        "working_set_bytes": 67932160,
+        "peak_working_set_bytes": 67932160
+      },
+      "memory_after": {
+        "working_set_bytes": 77287424,
+        "peak_working_set_bytes": 77287424
+      },
+      "dxf_audit_errors": 0,
+      "read_seconds": 0.07344639999973879,
+      "analysis_seconds": 0.003102499999840802
+    },
+    {
+      "mode": "baseline",
+      "labels": 1000,
+      "cells": 3000,
+      "read_and_analyze_seconds": 0.03400740000051883,
+      "drawing_seconds": 0.10516920000009122,
+      "preview_layout_seconds": null,
+      "save_seconds": 0.1607003999997687,
+      "total_seconds": 0.29987700000037876,
+      "memory_before": {
+        "working_set_bytes": 65802240,
+        "peak_working_set_bytes": 66740224
+      },
+      "memory_after": {
+        "working_set_bytes": 73256960,
+        "peak_working_set_bytes": 73256960
+      },
+      "dxf_audit_errors": 0
+    },
+    {
+      "mode": "candidate",
+      "labels": 1000,
+      "cells": 3000,
+      "read_and_analyze_seconds": 0.07609059999958845,
+      "drawing_seconds": 0.19880620000003546,
+      "preview_layout_seconds": 0.008646000000226195,
+      "save_seconds": 0.20174779999979364,
+      "total_seconds": 0.47664459999941755,
+      "memory_before": {
+        "working_set_bytes": 66904064,
+        "peak_working_set_bytes": 67723264
+      },
+      "memory_after": {
+        "working_set_bytes": 76902400,
+        "peak_working_set_bytes": 76902400
+      },
+      "dxf_audit_errors": 0,
+      "read_seconds": 0.07337529999949766,
+      "analysis_seconds": 0.0027153000000907923
+    },
+    {
+      "mode": "baseline",
+      "labels": 1000,
+      "cells": 3000,
+      "read_and_analyze_seconds": 0.03517340000053082,
+      "drawing_seconds": 0.09891969999989669,
+      "preview_layout_seconds": null,
+      "save_seconds": 0.1618508000001384,
+      "total_seconds": 0.2959439000005659,
+      "memory_before": {
+        "working_set_bytes": 66670592,
+        "peak_working_set_bytes": 66670592
+      },
+      "memory_after": {
+        "working_set_bytes": 73330688,
+        "peak_working_set_bytes": 73330688
+      },
+      "dxf_audit_errors": 0
+    },
+    {
+      "mode": "candidate",
+      "labels": 1000,
+      "cells": 3000,
+      "read_and_analyze_seconds": 0.07529930000055174,
+      "drawing_seconds": 0.09946320000017295,
+      "preview_layout_seconds": 0.008971700000074634,
+      "save_seconds": 0.1647116999993159,
+      "total_seconds": 0.3394742000000406,
+      "memory_before": {
+        "working_set_bytes": 66486272,
+        "peak_working_set_bytes": 67100672
+      },
+      "memory_after": {
+        "working_set_bytes": 76431360,
+        "peak_working_set_bytes": 76431360
+      },
+      "dxf_audit_errors": 0,
+      "read_seconds": 0.07245890000012878,
+      "analysis_seconds": 0.00284040000042296
+    },
+    {
+      "mode": "baseline",
+      "labels": 10000,
+      "cells": 30000,
+      "read_and_analyze_seconds": 0.3056901999998445,
+      "drawing_seconds": 1.040475300000253,
+      "preview_layout_seconds": null,
+      "save_seconds": 1.6051816999997754,
+      "total_seconds": 2.951347199999873,
+      "memory_before": {
+        "working_set_bytes": 65761280,
+        "peak_working_set_bytes": 66809856
+      },
+      "memory_after": {
+        "working_set_bytes": 131686400,
+        "peak_working_set_bytes": 131686400
+      },
+      "dxf_audit_errors": 0
+    },
+    {
+      "mode": "candidate",
+      "labels": 10000,
+      "cells": 30000,
+      "read_and_analyze_seconds": 0.9166393000004973,
+      "drawing_seconds": 1.0976075999997192,
+      "preview_layout_seconds": 0.10885210000014922,
+      "save_seconds": 1.595766000000367,
+      "total_seconds": 3.6100129000005836,
+      "memory_before": {
+        "working_set_bytes": 67219456,
+        "peak_working_set_bytes": 67219456
+      },
+      "memory_after": {
+        "working_set_bytes": 162742272,
+        "peak_working_set_bytes": 162742272
+      },
+      "dxf_audit_errors": 0,
+      "read_seconds": 0.8806295000003956,
+      "analysis_seconds": 0.03600980000010168
+    },
+    {
+      "mode": "baseline",
+      "labels": 10000,
+      "cells": 30000,
+      "read_and_analyze_seconds": 0.31645060000028025,
+      "drawing_seconds": 1.0532359999997425,
+      "preview_layout_seconds": null,
+      "save_seconds": 1.5684018000001743,
+      "total_seconds": 2.938088400000197,
+      "memory_before": {
+        "working_set_bytes": 65974272,
+        "peak_working_set_bytes": 66400256
+      },
+      "memory_after": {
+        "working_set_bytes": 131563520,
+        "peak_working_set_bytes": 131563520
+      },
+      "dxf_audit_errors": 0
+    },
+    {
+      "mode": "candidate",
+      "labels": 10000,
+      "cells": 30000,
+      "read_and_analyze_seconds": 0.8765886000001046,
+      "drawing_seconds": 1.0662336999994295,
+      "preview_layout_seconds": 0.10471459999916988,
+      "save_seconds": 1.5800387999997838,
+      "total_seconds": 3.522861099999318,
+      "memory_before": {
+        "working_set_bytes": 66920448,
+        "peak_working_set_bytes": 67596288
+      },
+      "memory_after": {
+        "working_set_bytes": 163090432,
+        "peak_working_set_bytes": 163090432
+      },
+      "dxf_audit_errors": 0,
+      "read_seconds": 0.8471237999992809,
+      "analysis_seconds": 0.029464800000823743
+    },
+    {
+      "mode": "baseline",
+      "labels": 10000,
+      "cells": 30000,
+      "read_and_analyze_seconds": 0.31744780000008177,
+      "drawing_seconds": 1.0265672000004997,
+      "preview_layout_seconds": null,
+      "save_seconds": 1.5918062999999165,
+      "total_seconds": 2.935821300000498,
+      "memory_before": {
+        "working_set_bytes": 66949120,
+        "peak_working_set_bytes": 66949120
+      },
+      "memory_after": {
+        "working_set_bytes": 131833856,
+        "peak_working_set_bytes": 131833856
+      },
+      "dxf_audit_errors": 0
+    },
+    {
+      "mode": "candidate",
+      "labels": 10000,
+      "cells": 30000,
+      "read_and_analyze_seconds": 0.8163706000004822,
+      "drawing_seconds": 1.0835022000001118,
+      "preview_layout_seconds": 0.11279180000019551,
+      "save_seconds": 1.6184660999997504,
+      "total_seconds": 3.5183389000003444,
+      "memory_before": {
+        "working_set_bytes": 66813952,
+        "peak_working_set_bytes": 67497984
+      },
+      "memory_after": {
+        "working_set_bytes": 162189312,
+        "peak_working_set_bytes": 162189312
+      },
+      "dxf_audit_errors": 0,
+      "read_seconds": 0.7854778000000806,
+      "analysis_seconds": 0.03089280000040162
+    }
+  ],
+  "medians": [
+    {
+      "mode": "baseline",
+      "labels": 1000,
+      "read_and_analyze_seconds": 0.03517340000053082,
+      "drawing_seconds": 0.10065120000035677,
+      "save_seconds": 0.1618508000001384,
+      "total_seconds": 0.29987700000037876,
+      "median_peak_working_set_bytes": 73256960
+    },
+    {
+      "mode": "candidate",
+      "labels": 1000,
+      "read_and_analyze_seconds": 0.07609059999958845,
+      "drawing_seconds": 0.10145869999996648,
+      "save_seconds": 0.1647116999993159,
+      "total_seconds": 0.3394742000000406,
+      "median_peak_working_set_bytes": 76902400
+    },
+    {
+      "mode": "baseline",
+      "labels": 10000,
+      "read_and_analyze_seconds": 0.31645060000028025,
+      "drawing_seconds": 1.040475300000253,
+      "save_seconds": 1.5918062999999165,
+      "total_seconds": 2.938088400000197,
+      "median_peak_working_set_bytes": 131686400
+    },
+    {
+      "mode": "candidate",
+      "labels": 10000,
+      "read_and_analyze_seconds": 0.8765886000001046,
+      "drawing_seconds": 1.0835022000001118,
+      "save_seconds": 1.595766000000367,
+      "total_seconds": 3.522861099999318,
+      "median_peak_working_set_bytes": 162742272
+    }
+  ],
+  "ui_event_loop": {
+    "labels_1000": {
+      "scope": "visible source Tk event loop, programmatic file selection, not physical-input acceptance",
+      "cancel_requested": false,
+      "elapsed_seconds": 0.12398190000021714,
+      "max_heartbeat_gap_seconds": 0.04584499999873515,
+      "cancel_to_terminal_seconds": null,
+      "labels": 1000,
+      "viewport_draw_seconds": 0.001682099999015918,
+      "canvas_items": 200
+    },
+    "labels_10000": {
+      "scope": "visible source Tk event loop, programmatic file selection, not physical-input acceptance",
+      "cancel_requested": false,
+      "elapsed_seconds": 0.880343200000425,
+      "max_heartbeat_gap_seconds": 0.09696289999919827,
+      "cancel_to_terminal_seconds": null,
+      "labels": 10000,
+      "viewport_draw_seconds": 0.004150000000663567,
+      "canvas_items": 200
+    },
+    "single_30000_cells": {
+      "scope": "visible source Tk event loop, programmatic file selection, not physical-input acceptance",
+      "cancel_requested": false,
+      "elapsed_seconds": 0.856120300000839,
+      "max_heartbeat_gap_seconds": 0.09086019999995187,
+      "cancel_to_terminal_seconds": null,
+      "labels": 1,
+      "viewport_draw_seconds": 0.000644300000203657,
+      "canvas_items": 1
+    },
+    "cancel_10000": {
+      "scope": "visible source Tk event loop, programmatic file selection, not physical-input acceptance",
+      "cancel_requested": true,
+      "elapsed_seconds": 0.14848559999882127,
+      "max_heartbeat_gap_seconds": 0.015166400000452995,
+      "cancel_to_terminal_seconds": 0.047204999998939456,
+      "labels": null
+    }
+  },
+  "fixtures": {
+    "labels-1000.xlsx": "4a0afbdb68ae6b8544ef65d017826de2b1320525e6b860f7d347524abfaaf6c9",
+    "labels-10000.xlsx": "3510642d455ead92c68a76f641d401670070cfbc9a36fd2401f05df189c07f7f",
+    "labels-20.xlsx": "c705274ffa5372dc8a513614a47ee9f128ad6de9105490160fe16a77fda44cf5",
+    "single-long-label.xlsx": "af5603ab2120ade4d66baa433d4b4943339ae837362e6f7658d1ddd482183a8f"
+  },
+  "startup_and_size": {
+    "schema_version": 1,
+    "criterion": "Fresh process launch to visible Tk top-level with at least 10 native child windows; polling interval 10 ms; not first-input latency",
+    "conditions": "Five alternating launches on same Windows host, no simultaneous build or performance job, OS cache not flushed",
+    "samples": [
+      {
+        "mode": "baseline",
+        "repeat": 1,
+        "ready_seconds": 0.5243267999994714,
+        "working_set_bytes": 85360640
+      },
+      {
+        "mode": "candidate",
+        "repeat": 1,
+        "ready_seconds": 0.6825849000015296,
+        "working_set_bytes": 86470656
+      },
+      {
+        "mode": "baseline",
+        "repeat": 2,
+        "ready_seconds": 0.5280249999996158,
+        "working_set_bytes": 85520384
+      },
+      {
+        "mode": "candidate",
+        "repeat": 2,
+        "ready_seconds": 0.542198000001008,
+        "working_set_bytes": 87207936
+      },
+      {
+        "mode": "baseline",
+        "repeat": 3,
+        "ready_seconds": 0.5008983999996417,
+        "working_set_bytes": 84647936
+      },
+      {
+        "mode": "candidate",
+        "repeat": 3,
+        "ready_seconds": 0.5576965999989625,
+        "working_set_bytes": 87404544
+      },
+      {
+        "mode": "baseline",
+        "repeat": 4,
+        "ready_seconds": 0.55343399999947,
+        "working_set_bytes": 85475328
+      },
+      {
+        "mode": "candidate",
+        "repeat": 4,
+        "ready_seconds": 0.5488509000006161,
+        "working_set_bytes": 87515136
+      },
+      {
+        "mode": "baseline",
+        "repeat": 5,
+        "ready_seconds": 0.5223738999993657,
+        "working_set_bytes": 84754432
+      },
+      {
+        "mode": "candidate",
+        "repeat": 5,
+        "ready_seconds": 0.5284512999987783,
+        "working_set_bytes": 86872064
+      }
+    ],
+    "medians": [
+      {
+        "mode": "baseline",
+        "ready_seconds": 0.5243267999994714
+      },
+      {
+        "mode": "candidate",
+        "ready_seconds": 0.5488509000006161
+      }
+    ],
+    "artifacts": {
+      "baseline": {
+        "exe_sha256": "7960af7c0aba9b592f73256ee278b026e1ec2eab2cdf54a6bbfb55fc317baea7",
+        "folder_bytes": 65665215,
+        "files": 1129
+      },
+      "candidate": {
+        "exe_sha256": "1f1047c2a19d3f72c087399d1e5b71689b3093e03e86a07ba798571ede1eaf00",
+        "folder_bytes": 65610404,
+        "files": 1126
+      }
+    }
+  },
+  "measured_component_sha256": {
+    "accessibility.py": "fbbcdfd1de6290d20b3758101ee0c1bacef3e926e1a458c4a90b11beefe95496",
+    "app_version.py": "421b9db70963594517fbef29c0be51505954334cb4ab8d62d81ff2021f3c02df",
+    "converter.py": "fca824bfd56526908f3da6efd520af99126e58fca0d7b7b7a94955f60d1b958d",
+    "excel_cad_label.py": "ce6bd3b4de04a11947bf31b12027598c2163bef8411781240f72071799c681db",
+    "input_model.py": "222cdc3096b52ae83cda5aba50ed8032e135a40f314b13786d1eb878c920fc70",
+    "jobs.py": "1089257a03563093776e4c6fedf589745bb5587a98573d2fa6fef1fdfc5c7e62",
+    "label_ui.py": "ab2f5f025389fbb94ce87a94bfd7cb8d6894cd978bba141c95e58257a389a0d5",
+    "preview.py": "84363729adf11236b9a4bc08cf3d2c34a2aa6646f6766f4c35828d0410a0d3f0",
+    "settings_store.py": "7a64dff20d0b95cca03e82bed43ee8c666bae09a120801b17b0bf9ba9edac507",
+    "text_bitmap.py": "63e9835d76ae472a1a8992518677718689e5e75b1a51dab9e225377be70b264e",
+    "update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+    "update_notice.py": "5c29de17236d2a08f37b20f32ed4df7d8ac6b46151efebc29421b89a94833c4e"
+  }
+}
