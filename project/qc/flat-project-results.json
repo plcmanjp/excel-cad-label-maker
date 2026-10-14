@@ -1,0 +1,41 @@
+{
+  "issue": 10,
+  "type": "flat-project-layout-qc",
+  "base_commit": "b8b522f1140b9621a8d1ee66177fa60472210911",
+  "layout": {
+    "original": "project/original",
+    "source": "project/src",
+    "tests": "project/tests"
+  },
+  "preservation": {
+    "moved_files": 13,
+    "moved_bytes_equal_base_git": true,
+    "protected_hashes": 68,
+    "result": "PASS"
+  },
+  "local_tests": {
+    "product_and_build_guards": 35,
+    "release_and_baseline": 12,
+    "harness": 22,
+    "passed": 68,
+    "skipped": 1,
+    "skip_reason": "Native symlink privilege unavailable locally; remote CI pending"
+  },
+  "development_build": {
+    "output": "project/dist/Excel_CAD_Label_Dev",
+    "result": "PASS",
+    "exe_sha256": "a76ad9e1c85db0bbde20ad6ca8d6fa9050d4b9e683da6233d2888b138e452000"
+  },
+  "release_build": {
+    "output": "release/artifacts/Excel_CAD_Label",
+    "result": "PASS",
+    "exe_sha256": "503bf4e77b4df87eab0640d8adeb1bc6f59e09b8ec42a073339ca0f53df4db9b"
+  },
+  "receipt_flat_source_and_assets": "PASS",
+  "qc_source_entrypoint_import": "PASS: --help",
+  "repository_and_document_links": "PASS",
+  "independent_review": "PASS: obsolete original-source description corrected and delta reviewed",
+  "ci_routing": "Unified project/tests35 runs once in build; release12 and harness22 retain total69",
+  "existing_public_releases_modified": false,
+  "private_evidence": ".local/flatten-qc/"
+}

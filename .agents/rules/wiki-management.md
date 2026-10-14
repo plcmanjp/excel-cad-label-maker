@@ -11,11 +11,11 @@
 | `wiki/journal/YYYY-MM/r{NNN}-*.md` | Session journals |
 | `wiki/troubleshooting/` | Recurrence-prevention KB |
 | `wiki/guides/`, `wiki/reference/`, `wiki/harness/` | Development/release guides, references, and harness policy |
-| `project/P{NNN}-{slug}/` | Source, tests, and runtime outputs for one project's implementation lineage. `project/INDEX.md` owns boundaries and numbering |
+| `project/original/`, `project/src/`, `project/tests/` | Preserved original, application source/assets, and unified product/build-guard tests. `project/INDEX.md` owns the flat single-app layout |
 | `project/scripts/`, `project/tests/`, `project/qc/` | Development tools, build guards, and product QC assets |
 | `release/` | Release configuration, package materials, preserved notices, packaging tools, and release QC. `release/INDEX.md` owns the layout |
 
-The default is **1 workspace = 1 project**. Multiple `P{NNN}` folders are not separate products. They are implementation lineages of the same project, used when work such as a major rewrite or technology-stack transition needs an independent source tree and explicit succession. Do not create planning-document `meta/` or `specs/` folders under each P folder. Only a 001-style composite workspace that manages multiple independent customer or site projects together may define a separate exception in its harness.
+This repository uses **1 workspace = 1 app** and a flat `project/` layout. Keep application source, original input, and tests directly under the paths above. Product planning documents belong in `wiki/`; GitHub Issues own work instructions. Do not add an implementation-lineage directory without an explicitly approved structural task.
 
 ## Work Journal (CURRENT.md)
 

@@ -29,11 +29,9 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Environment creation failed.' }
           & .venv/Scripts/python.exe -m pip install -r project/requirements-dev.lock.txt
           if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
-      - name: Build and release package refusal guards
+      - name: Release package refusal guards
         run: |
-          python -B -m unittest discover -s project/tests -v
-          if ($LASTEXITCODE -ne 0) { throw 'Build guards failed.' }
           python -B -m unittest discover -s release/tests -v
           if ($LASTEXITCODE -ne 0) { throw 'Release package guards failed.' }
-      - name: Excel, DXF, Tk drop regression and release Windows build
+      - name: Product and build guards with release Windows build
         run: powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps1 -Release

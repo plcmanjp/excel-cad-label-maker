@@ -4,9 +4,9 @@
 
 ## 현재 개발 기준선
 
-project/P001-excel-cad-label/original/excel_cad_label.py는 전달받은 원본입니다. 문법 손상 때문에 제품 실행 또는 빌드 대상이 아닙니다. 원본 파일을 보존하고 복구 구현은 별도 src/와 tests/에 추가합니다. 원본 EXE와 소스의 일치 여부는 확인되지 않았습니다.
+project/original/excel_cad_label.py는 전달받은 원본입니다. 문법 손상 때문에 제품 실행 또는 빌드 대상이 아닙니다. 원본 파일을 보존하고 복구 구현은 별도 src/와 tests/에 추가합니다. 원본 EXE와 소스의 일치 여부는 확인되지 않았습니다.
 
-복구 구현은 `project/P001-excel-cad-label/src/`에 있습니다. 원본의 열 방향 읽기와 가변 높이 배치를 복구하고, Excel 파일 드래그 앤 드롭과 UTF-8 DXF 출력을 추가했습니다. 원본 EXE와 바이트 또는 기능이 동일한 재빌드라고 표현하지 않습니다.
+복구 구현은 `project/src/`에 있습니다. 원본의 열 방향 읽기와 가변 높이 배치를 복구하고, Excel 파일 드래그 앤 드롭과 UTF-8 DXF 출력을 추가했습니다. 원본 EXE와 바이트 또는 기능이 동일한 재빌드라고 표현하지 않습니다.
 
 ## 개발환경
 
@@ -22,7 +22,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/run-dev.ps1
 ## 제품 검사와 Windows 개발 빌드
 
 ~~~powershell
-& .venv/Scripts/python.exe -B -m unittest discover -s project/P001-excel-cad-label/tests -v
 & .venv/Scripts/python.exe -B -m unittest discover -s project/tests -v
 powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps1
 ~~~
@@ -30,6 +29,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps
 생성 앱은 `project/dist/Excel_CAD_Label_Dev/Excel_CAD_Label_Dev.exe`입니다. **EXE와 `_internal/`, `third_party/` 등 같은 폴더의 파일을 함께 유지**해야 합니다. Python이 없는 사용자 PC에서 실행하는 무설치 폴더 형태이며, 단일 EXE 형태는 아닙니다. `project/dist/`, `project/build/`와 `release/artifacts/`는 Git에서 제외됩니다.
 
 재빌드 전 실행 중인 개발 앱을 닫으세요. 스크립트는 실행 중인 앱과 빌드 경로의 junction 및 symlink를 거부합니다. 생성된 출력 폴더의 OneDrive 읽기 전용 속성은 경로 검사를 통과한 뒤 처리합니다.
+
+`project/tests/`는 제품과 빌드 보호 검사 35개를 함께 관리합니다. 빌드 스크립트가 이 검사를 실행하며 CI에서는 별도 배포 검사 12개와 하네스 검사 22개를 더해 총 69개를 확인합니다.
 
 `build-receipt.json`은 Python과 의존성 버전, Git commit 및 변경 여부, 소스와 패키지 파일의 SHA-256을 기록합니다. 같은 소스와 의존성으로 빌드 절차를 반복할 수 있다는 뜻이며, EXE 바이트가 항상 동일하다는 뜻은 아닙니다. 다른 PC의 깨끗한 환경 검증은 GitHub Actions의 Windows `product` 작업 결과로 구분합니다.
 
@@ -49,7 +50,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/make-app-ico
 
 ## 업데이트 알림
 
-앱 버전은 `project/P001-excel-cad-label/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0`입니다. 원본 배포의 `release/baseline/VERSION` 및 `release/baseline/manifest.json`은 0.1.0 기준선으로 보존합니다.
+앱 버전은 `project/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0`입니다. 원본 배포의 `release/baseline/VERSION` 및 `release/baseline/manifest.json`은 0.1.0 기준선으로 보존합니다.
 
 앱 시작 뒤 고정된 GitHub 최신 릴리스 API를 백그라운드에서 한 번 조회합니다. 설치 버전보다 새 정식 버전이 있을 때 `새 버전 알림`에 현재 및 최신 버전과 `릴리스 페이지 열기`, `나중에` 버튼을 표시합니다. 하단의 `업데이트 확인`으로 수동 조회할 수도 있습니다. 자동 다운로드나 실행 파일 교체는 하지 않습니다.
 

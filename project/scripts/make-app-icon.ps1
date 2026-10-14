@@ -1,7 +1,7 @@
 param([switch]$Force)
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$assetRoot = Join-Path $repoRoot 'project/P001-excel-cad-label/src/assets'
+$assetRoot = Join-Path $repoRoot 'project/src/assets'
 $sourcePath = Join-Path $assetRoot 'app-icon.png'
 $iconPath = Join-Path $assetRoot 'app-icon.ico'
 if ((Test-Path -LiteralPath $iconPath) -and -not $Force) { throw 'Icon exists; use -Force to regenerate it.' }
