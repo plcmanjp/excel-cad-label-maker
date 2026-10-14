@@ -419,6 +419,18 @@
         "folder_bytes": 65610404,
         "files": 1126
       }
+    },
+    "package_comparison_scope": "Published v0.2.2 folder versus development candidate folder; full bytes include receipt and package materials. This is not a normalized release-size reduction claim.",
+    "package_file_differences": {
+      "baseline_only": [
+        "Excel_CAD_Label.exe",
+        "README.txt",
+        "VERSION",
+        "release-manifest.json"
+      ],
+      "candidate_only": [
+        "Excel_CAD_Label_Dev.exe"
+      ]
     }
   },
   "measured_component_sha256": {

@@ -409,5 +409,20 @@
     "detail": "Earlier automation observed preset/style/advanced/example-dialog changes; instrumented source and final frozen flows preserved settings. Separate native-dialog shortcut reentry was measured and guarded."
   },
   "private_evidence_root": ".local/issue20",
-  "notes": "All workbooks, paths and raw UI screenshots are private QC artifacts; public record contains hashes and synthetic counts only. Build is a development candidate at version 0.2.2, not a new release."
+  "notes": "All workbooks, paths and raw UI screenshots are private QC artifacts; public record contains hashes and synthetic counts only. Build is a development candidate at version 0.2.2, not a new release.",
+  "ci": {
+    "status": "PASS",
+    "commit": "8e004a6aa9307a6ab42f5bd08920ab839123acdf",
+    "run_url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38589845254",
+    "jobs": {
+      "verify": "success",
+      "product": "success"
+    },
+    "first_attempt": {
+      "run_url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38589481008",
+      "status": "failure",
+      "cause": "Test delayed-read path comparison missed Windows TEMP 8.3 alias; fixture comparison now resolves both paths"
+    },
+    "product_sources_changed_for_ci_fix": false
+  }
 }
