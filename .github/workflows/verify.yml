@@ -16,8 +16,6 @@ jobs:
         run: python -B .agents/scripts/test_session_start.py
       - name: Public repository and provenance checks
         run: python -B .agents/scripts/check_repository.py
-      - name: Baseline release refusal boundaries
-        run: python -B .agents/scripts/test_package_release.py
   product:
     runs-on: windows-latest
     steps:
@@ -29,9 +27,13 @@ jobs:
         run: |
           python -m venv .venv
           if ($LASTEXITCODE -ne 0) { throw 'Environment creation failed.' }
-          & .venv/Scripts/python.exe -m pip install -r requirements-dev.lock.txt
+          & .venv/Scripts/python.exe -m pip install -r project/requirements-dev.lock.txt
           if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
       - name: Build and release package refusal guards
-        run: python -B -m unittest discover -s scripts/tests -v
+        run: |
+          python -B -m unittest discover -s project/tests -v
+          if ($LASTEXITCODE -ne 0) { throw 'Build guards failed.' }
+          python -B -m unittest discover -s release/tests -v
+          if ($LASTEXITCODE -ne 0) { throw 'Release package guards failed.' }
       - name: Excel, DXF, Tk drop regression and release Windows build
-        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-dev.ps1 -Release
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps1 -Release

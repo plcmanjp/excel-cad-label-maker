@@ -7,7 +7,7 @@ Canonical instructions for the public development and release repository. This h
 - Original developer nickname: 직장인. Fork maintainer and continuing developer: plcmanjp. Preserve both credits.
 - One repository owns development and GitHub Releases. Work instructions: GitHub Issues in plcmanjp/excel-cad-label-maker. CURRENT is progress only.
 - Version 0.1.0 distributes the supplied original executable unchanged. Never claim it was rebuilt from the imported source.
-- Original source in Project/P001-excel-cad-label/original/ is preserved as received. It has syntax damage. A repaired implementation requires a separate approved product task.
+- Original source in project/P001-excel-cad-label/original/ is preserved as received. It has syntax damage. A repaired implementation requires a separate approved product task.
 - DXF output is supported by the baseline. Native DWG export is not implemented or verified.
 
 ## Startup
@@ -41,4 +41,4 @@ Codex and other tools manually Read all six sources at startup. Claude imports t
 - Claude reads AGENTS.md directly in a supported runtime. No CLAUDE.md adapter. .claude/ assets are owned by Claude; Codex does not create or modify them.
 - Native .claude/memory/ is reference-only for Codex. Do not modify or bulk-migrate it. No deployed blog-copy edits.
 - Shared skills live in .agents/skills/. Shared role bodies live in .agents/agents/; runtime adapters remain thin.
-- Read .agents/docs/harness-policy.md for the source registry and docs/releasing.md before release work.
+- Read wiki/harness/harness-policy.md for the source registry and wiki/guides/releasing.md before release work.

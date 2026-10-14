@@ -5,7 +5,7 @@
 - 저장소: https://github.com/plcmanjp/excel-cad-label-maker (public)
 - remote: origin / branch: main
 - 포함: 제품 소스, 공개 문서, 하네스, 검증 스크립트와 GitHub Actions.
-- 제외: EXE, ZIP, dist/, build/, .local/, 로컬 절대 경로 설정, 비밀과 고객 자료.
+- 제외: EXE, ZIP, project/dist/, project/build/, release/artifacts/, .venv/, .local/, 로컬 절대 경로 설정, 비밀과 고객 자료.
 
 ## 승인 분류
 
