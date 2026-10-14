@@ -1,0 +1,63 @@
+{
+  "issue": 8,
+  "type": "workspace-layout-qc",
+  "base_commit": "f479680db7762e5de4927463d5364213f7aa83a1",
+  "layout": {
+    "wiki": "guides, reference, harness and journals",
+    "project": "source, tests, scripts, lock and development QC",
+    "release": "baseline, package, notes, scripts, tests, notices, QC and ignored artifacts"
+  },
+  "local_checks": {
+    "product": 33,
+    "harness": 22,
+    "build_guards": 2,
+    "release_and_baseline": 12,
+    "passed": 68,
+    "skipped": 1,
+    "skip_reason": "Native symlink creation requires privilege; remote Windows CI pending"
+  },
+  "protected_before_after_hashes": {
+    "files": 68,
+    "result": "PASS",
+    "includes": [
+      "original Python",
+      "PNG and ICO",
+      "63 third-party notice originals",
+      "published v0.1.0 and v0.2.0 ZIPs"
+    ]
+  },
+  "preserved_mapped_git_bytes": "PASS: product source, dependency lock, historical QC, journals, notices, release notes and existing user materials",
+  "builds": {
+    "development": {
+      "output": "project/dist/Excel_CAD_Label_Dev",
+      "result": "PASS"
+    },
+    "release": {
+      "output": "release/artifacts/Excel_CAD_Label",
+      "result": "PASS"
+    },
+    "separate_update_qc": {
+      "output": ".local/update-qc/builds",
+      "result": "PASS"
+    }
+  },
+  "startup_smoke": {
+    "moved_source_script": "PASS",
+    "development_executable": "PASS",
+    "release_executable": "PASS",
+    "scope": "Native window and normal UI; no new CAD or separate-PC acceptance"
+  },
+  "baseline_actual_zip": {
+    "output": "release/artifacts/baseline-build",
+    "integrity": "PASS",
+    "flat_readme_links": "PASS",
+    "original_executable_unchanged": true
+  },
+  "independent_review": {
+    "cumulative": "One baseline README flat-link finding",
+    "delta": "PASS: separate package README and mapping fixed"
+  },
+  "repository_and_doc_links": "PASS",
+  "existing_public_releases_modified": false,
+  "private_evidence": ".local/layout-qc/"
+}

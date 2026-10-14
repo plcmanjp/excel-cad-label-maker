@@ -6,7 +6,7 @@
 - Fork 및 후속 개발: **[plcmanjp](https://github.com/plcmanjp)**
 - 현재 배포 버전: **0.2.0**
 
-[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.0) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](CREDITS.md)
+[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.0) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](release/package/CREDITS.md)
 
 ## 사용 방법
 
@@ -23,25 +23,33 @@
 
 0.1.0은 전달받은 기존 EXE를 변경 없이 배포하는 기준 릴리스입니다. 배포 버전 0.1.0은 이 프로젝트에서 부여한 번호이며, EXE 내부 버전이나 이 저장소에서 새로 빌드한 결과를 의미하지 않습니다.
 
-가져온 Python 원본은 따옴표, 콜론과 연산자 일부가 누락되어 현재 그대로는 실행하거나 다시 빌드할 수 없습니다. 원본은 Project/P001-excel-cad-label/original/에 보존합니다. 원본 소스와 EXE의 빌드 대응 관계도 확인되지 않았습니다. 후속 개발은 이 원본을 보존한 별도 구현에서 진행합니다.
+가져온 Python 원본은 따옴표, 콜론과 연산자 일부가 누락되어 현재 그대로는 실행하거나 다시 빌드할 수 없습니다. 원본은 project/P001-excel-cad-label/original/에 보존합니다. 원본 소스와 EXE의 빌드 대응 관계도 확인되지 않았습니다. 후속 개발은 이 원본을 보존한 별도 구현에서 진행합니다.
 
 ## 후속 복구 앱 0.2.0
 
 별도 `src/` 구현은 Excel 파일 드래그 앤 드롭, 입력 검사와 UTF-8 DXF 생성을 지원합니다. 탐색기에서 `.xlsx` 또는 `.xls` 한 개를 앱에 놓으면 파일 찾기 없이 선택할 수 있습니다. 규격을 확인한 뒤 `DXF 도면 생성 및 저장`을 누르세요.
 
-앱의 아이콘은 흰 라벨지에 ABC가 적힌 형태입니다. [아이콘 원본과 생성 정보](Project/P001-excel-cad-label/src/assets/README.md)는 저장소에 보관하며 EXE와 앱 창에 적용합니다.
+앱의 아이콘은 흰 라벨지에 ABC가 적힌 형태입니다. [아이콘 원본과 생성 정보](wiki/reference/app-icon.md)는 저장소에 보관하며 EXE와 앱 창에 적용합니다.
 
 버전 0.2.0은 시작 시 GitHub Releases에서 새 정식 버전을 확인합니다. 새 버전이 있으면 알림에서 릴리스 페이지를 열 수 있으며 `나중에`를 눌러 작업을 계속할 수 있습니다. 자동 설치는 하지 않습니다. 인터넷 연결 실패가 앱 사용을 막지 않습니다.
 
-`.venv` 구성, 소스 실행과 Windows 빌드는 [개발 안내](CONTRIBUTING.md)를 따릅니다. 0.1.0 기준 배포와 0.2.0 후속 앱은 구분하며 CAD에서 직접 열기와 원본 이용 조건 확인이 남아 있습니다.
+`.venv` 구성, 소스 실행과 Windows 빌드는 [개발 안내](wiki/guides/development.md)를 따릅니다. 0.1.0 기준 배포와 0.2.0 후속 앱은 구분하며 CAD에서 직접 열기와 원본 이용 조건 확인이 남아 있습니다.
 
 ## 개발 저장소
 
 이 공개 저장소에서 개발, 이슈와 릴리스를 함께 관리합니다. 하네스는 900 스타터의 단일 AGENTS.md, 중립 규칙, Codex 어댑터와 SessionStart 검증 구조를 사용합니다.
 
-- [개발 안내](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/CONTRIBUTING.md)
-- [릴리스 절차](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/docs/releasing.md)
-- [배포와 권리 범위](NOTICE.md)
+| 경로 | 내용 |
+|---|---|
+| [wiki/](wiki/INDEX.md) | 개발과 릴리스 안내, 참고 자료, 하네스 정책과 작업 저널 |
+| [project/](project/INDEX.md) | 앱 소스, 테스트, 개발 스크립트와 고정 의존성 |
+| [release/](release/INDEX.md) | 버전 및 배포 구성, 패키징 스크립트, 사용자 고지와 릴리스 검수 |
+
+개발 빌드는 `project/dist/`, 빌드 캐시는 `project/build/`, 배포 산출물은 `release/artifacts/`에 생성하며 Git에서 제외합니다. `.venv`와 `.local` 및 도구 설정은 루트의 숨김 경로로 유지합니다.
+
+- [개발 안내](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/guides/development.md)
+- [릴리스 절차](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/guides/releasing.md)
+- [배포와 권리 범위](release/package/NOTICE.md)
 - [현재 진행 상태](https://github.com/plcmanjp/excel-cad-label-maker/blob/main/wiki/journal/CURRENT.md)
 
 실제 고객의 엑셀 자료와 도면은 공개 저장소나 Issue에 올리지 마세요.

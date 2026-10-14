@@ -10,7 +10,10 @@
 | `wiki/poc/` | Durable folder bundles for directly executed proofs of concept |
 | `wiki/journal/YYYY-MM/r{NNN}-*.md` | Session journals |
 | `wiki/troubleshooting/` | Recurrence-prevention KB |
-| `Project/P{NNN}-{slug}/` | Source, tests, and runtime outputs for one project's implementation lineage. `Project/INDEX.md` owns boundaries and numbering |
+| `wiki/guides/`, `wiki/reference/`, `wiki/harness/` | Development/release guides, references, and harness policy |
+| `project/P{NNN}-{slug}/` | Source, tests, and runtime outputs for one project's implementation lineage. `project/INDEX.md` owns boundaries and numbering |
+| `project/scripts/`, `project/tests/`, `project/qc/` | Development tools, build guards, and product QC assets |
+| `release/` | Release configuration, package materials, preserved notices, packaging tools, and release QC. `release/INDEX.md` owns the layout |
 
 The default is **1 workspace = 1 project**. Multiple `P{NNN}` folders are not separate products. They are implementation lineages of the same project, used when work such as a major rewrite or technology-stack transition needs an independent source tree and explicit succession. Do not create planning-document `meta/` or `specs/` folders under each P folder. Only a 001-style composite workspace that manages multiple independent customer or site projects together may define a separate exception in its harness.
 
@@ -41,7 +44,7 @@ For monthly r001 numbering, top-level H1, 4 visible metadata fields, no YAML fro
 
 ## Work Management
 
-GitHub Issues in plcmanjp/excel-cad-label-maker own work instructions. Read the exact assigned Issue and verify authentication and repository identity. Do not copy Issue bodies into local orders. CURRENT contains progress and pointers only. For non-ASCII mutations on Windows, follow docs/releasing.md safe body-file transport and exact API readback.
+GitHub Issues in plcmanjp/excel-cad-label-maker own work instructions. Read the exact assigned Issue and verify authentication and repository identity. Do not copy Issue bodies into local orders. CURRENT contains progress and pointers only. For non-ASCII mutations on Windows, follow wiki/guides/releasing.md safe body-file transport and exact API readback.
 
 ## Troubleshooting
 Use `wiki/troubleshooting/TS-{NNN}-{slug}.md` for recurring problems and document them autonomously right after resolution.

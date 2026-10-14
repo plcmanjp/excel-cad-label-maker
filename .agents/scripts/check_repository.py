@@ -9,21 +9,40 @@ import sys
 import tomllib
 
 ROOT = Path(__file__).resolve().parents[2]
-ICON_ROOT = Path('Project/P001-excel-cad-label/src/assets')
+ICON_ROOT = Path('project/P001-excel-cad-label/src/assets')
 ICON_SIGNATURES = {'app-icon.png': b'\x89PNG\r\n\x1a\n', 'app-icon.ico': b'\x00\x00\x01\x00'}
 
 def main():
     errors = []
+    visible_roots = {'AGENTS.md', 'README.md', 'wiki', 'project', 'release'}
+    for path in ROOT.iterdir():
+        if not path.name.startswith('.') and path.name not in visible_roots:
+            errors.append('misplaced root asset: ' + path.name)
+    current_docs = [ROOT / 'README.md', ROOT / 'project/INDEX.md', ROOT / 'release/INDEX.md', ROOT / 'wiki/INDEX.md']
+    for folder in ('guides', 'reference', 'harness'):
+        current_docs.extend((ROOT / 'wiki' / folder).glob('*.md'))
+    for doc in current_docs:
+        if not doc.is_file():
+            errors.append('layout entry missing: ' + doc.relative_to(ROOT).as_posix())
+            continue
+        for target in re.findall(r'\]\(([^)]+)\)', doc.read_text(encoding='utf-8')):
+            if target.startswith(('#', 'https://', 'http://', 'mailto:')):
+                continue
+            linked = (doc.parent / target.split('#', 1)[0]).resolve()
+            if not linked.is_relative_to(ROOT) or not linked.exists():
+                errors.append('broken local link: ' + doc.relative_to(ROOT).as_posix() + ' -> ' + target)
     try:
         icons = json.loads((ROOT / ICON_ROOT / 'manifest.json').read_text(encoding='utf-8'))
+        if not (ROOT / icons['prompt_file']).is_file():
+            errors.append('icon prompt document missing')
         for name, signature in ICON_SIGNATURES.items():
             asset = (ROOT / ICON_ROOT / name).read_bytes()
             if not asset.startswith(signature) or hashlib.sha256(asset).hexdigest() != icons['sha256'][name]:
                 errors.append('icon signature or hash mismatch: ' + name)
     except (OSError, ValueError, KeyError, TypeError):
         errors.append('icon asset manifest missing or invalid')
-    manifest = json.loads((ROOT / 'release/manifest.json').read_text(encoding='utf-8'))
-    if (ROOT / 'VERSION').read_text().strip() != manifest['version']:
+    manifest = json.loads((ROOT / 'release/baseline/manifest.json').read_text(encoding='utf-8'))
+    if (ROOT / 'release/baseline/VERSION').read_text().strip() != manifest['version']:
         errors.append('version mismatch')
     raw = (ROOT / manifest['source_path']).read_bytes()
     if hashlib.sha256(raw).hexdigest() != manifest['source_sha256']:
@@ -54,7 +73,8 @@ def main():
     # Prune local environments before traversal; dependency files are not public sources.
     paths = []
     for directory, folders, files in os.walk(ROOT):
-        folders[:] = [name for name in folders if name not in ignored]
+        folders[:] = [name for name in folders if name not in ignored
+                      and (Path(directory) / name).relative_to(ROOT).as_posix() != 'release/artifacts']
         paths.extend(Path(directory) / name for name in files)
     for path in paths:
         rel = path.relative_to(ROOT)
@@ -72,9 +92,9 @@ def main():
             continue
         if re.search(r'[A-Za-z]:[\\/](?:OneDrive|Users)', text):
             errors.append('private machine path: ' + rel.as_posix())
-        if rel.parts[:2] == ('third_party', 'notices'):
+        if rel.parts[:3] == ('release', 'third_party', 'notices'):
             continue  # Preserved external legal originals, not authored UI prose.
-        if rel.parts[0] not in {'.agents','.codex','wiki','Project'} and path.suffix in {'.md','.txt'}:
+        if rel.parts[0] not in {'.agents','.codex','wiki','project'} and path.suffix in {'.md','.txt'}:
             if re.search('[\u2014\u2013\u2015\u00b7\u30fb\u2022]', text):
                 errors.append('display punctuation: ' + rel.as_posix())
     for forbidden in ['CLAUDE.md','CODEX.md','AGENTS.override.md']:
@@ -84,7 +104,7 @@ def main():
         print('FAIL: ' + error, file=sys.stderr)
     if errors:
         raise SystemExit(1)
-    print('PASS: original provenance, public boundaries, encoding, rule imports and adapters')
+    print('PASS: layout, document links, original provenance, public boundaries, encoding, rule imports and adapters')
 
 if __name__ == '__main__':
     main()
