@@ -28,7 +28,8 @@
       "project/src/working_data.py": "3b11efae86276997b0bc7d76bd962a721286a4c618df4f9eabe9887f33dfe494"
     },
     "packaged_files_verified": 1125,
-    "release_published": false
+    "release_published": false,
+    "committed_sources_match": "e2c6097e0b2c176bd3f112f60a1b02c4f5ac57c7"
   },
   "tests": {
     "product": {
@@ -326,5 +327,17 @@
     "Issue14 real CAD, second PC, original alignment and rights"
   ],
   "private_evidence_root": ".local/issue20",
-  "notes": "Synthetic fixtures only. Public record contains hashes and counts; raw screenshots and profiles stay private. Existing QC, originals and public version 0.2.2 preserved."
+  "notes": "Synthetic fixtures only. Public record contains hashes and counts; raw screenshots and profiles stay private. Existing QC, originals and public version 0.2.2 preserved.",
+  "ci": {
+    "status": "PASS",
+    "commit": "e2c6097e0b2c176bd3f112f60a1b02c4f5ac57c7",
+    "run_url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38599865631",
+    "jobs": {
+      "verify": "success",
+      "product": "success"
+    },
+    "product_tests": 99,
+    "ignored_tk_errors": 0,
+    "log_sha256": "3d5e2da94aa71cf155558bc1cf692dca420811e6307d189ff4b569517f505a9e"
+  }
 }

@@ -6,7 +6,7 @@
 
 ## 현재 상태
 
-- 후속 지시의 기본 Standard 글꼴과 기본(검정) 색상, 기본 규격 중심 UI, 공통 편집/추가 모달과 Excel 없는 직접 입력, 상단 업데이트 버튼 색상 안내 및 도움말 크레딧을 구현했다. 로컬 검증과 독립 검수는 완료했고 작업 브랜치 commit/push 및 원격 CI를 진행해야 한다. 상세 범위는 [Issue 댓글](https://github.com/plcmanjp/excel-cad-label-maker/issues/20#issuecomment-6172241897)에 있다.
+- 후속 지시의 기본 Standard 글꼴과 기본(검정) 색상, 기본 규격 중심 UI, 공통 편집/추가 모달과 Excel 없는 직접 입력, 상단 업데이트 버튼 색상 안내 및 도움말 크레딧을 구현했다. 로컬 검증과 독립 검수 및 e2c6097 작업 브랜치 commit/push를 완료했다. [원격 CI](https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38599865631)의 verify/product도 PASS다. 최종 기록은 같은 브랜치에 반영한다. 상세 범위는 [Issue 댓글](https://github.com/plcmanjp/excel-cad-label-maker/issues/20#issuecomment-6172241897)에 있다.
 - 작업 브랜치는 feat/issue-20-preview-presets이며 main 기준은 d8fa53c다. 선행 P1/P2와 GUI 보정은 7808086, 8e004a6, 16a60b9에 반영됐다. [기존 CI](https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38590746220)는 PASS다.
 - [PR #18](https://github.com/plcmanjp/excel-cad-label-maker/pull/18)은 main에 병합됐고 v0.2.2는 최신 정식 공개 버전이다. Issue #17과 #2는 CLOSED다. 이번 개발 빌드는 동일한 공개 버전 기준의 후보이며 새 공개 릴리스는 생성하지 않았다.
 
@@ -32,6 +32,6 @@
 
 ## 다음 작업
 
-1. 후속 UI/편집 변경을 작업 브랜치에 commit/push하고 최신 원격 CI를 확인한다.
-2. 실제 초보 사용자, 물리 마우스 더블클릭과 Windows150%/200% 배율 검증을 진행한다.
+1. 실제 초보 사용자, 물리 마우스 더블클릭과 Windows150%/200% 배율 검증을 진행한다.
+2. 실제 CAD/별도 PC와 글꼴 및 원본 대응은 Issue #14의 조건에 따라 검증한다.
 3. 브랜치 검토 결과에 따라 main 병합과 신규 버전 및 공개 릴리스의 승인 범위를 결정한다.
