@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "release_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.2",
+  "release_id": 412481120,
+  "version": "0.2.2",
+  "source_commit": "8efab92d7df724d78126fc8f06a723bff7413f6d",
+  "merged_pr": 18,
+  "issue_17_state": "CLOSED",
+  "issue_2_state": "CLOSED",
+  "followup_issue_14_state": "OPEN",
+  "archive_name": "Excel-CAD-Label-Maker-0.2.2-windows-x64.zip",
+  "archive_sha256": "e23102547e8df97fa46f7752b2c99969ddb527712f252df11bcc6b7cac8445d4",
+  "archive_size": 29499126,
+  "archive_members": 1129,
+  "exe_sha256": "7960af7c0aba9b592f73256ee278b026e1ec2eab2cdf54a6bbfb55fc317baea7",
+  "receipt_files_verified": 1127,
+  "manifest_files_verified": 1128,
+  "folder_bytes": 65534282,
+  "source_clean_at_build": true,
+  "markdown_files": 0,
+  "legal_and_runtime_original_notices_verified": 63,
+  "pandas_absent_from_pyz": true,
+  "independent_source_review": "PASS",
+  "independent_artifact_review": "PASS",
+  "main_ci": {
+    "status": "PASS",
+    "url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38533378883",
+    "tests_passed": 78,
+    "product_tests": 40,
+    "release_tests": 16,
+    "harness_tests": 22,
+    "native_dangling_symlink_test": "PASS",
+    "local_tests_passed": 77,
+    "local_tests_skipped": 1,
+    "branch_run": 38532961122,
+    "pr_run": 38532967118
+  },
+  "centered_notice_qc": {
+    "production_version": "0.2.2",
+    "frozen_qc_exe_sha256": "cc18eb94d2711b78b44b6fce580147719ff8b53aeee10b6209912f8ec68cd421",
+    "real_github_api": true,
+    "samples": [
+      {
+        "case": "740x760+650+100",
+        "parent": {
+          "x": 657,
+          "y": 100,
+          "width": 742,
+          "height": 792
+        },
+        "dialog": {
+          "x": 834,
+          "y": 391,
+          "width": 387,
+          "height": 210
+        },
+        "center_offset": {
+          "x": -0.5,
+          "y": 0
+        }
+      },
+      {
+        "case": "880x700+260+180",
+        "parent": {
+          "x": 267,
+          "y": 180,
+          "width": 882,
+          "height": 732
+        },
+        "dialog": {
+          "x": 514,
+          "y": 441,
+          "width": 387,
+          "height": 210
+        },
+        "center_offset": {
+          "x": -0.5,
+          "y": 0
+        }
+      }
+    ],
+    "result": "PASS",
+    "source_and_asset_hashes_equal_final_release": true,
+    "product_source_files_compared": 5,
+    "later_button": "PASS: popup closed and app remains usable",
+    "production_version_override": false,
+    "qc_entrypoint_separate": true,
+    "public_latest_at_measurement": "0.2.1"
+  },
+  "extracted_exe_qc": {
+    "status": "PASS",
+    "labels": 4,
+    "text_entities": 7,
+    "box_entities": 7,
+    "dxf_version": "AC1024",
+    "units": "mm",
+    "audit_errors": 0,
+    "labels_positions_styles_equal_previous": true,
+    "unicode_roundtrip": "EXACT",
+    "drawing_sha256": "a4e90e8800d03c0eae10b2f04c701f91ea260e801e6af8b097bddcb5966c29e3",
+    "actual_version_and_abc_icon": "PASS",
+    "physical_drop": "PASS: INPUT_COMPLETED and native selected file observed",
+    "save": "PASS: filename readback and native four-label completion",
+    "package_files_unchanged_after_execution": true,
+    "latest_app_manual_check": "PASS: no newer version, public 0.2.2 observed"
+  },
+  "published_readback": {
+    "status": "PASS",
+    "release_id": 412481120,
+    "release_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.2",
+    "latest_tag": "v0.2.2",
+    "tag_commit": "8efab92d7df724d78126fc8f06a723bff7413f6d",
+    "draft": false,
+    "prerelease": false,
+    "body_matches": true,
+    "assets": [
+      {
+        "id": 639715295,
+        "name": "Excel-CAD-Label-Maker-0.2.2-windows-x64.zip",
+        "size": 29499126,
+        "digest": "sha256:e23102547e8df97fa46f7752b2c99969ddb527712f252df11bcc6b7cac8445d4",
+        "state": "uploaded"
+      },
+      {
+        "id": 639715294,
+        "name": "SHA256SUMS.txt",
+        "size": 110,
+        "digest": "sha256:95e249ff66af462350398429b3f73b7b8d7f5e6e57a8dd24d14f518fa7c05fc2",
+        "state": "uploaded"
+      }
+    ],
+    "redownload_bytes_match": true,
+    "redownload_members_match": 1129,
+    "current_version_result": {
+      "status": "current",
+      "release": {
+        "version": "0.2.2",
+        "tag": "v0.2.2",
+        "page_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.2",
+        "asset_name": "Excel-CAD-Label-Maker-0.2.2-windows-x64.zip"
+      },
+      "reason": ""
+    },
+    "older_version_result": {
+      "status": "available",
+      "release": {
+        "version": "0.2.2",
+        "tag": "v0.2.2",
+        "page_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.2",
+        "asset_name": "Excel-CAD-Label-Maker-0.2.2-windows-x64.zip"
+      },
+      "reason": ""
+    }
+  },
+  "older_release_body_changes": [
+    {
+      "tag": "v0.1.0",
+      "release_id": 412248934,
+      "body_matches": true,
+      "asset_ids_sizes_digests_preserved": true
+    },
+    {
+      "tag": "v0.2.0",
+      "release_id": 412348290,
+      "body_matches": true,
+      "asset_ids_sizes_digests_preserved": true
+    },
+    {
+      "tag": "v0.2.1",
+      "release_id": 412440767,
+      "body_matches": true,
+      "asset_ids_sizes_digests_preserved": true
+    }
+  ],
+  "public_document_boundary": {
+    "result": "PASS",
+    "readme_usage_package_guides_credits_own_notice_library_explanation_release_notes": "user-focused",
+    "contributor_guides": "concise reproducible procedures",
+    "policy_and_icon_prompt": ".agents/docs/",
+    "guard_rejects_previous_readme": true,
+    "historical_journals_and_qc_preserved": true,
+    "protected_original_notices_icons_and_old_zips_verified": 68,
+    "v021_zip_also_preserved": true
+  },
+  "unverified": [
+    "Actual CAD application rendering and drawing acceptance",
+    "Separate Windows PC without Python installed",
+    "Original source to supplied executable correspondence",
+    "Specific original modification and commercial redistribution terms"
+  ],
+  "unverified_followup_issue": "https://github.com/plcmanjp/excel-cad-label-maker/issues/14",
+  "unsupported": [
+    "Native DWG export"
+  ],
+  "private_evidence": ".local/centered-docs-qc/"
+}

@@ -53,7 +53,7 @@ For monthly r001 numbering, top-level H1, 4 visible metadata fields, no YAML fro
 
 ## Work Management
 
-GitHub Issues in plcmanjp/excel-cad-label-maker own work instructions. Read the exact assigned Issue and verify authentication and repository identity. Do not copy Issue bodies into local orders. CURRENT contains progress and pointers only. For non-ASCII mutations on Windows, follow wiki/guides/releasing.md safe body-file transport and exact API readback.
+GitHub Issues in plcmanjp/excel-cad-label-maker own work instructions. Read the exact assigned Issue and verify authentication and repository identity. Do not copy Issue bodies into local orders. CURRENT contains progress and pointers only. For non-ASCII mutations on Windows, follow .agents/rules/git-sync.md safe body-file transport and exact API readback.
 
 ## Troubleshooting
 Use `wiki/troubleshooting/TS-{NNN}-{slug}.md` for recurring problems and document them autonomously right after resolution.
