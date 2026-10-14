@@ -1,4 +1,4 @@
-# Excel CAD Label Maker 0.2.0
+# Excel CAD Label Maker 0.2.1
 
 Excel 파일의 문자를 전기함 덕트 라벨 DXF로 만드는 Windows x64 무설치 앱입니다. 원개발자는 직장인, Fork 및 후속 개발자는 plcmanjp입니다. 보존된 원본을 참고해 별도 src 구현으로 빌드한 후속 앱이며 제공받은 0.1.0 EXE와 같은 재빌드가 아닙니다.
 
@@ -17,6 +17,8 @@ Excel 파일의 문자를 전기함 덕트 라벨 DXF로 만드는 Windows x64 �
 합성 Excel 입력, 열 방향 및 빈 셀 구분, 긴 한글과 영문, 숫자, 가변 높이와 DXF 구조 및 UTF-8 읽기를 검사했습니다. Windows에서 실제 파일 드롭, DXF 저장, 업데이트 알림과 릴리스 페이지 열기 및 ABC 아이콘을 확인했습니다. 실제 CAD에서 글꼴과 도면 수용 및 Python 없는 별도 PC 실행은 별도 확인 항목입니다. DWG 직접 출력은 지원하지 않습니다.
 
 원본 이용 조건은 NOTICE.md, 원개발자와 후속 개발 표시는 CREDITS.md, 포함 외부 라이브러리 고지는 third_party/를 확인하세요. 별도의 원본 오픈소스 라이선스를 부여하지 않습니다. 실제 고객 자료를 공개 Issue에 올리지 마세요.
+
+이 버전은 안내와 출력 고지를 일반 텍스트 파일로 제공하고 Excel 엔진 직접 읽기 및 Windows x64용 드롭 모듈 수집으로 배포 용량을 줄였습니다. 외부 고지 원문은 확장자만 바꾸고 내용은 보존했습니다.
 
 릴리스 ZIP은 함께 제공하는 SHA256SUMS.txt로 검증할 수 있습니다. release-manifest.json과 build-receipt.json에는 이 빌드의 commit, 버전 및 파일 hash가 있습니다.
 

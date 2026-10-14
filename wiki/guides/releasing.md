@@ -6,7 +6,7 @@
 
 1. 정확한 저장소, 버전과 공개 승인을 확인하고 release/app-release.json 및 APP_VERSION을 일치시킵니다. release/baseline/VERSION과 release/baseline/manifest.json은 0.1.0 기준선으로 보존합니다.
 2. 검증된 PR을 main에 병합하고 원격과 일치하는 깨끗한 main에서 project/scripts/build-dev.ps1 -Release를 실행합니다.
-3. release/scripts/package-app-release.py --output release/artifacts/candidate-0.2.0으로 ZIP과 SHA256SUMS.txt를 만듭니다. release receipt, source commit과 모든 패키지 hash를 대조합니다.
+3. release/scripts/package-app-release.py --output release/artifacts/candidate-0.2.1으로 ZIP과 SHA256SUMS.txt를 만듭니다. release receipt, source commit과 모든 패키지 hash를 대조합니다.
 4. 최종 ZIP을 별도 로컬 폴더에 풀고 EXE, Excel 드롭, DXF 저장 및 읽기, 아이콘과 업데이트 조회를 실제 확인합니다. 실제 CAD 및 별도 PC 검증 범위는 확대하지 않습니다.
 5. 독립 읽기 전용 검수, CI와 실제 QC를 통과한 commit, 버전 및 EXE와 ZIP hash를 해당 Issue에 기록합니다.
 6. 정확한 main commit의 tag를 생성하고 ZIP 및 SHA256SUMS.txt가 준비된 정식 릴리스를 최신 버전으로 공개합니다. 준비되지 않은 ZIP이나 draft를 업데이트 대상으로 삼지 않습니다.
