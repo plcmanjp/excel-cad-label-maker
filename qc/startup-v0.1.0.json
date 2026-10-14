@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "excel-cad-label-0-1-0-startup",
+  "target": {
+    "backend": "win32",
+    "title_re": "^엑셀 데이터 ➔ CAD 자동 가변 라벨 배치기$",
+    "launch": {
+      "executable": "${EXE_PATH}",
+      "workdir": "${WORK_DIR}"
+    }
+  },
+  "limits": {
+    "run_timeout_seconds": 45,
+    "action_timeout_seconds": 15,
+    "poll_interval_seconds": 0.25,
+    "max_actions": 5
+  },
+  "steps": [
+    {
+      "id": "main-tree",
+      "action": "dump_tree",
+      "scope": "main",
+      "risk": "read_only",
+      "name": "main-tree.json"
+    },
+    {
+      "id": "main-window",
+      "action": "capture",
+      "scope": "main",
+      "risk": "read_only",
+      "name": "main-window.png"
+    }
+  ]
+}

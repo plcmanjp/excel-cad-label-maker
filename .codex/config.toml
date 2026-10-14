@@ -1,0 +1,5 @@
+# 프로젝트 스코프 Codex 설정 — trust 후 로드됨
+
+[agents]
+# V1 호환 방어용이다. V2 깊이는 Director에서 Specialist까지만 허용하는 정책으로 집행한다.
+max_depth = 1

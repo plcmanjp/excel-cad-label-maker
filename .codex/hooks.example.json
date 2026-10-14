@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .agents/hooks/session_start_status.py",
+            "commandWindows": "python .agents/hooks/session_start_status.py",
+            "statusMessage": "inject work journal (CURRENT.md)",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+# Codex execpolicy — 승인 게이트 하드 정책 (도구 무관 게이트의 Codex 측 강제)
+# SSOT: .agents/rules/git-sync.md · AGENTS.md 공통 불변 원칙 5. trust 후 로드됨.
+# 한계: prefix 매칭이라 플래그가 뒤에 오는 변형(git push origin --force)은 못 잡는다 —
+# 브리지 문면 게이트가 1차 방어, 본 정책은 하드 백스톱.
+
+prefix_rule(
+    pattern = ["git", "push", "--force"],
+    decision = "forbidden",
+    justification = "force push requires explicit user approval (approval gate)",
+    match = ["git push --force origin main"],
+    not_match = ["git push origin main"],
+)
+
+prefix_rule(
+    pattern = ["git", "push", "-f"],
+    decision = "forbidden",
+    justification = "force push requires explicit user approval (approval gate)",
+    match = ["git push -f origin main"],
+    not_match = ["git push origin main"],
+)
+
+prefix_rule(
+    pattern = ["git", "push", "--force-with-lease"],
+    decision = "forbidden",
+    justification = "force push requires explicit user approval (approval gate)",
+    match = ["git push --force-with-lease origin main"],
+    not_match = ["git push origin main"],
+)
+
+prefix_rule(
+    pattern = ["git", "remote", "add"],
+    decision = "prompt",
+    justification = "remote change requires user approval (approval gate)",
+    match = ["git remote add origin https://example.com/x.git"],
+    not_match = ["git remote -v"],
+)
+
+prefix_rule(
+    pattern = ["git", "remote", "set-url"],
+    decision = "prompt",
+    justification = "remote change requires user approval (approval gate)",
+    match = ["git remote set-url origin https://example.com/x.git"],
+    not_match = ["git remote -v"],
+)
+
+prefix_rule(
+    pattern = ["git", "remote", "remove"],
+    decision = "prompt",
+    justification = "remote change requires user approval (approval gate)",
+    match = ["git remote remove origin"],
+    not_match = ["git remote -v"],
+)
+
+prefix_rule(
+    pattern = ["git", "remote", "rm"],
+    decision = "prompt",
+    justification = "remote change requires user approval (approval gate)",
+    match = ["git remote rm origin"],
+    not_match = ["git remote -v"],
+)
