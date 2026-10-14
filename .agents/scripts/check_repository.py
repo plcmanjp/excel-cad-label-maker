@@ -9,9 +9,19 @@ import sys
 import tomllib
 
 ROOT = Path(__file__).resolve().parents[2]
+ICON_ROOT = Path('Project/P001-excel-cad-label/src/assets')
+ICON_SIGNATURES = {'app-icon.png': b'\x89PNG\r\n\x1a\n', 'app-icon.ico': b'\x00\x00\x01\x00'}
 
 def main():
     errors = []
+    try:
+        icons = json.loads((ROOT / ICON_ROOT / 'manifest.json').read_text(encoding='utf-8'))
+        for name, signature in ICON_SIGNATURES.items():
+            asset = (ROOT / ICON_ROOT / name).read_bytes()
+            if not asset.startswith(signature) or hashlib.sha256(asset).hexdigest() != icons['sha256'][name]:
+                errors.append('icon signature or hash mismatch: ' + name)
+    except (OSError, ValueError, KeyError, TypeError):
+        errors.append('icon asset manifest missing or invalid')
     manifest = json.loads((ROOT / 'release/manifest.json').read_text(encoding='utf-8'))
     if (ROOT / 'VERSION').read_text().strip() != manifest['version']:
         errors.append('version mismatch')
@@ -51,6 +61,8 @@ def main():
         if any(part in ignored for part in rel.parts) or not path.is_file() or rel.as_posix() == '.codex/hooks.json':
             continue
         data = path.read_bytes()
+        if rel.parent == ICON_ROOT and rel.name in ICON_SIGNATURES:
+            continue  # Only these hash-verified product images may bypass UTF-8 decoding.
         if data.startswith(b'\xef\xbb\xbf'):
             errors.append('UTF-8 BOM: ' + rel.as_posix())
         try:

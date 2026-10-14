@@ -18,6 +18,7 @@ class App:
     def __init__(self, root, *, current_version=APP_VERSION, update_checker=check_for_update, check_updates=True):
         self.root = root
         root.title(APP_TITLE)
+        root.iconbitmap(default=str(Path(__file__).resolve().parent / "assets" / "app-icon.ico"))
         root.minsize(620, 650)
         self.excel_path = tk.StringVar()
         self.status = tk.StringVar(value="Excel 파일을 놓거나 파일 찾기를 눌러 시작하세요.")

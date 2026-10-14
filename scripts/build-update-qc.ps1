@@ -10,7 +10,9 @@ try {
     }
     $runRoot = Join-Path $repoRoot ('.local/update-qc/builds/' + [guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Path $runRoot | Out-Null
+    $iconPath = Join-Path $repoRoot 'Project/P001-excel-cad-label/src/assets/app-icon.ico'
     & .venv/Scripts/python.exe -m PyInstaller --windowed --onedir --noupx `
+        --icon $iconPath --add-data "$iconPath;assets" `
         --name Update_Notice_QC --paths Project/P001-excel-cad-label/src --collect-all tkinterdnd2 `
         --hidden-import openpyxl --hidden-import xlrd --specpath $runRoot `
         --distpath "$runRoot/dist" --workpath "$runRoot/work" qc/update-notice-gui.py
@@ -18,6 +20,8 @@ try {
     $output = Join-Path $runRoot 'dist/Update_Notice_QC'
     Copy-Item -LiteralPath third_party -Destination "$output/third_party" -Recurse
     Copy-Item -LiteralPath NOTICE.md,CREDITS.md -Destination $output
+    & .venv/Scripts/python.exe -B scripts/check-app-icon.py --output $output --exe-name Update_Notice_QC.exe
+    if ($LASTEXITCODE -ne 0) { throw 'Packaged QC icon verification failed.' }
     & .venv/Scripts/python.exe -B scripts/build-receipt.py --output $output --exe-name Update_Notice_QC.exe --build-type update-qc-build
     if ($LASTEXITCODE -ne 0) { throw 'QC build receipt failed.' }
     $pointer = @{ output = $output.Substring($repoRoot.Length + 1).Replace('\', '/'); executable = 'Update_Notice_QC.exe' }

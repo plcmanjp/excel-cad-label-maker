@@ -32,6 +32,8 @@ if __name__ == "__main__":
         "source_dirty": bool(subprocess.check_output(["git", "--no-optional-locks", "status", "--porcelain"], cwd=ROOT)),
         "sources": {str(p.relative_to(ROOT)).replace("\\", "/"): digest(p)
                     for p in (ROOT / "Project/P001-excel-cad-label/src").glob("*.py")},
+        "assets": {p.relative_to(ROOT).as_posix(): digest(p)
+                   for p in (ROOT / "Project/P001-excel-cad-label/src/assets").glob("app-icon.*")},
         "entrypoint": {"path": "qc/update-notice-gui.py" if args.build_type == "update-qc-build"
                        else "Project/P001-excel-cad-label/src/excel_cad_label.py"},
         "lock_sha256": digest(ROOT / "requirements-dev.lock.txt"),

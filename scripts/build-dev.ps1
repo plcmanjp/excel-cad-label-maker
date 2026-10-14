@@ -36,13 +36,17 @@ try {
     }
     & .venv/Scripts/python.exe -B -m unittest discover -s Project/P001-excel-cad-label/tests -v
     if ($LASTEXITCODE -ne 0) { throw 'Product tests failed.' }
+    $iconPath = Join-Path $repoRoot 'Project/P001-excel-cad-label/src/assets/app-icon.ico'
     & .venv/Scripts/python.exe -m PyInstaller --noconfirm --windowed --onedir --noupx `
+        --icon $iconPath --add-data "$iconPath;assets" `
         --name Excel_CAD_Label_Dev --collect-all tkinterdnd2 --hidden-import openpyxl `
         --hidden-import xlrd --specpath build --distpath dist --workpath build/pyinstaller `
         Project/P001-excel-cad-label/src/excel_cad_label.py
     if ($LASTEXITCODE -ne 0) { throw 'Windows build failed.' }
     Copy-Item -LiteralPath third_party -Destination dist/Excel_CAD_Label_Dev/third_party -Recurse -Force
     Copy-Item -LiteralPath NOTICE.md,CREDITS.md -Destination dist/Excel_CAD_Label_Dev -Force
+    & .venv/Scripts/python.exe -B scripts/check-app-icon.py
+    if ($LASTEXITCODE -ne 0) { throw 'Packaged app icon verification failed.' }
     & .venv/Scripts/python.exe -B scripts/build-receipt.py
     if ($LASTEXITCODE -ne 0) { throw 'Build receipt failed.' }
 } finally { Pop-Location }

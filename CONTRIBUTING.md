@@ -35,6 +35,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-dev.ps1
 
 복구 앱에는 `.xlsx` 또는 `.xls` 파일 한 개를 탐색기에서 끌어다 놓으세요. 파일 찾기도 사용할 수 있습니다. 여러 파일, 다른 확장자, 삭제된 파일과 Excel 임시 파일은 거부하며 기존 선택은 보존합니다. 파일 드롭은 입력 선택이며 도면 저장은 별도의 버튼과 저장 대화상자로 진행합니다.
 
+## 앱 아이콘
+
+개발 앱은 흰 라벨지에 ABC가 적힌 아이콘을 사용합니다. 원본 PNG, 여러 크기의 Windows ICO와 생성 프롬프트는 [아이콘 자산](Project/P001-excel-cad-label/src/assets/README.md)에 있습니다. EXE 리소스와 Tk 창에 같은 ICO를 적용하며 개발 빌드에 포함합니다. 기존 0.1.0 배포물은 보존합니다.
+
+~~~powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/make-app-icon.ps1 -Force
+~~~
+
+이 명령은 저장된 PNG를 Windows ICO로 변환하고 자산 hash manifest를 갱신합니다. 새 이미지를 생성하거나 네트워크에 접속하지 않습니다. `build-receipt.json`은 소스 자산과 패키지에 포함된 ICO의 hash도 기록합니다.
+
+빌드 스크립트는 `scripts/check-app-icon.py`로 ICO의 10개 PNG 프레임, EXE의 실제 아이콘 리소스와 포함된 Tk 자산이 같은지 검사합니다. 이 검사가 실패하면 빌드 완료로 처리하지 않습니다.
+
 ## 업데이트 알림
 
 개발 앱 버전은 `Project/P001-excel-cad-label/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0.dev1`입니다. 원본 배포의 `VERSION` 및 `release/manifest.json`은 0.1.0 기준선으로 보존합니다.
