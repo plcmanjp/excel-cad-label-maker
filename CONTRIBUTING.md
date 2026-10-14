@@ -35,6 +35,31 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-dev.ps1
 
 복구 앱에는 `.xlsx` 또는 `.xls` 파일 한 개를 탐색기에서 끌어다 놓으세요. 파일 찾기도 사용할 수 있습니다. 여러 파일, 다른 확장자, 삭제된 파일과 Excel 임시 파일은 거부하며 기존 선택은 보존합니다. 파일 드롭은 입력 선택이며 도면 저장은 별도의 버튼과 저장 대화상자로 진행합니다.
 
+## 업데이트 알림
+
+개발 앱 버전은 `Project/P001-excel-cad-label/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0.dev1`입니다. 원본 배포의 `VERSION` 및 `release/manifest.json`은 0.1.0 기준선으로 보존합니다.
+
+앱 시작 뒤 고정된 GitHub 최신 릴리스 API를 백그라운드에서 한 번 조회합니다. 설치 버전보다 새 정식 버전이 있을 때 `새 버전 알림`에 현재 및 최신 버전과 `릴리스 페이지 열기`, `나중에` 버튼을 표시합니다. 하단의 `업데이트 확인`으로 수동 조회할 수도 있습니다. 자동 다운로드나 실행 파일 교체는 하지 않습니다.
+
+조회는 TLS 인증서 검증을 유지하고 인증 token 또는 PC 및 Excel 자료를 보내지 않습니다. 요청 timeout은 3초, 응답 본문 제한은 256KiB이며 redirect는 거부합니다. 시작 조회 실패, 동일 또는 구버전이면 오류 팝업 없이 앱을 사용할 수 있습니다. Excel 파일 및 저장 대화상자를 사용하는 동안 새 알림은 지연합니다.
+
+알림을 수용하는 릴리스는 공개 정식 버전이며 tag가 `vX.Y.Z` 또는 `X.Y.Z`여야 합니다. 준비된 Windows ZIP 이름은 `Excel-CAD-Label-Maker-X.Y.Z-windows-x64.zip`이고 API의 업로드 상태, 크기와 저장소 URL이 일치해야 합니다. 초안, prerelease, 준비되지 않은 ZIP과 다른 저장소 URL은 알림 대상으로 수용하지 않습니다. 신규 공개 배포 시 ZIP을 준비한 뒤 정식 릴리스를 최신 버전으로 지정하세요.
+
+이미 전달된 0.1.0 원본 EXE에 이 기능을 소급 추가할 수는 없습니다. 업데이트 알림을 포함한 후속 앱을 설치한 사용자부터 이후 릴리스 알림을 받을 수 있습니다. 새 공개 릴리스는 별도 승인 범위를 따릅니다.
+
+## 실제 업데이트 GUI 검수
+
+정상 EXE는 버전 override 실행 인자를 제공하지 않습니다. 별도 QC 진입점 `qc/update-notice-gui.py`가 제품 코드에 검수용 비교 버전을 주입하고 실제 GitHub API를 조회합니다. 이 코드와 검수 EXE를 공개 앱 배포물에 포함하지 않습니다.
+
+~~~powershell
+& .venv/Scripts/python.exe -B qc/update-notice-gui.py --scenario live-older --report .local/update-qc/live-older-source.json
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-update-qc.ps1
+~~~
+
+`live-older`는 비교 입력 0.0.1로 실제 공개 0.1.0을 조회해 알림을 검수하는 조건입니다. `live-current`는 정상 앱 버전을 사용합니다. 원격 릴리스나 제품 버전을 테스트용으로 변경하지 않습니다. 네트워크가 실패하면 검수 report에서도 실패를 그대로 기록합니다.
+
+QC 빌드는 `.local/update-qc/builds/`에 새 폴더를 생성하고 `.local/update-qc/latest-build.json`에 해당 경로를 기록합니다. 그 폴더의 `Update_Notice_QC.exe`에 위와 같은 `--scenario`, `--report` 인자를 전달합니다. `build-receipt.json`의 제품 소스 SHA-256을 정상 EXE와 비교한 뒤 팝업, 나중에 및 실제 릴리스 페이지 열기를 확인합니다. 원시 경로와 UI 증거는 `.local/`에만 둡니다.
+
 DXF는 R2010(AC1024), mm 단위, UTF-8이며 `LABEL_BOX`와 `TEXT_DATA` 레이어를 사용합니다. 긴 글자 크기 계산은 추정치이고 실제 CAD 글꼴 렌더링과 CAD별 호환성은 별도 검증 대상입니다. 글꼴 파일은 포함하지 않습니다. DWG 직접 출력은 지원하지 않습니다.
 
 ## 외부 라이브러리 고지

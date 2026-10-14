@@ -25,7 +25,7 @@ class UiTests(unittest.TestCase):
         self.root = TkinterDnD.Tk()
         self.root.withdraw()
         self.addCleanup(self.root.destroy)
-        self.app = App(self.root)
+        self.app = App(self.root, check_updates=False)
 
     def test_drop_selects_file_without_browse_and_enables_generate(self):
         with patch("excel_cad_label.filedialog.askopenfilename", side_effect=AssertionError("browse called")):
