@@ -49,7 +49,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/make-app-icon.ps1 -F
 
 ## 업데이트 알림
 
-개발 앱 버전은 `Project/P001-excel-cad-label/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0.dev1`입니다. 원본 배포의 `VERSION` 및 `release/manifest.json`은 0.1.0 기준선으로 보존합니다.
+앱 버전은 `Project/P001-excel-cad-label/src/app_version.py`의 `APP_VERSION`으로 관리하며 현재 `0.2.0`입니다. 원본 배포의 `VERSION` 및 `release/manifest.json`은 0.1.0 기준선으로 보존합니다.
 
 앱 시작 뒤 고정된 GitHub 최신 릴리스 API를 백그라운드에서 한 번 조회합니다. 설치 버전보다 새 정식 버전이 있을 때 `새 버전 알림`에 현재 및 최신 버전과 `릴리스 페이지 열기`, `나중에` 버튼을 표시합니다. 하단의 `업데이트 확인`으로 수동 조회할 수도 있습니다. 자동 다운로드나 실행 파일 교체는 하지 않습니다.
 
@@ -78,7 +78,16 @@ DXF는 R2010(AC1024), mm 단위, UTF-8이며 `LABEL_BOX`와 `TEXT_DATA` 레이�
 
 `third_party/`는 고정된 개발환경과 포함 런타임의 저작권 및 라이선스 원문을 보존합니다. 누락된 wheel 고지는 SHA-256을 확인한 같은 버전의 공식 PyPI 소스에서 수집했습니다. 재수집 명령은 `& .venv/Scripts/python.exe -B scripts/collect-notices.py`이며 네트워크를 사용합니다. 원문 고지를 임의 수정하지 않습니다.
 
-복구 앱의 신규 공개 릴리스에는 원권리자의 구체적인 수정, 상업 이용 및 추가 재배포 조건 확인과 해당 버전 공개 승인이 필요합니다. 0.1.0 릴리스와 원본 manifest는 개발 빌드가 교체하지 않습니다.
+원권리자의 구체적인 수정, 상업 이용 및 추가 재배포 조건은 별도 확인 항목입니다. 신규 공개 릴리스에는 확인 범위를 명시하고 해당 버전의 사용자 공개 승인을 확인합니다. 원본에 새 라이선스를 부여하지 않으며 0.1.0 릴리스와 원본 manifest는 후속 빌드가 교체하지 않습니다.
+
+## 후속 정식 릴리스 빌드
+
+~~~powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-dev.ps1 -Release
+& .venv/Scripts/python.exe -B scripts/package-app-release.py --output dist/releases/0.2.0
+~~~
+
+정식 빌드는 `dist/Excel_CAD_Label/Excel_CAD_Label.exe`와 Windows 사용자 안내 및 버전 파일을 생성하고 release-build receipt를 기록합니다. 패키징은 깨끗한 main, 현재 commit 및 소스와 자산, release receipt 및 모든 파일 hash를 확인합니다. 개발 receipt, 수정된 파일, 등록되지 않은 파일, 링크 경로와 기존 릴리스 파일 덮어쓰기는 거부합니다. ZIP과 SHA256SUMS.txt를 생성한 후 실제 압축 해제 앱의 QC 및 독립 검수를 마치고 승인된 버전을 공개합니다.
 
 ## 하네스 검증
 

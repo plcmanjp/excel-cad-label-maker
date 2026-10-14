@@ -11,7 +11,7 @@ from converter import (CAD_COLORS, CAD_FONTS, LabelSettings, create_drawing,
                        extract_blocks_auto, save_drawing, select_dropped_file,
                        validate_excel_path)
 
-APP_TITLE = f"Excel CAD Label Maker {APP_VERSION} (개발 빌드)"
+APP_TITLE = f"Excel CAD Label Maker {APP_VERSION}"
 
 
 class App:

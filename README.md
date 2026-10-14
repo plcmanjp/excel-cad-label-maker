@@ -4,14 +4,14 @@
 
 - 원개발자: **직장인** (닉네임)
 - Fork 및 후속 개발: **[plcmanjp](https://github.com/plcmanjp)**
-- 현재 배포 버전: **0.1.0**
+- 현재 배포 버전: **0.2.0**
 
-[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.1.0) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](CREDITS.md)
+[릴리스 다운로드](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.0) | [개발 작업](https://github.com/plcmanjp/excel-cad-label-maker/issues) | [크레딧](CREDITS.md)
 
 ## 사용 방법
 
 1. 릴리스의 Windows ZIP 파일을 내려받아 압축을 풉니다.
-2. Excel_Cad_Label.exe를 실행하고 엑셀 파일을 선택합니다.
+2. Excel_CAD_Label.exe를 실행하고 엑셀 파일을 앱에 놓거나 파일 찾기로 선택합니다. EXE와 `_internal` 및 같은 폴더의 파일을 함께 유지하세요.
 3. 라벨 크기(mm), 한 행에 배치할 라벨 수, 간격, 글꼴과 색상을 지정합니다.
 4. DXF 도면을 저장하고 사용하는 CAD에서 열어 확인합니다.
 
@@ -25,15 +25,15 @@
 
 가져온 Python 원본은 따옴표, 콜론과 연산자 일부가 누락되어 현재 그대로는 실행하거나 다시 빌드할 수 없습니다. 원본은 Project/P001-excel-cad-label/original/에 보존합니다. 원본 소스와 EXE의 빌드 대응 관계도 확인되지 않았습니다. 후속 개발은 이 원본을 보존한 별도 구현에서 진행합니다.
 
-## 개발 중인 복구 앱
+## 후속 복구 앱 0.2.0
 
 별도 `src/` 구현은 Excel 파일 드래그 앤 드롭, 입력 검사와 UTF-8 DXF 생성을 지원합니다. 탐색기에서 `.xlsx` 또는 `.xls` 한 개를 앱에 놓으면 파일 찾기 없이 선택할 수 있습니다. 규격을 확인한 뒤 `DXF 도면 생성 및 저장`을 누르세요.
 
-개발 앱의 아이콘은 흰 라벨지에 ABC가 적힌 형태입니다. [아이콘 원본과 생성 정보](Project/P001-excel-cad-label/src/assets/README.md)는 저장소에 보관하며 EXE와 앱 창에 적용합니다.
+앱의 아이콘은 흰 라벨지에 ABC가 적힌 형태입니다. [아이콘 원본과 생성 정보](Project/P001-excel-cad-label/src/assets/README.md)는 저장소에 보관하며 EXE와 앱 창에 적용합니다.
 
-개발 버전 0.2.0.dev1은 시작 시 GitHub Releases에서 새 정식 버전을 확인합니다. 새 버전이 있으면 알림에서 릴리스 페이지를 열 수 있으며 `나중에`를 눌러 작업을 계속할 수 있습니다. 자동 설치는 하지 않습니다. 인터넷 연결 실패가 앱 사용을 막지 않습니다.
+버전 0.2.0은 시작 시 GitHub Releases에서 새 정식 버전을 확인합니다. 새 버전이 있으면 알림에서 릴리스 페이지를 열 수 있으며 `나중에`를 눌러 작업을 계속할 수 있습니다. 자동 설치는 하지 않습니다. 인터넷 연결 실패가 앱 사용을 막지 않습니다.
 
-`.venv` 구성, 소스 실행과 Windows 무설치 개발 빌드는 [개발 안내](CONTRIBUTING.md)를 따릅니다. 이 개발 빌드는 0.1.0 릴리스로 배포되지 않았으며 CAD에서 직접 열기와 원본 이용 조건 확인이 남아 있습니다.
+`.venv` 구성, 소스 실행과 Windows 빌드는 [개발 안내](CONTRIBUTING.md)를 따릅니다. 0.1.0 기준 배포와 0.2.0 후속 앱은 구분하며 CAD에서 직접 열기와 원본 이용 조건 확인이 남아 있습니다.
 
 ## 개발 저장소
 

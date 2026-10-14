@@ -16,7 +16,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", default="dist/Excel_CAD_Label_Dev")
     parser.add_argument("--exe-name", default="Excel_CAD_Label_Dev.exe")
-    parser.add_argument("--build-type", choices=("development-build", "update-qc-build"), default="development-build")
+    parser.add_argument("--build-type", choices=("development-build", "update-qc-build", "release-build"), default="development-build")
     args = parser.parse_args()
     output = (ROOT / args.output).resolve()
     if not output.is_relative_to(ROOT) or Path(args.exe_name).name != args.exe_name:

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "version": "0.2.0",
+  "tag": "v0.2.0",
+  "release_type": "recovered-source-build",
+  "binary_name": "Excel_CAD_Label.exe",
+  "baseline_version": "0.1.0",
+  "original_baseline_replaced": false,
+  "rebuild_of_supplied_original_executable": false,
+  "original_developer": "직장인",
+  "fork_maintainer": "plcmanjp"
+}
