@@ -1,5 +1,6 @@
 """Real Tk widgets, synthetic drop data; does not claim Explorer mouse QC."""
 import ast
+import gc
 from pathlib import Path
 import sys
 import tempfile
@@ -17,6 +18,7 @@ from excel_cad_label import App
 
 class UiTests(unittest.TestCase):
     def setUp(self):
+        gc.collect()  # Tk fixture finalizers must run on their owner thread.
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.file = Path(self.temp.name) / "드래그 공백 파일.xlsx"
@@ -326,11 +328,10 @@ class UiTests(unittest.TestCase):
         self.assertIn("전체 3,000칸", self.app.data_tree.item("0", "values")[2])
         self.app.select_label(0)
         self.assertLess(len(self.app.selection_info.get()), 400)
-        self.app.show_label_details()
+        self.app.edit_selected()
         dialogs = [child for child in self.root.winfo_children() if child.winfo_class() == "Toplevel"]
         self.assertEqual(len(dialogs), 1)
-        trees = [child for child in dialogs[0].winfo_children() if child.winfo_class() == "Treeview"]
-        self.assertEqual(len(trees[0].get_children()), 100)
+        self.assertEqual(len(self.app.editor.text.get("1.0", "end-1c").splitlines()), 3000)
         dialogs[0].destroy()
 
     def test_example_cannot_overwrite_pending_first_or_replacement_input(self):

@@ -42,6 +42,14 @@ class ConversionTests(unittest.TestCase):
     def test_empty_excel_produces_no_drawing(self):
         self.assertEqual(generate_dxf_string(self.workbook([])), ("", 0))
 
+    def test_string_api_defaults_match_ui_defaults(self):
+        output, count = generate_dxf_string(self.workbook([["001"]]))
+        loaded = ezdxf.read(StringIO(output))
+        self.assertEqual(count, 1)
+        self.assertEqual(loaded.layers.get("LABEL_BOX").dxf.color, 7)
+        self.assertEqual(loaded.layers.get("TEXT_DATA").dxf.color, 7)
+        self.assertEqual(loaded.styles.get("STANDARD").dxf.font, "txt.shx")
+
     def test_legacy_xls(self):
         path = self.directory / "구형 Excel.xls"
         book = xlwt.Workbook()
@@ -115,8 +123,9 @@ class ConversionTests(unittest.TestCase):
         self.assertFalse(loaded.audit().has_errors)
         self.assertEqual([e.dxf.text for e in loaded.modelspace().query("TEXT")], texts)
         self.assertEqual(len(loaded.modelspace().query("LWPOLYLINE")), 3)
-        self.assertEqual(loaded.layers.get("LABEL_BOX").dxf.color, 4)
-        self.assertEqual(loaded.layers.get("TEXT_DATA").dxf.color, 2)
+        self.assertEqual(loaded.layers.get("LABEL_BOX").dxf.color, 7)
+        self.assertEqual(loaded.layers.get("TEXT_DATA").dxf.color, 7)
+        self.assertEqual(loaded.styles.get("STANDARD").dxf.font, "txt.shx")
         self.assertTrue(all(e.closed for e in loaded.modelspace().query("LWPOLYLINE")))
 
     def test_variable_height_rows_do_not_overlap(self):

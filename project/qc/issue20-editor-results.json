@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/plcmanjp/excel-cad-label-maker/issues/20",
+  "scope": "User-approved editor and simple UI follow-up",
+  "status": "IMPLEMENTED_LOCAL_VERIFIED_WITH_OPEN_ENVIRONMENT_GATES",
+  "verified_at": "2026-10-15T01:36:40+09:00",
+  "build": {
+    "type": "development-build",
+    "version": "0.2.2",
+    "source_commit_at_build": "16a60b9f3b1cc6a3b3c3a03ce2a68b15d3e83d27",
+    "dirty_at_build": true,
+    "exe_sha256": "4bcd4075f536403bd7a7c05f8974915359162ea2c06b5d9be99f6dd8157ab5e2",
+    "receipt_sha256": "0daa33cf939e61e35fba944df9296214fb4cc4d60fc926bdf6808244002959fc",
+    "sources": {
+      "project/src/accessibility.py": "fbbcdfd1de6290d20b3758101ee0c1bacef3e926e1a458c4a90b11beefe95496",
+      "project/src/app_version.py": "421b9db70963594517fbef29c0be51505954334cb4ab8d62d81ff2021f3c02df",
+      "project/src/converter.py": "03a489611f016ccb970316898b6213d1dc0ad3dd92a24a956d50eb2856392f6d",
+      "project/src/excel_cad_label.py": "ce6bd3b4de04a11947bf31b12027598c2163bef8411781240f72071799c681db",
+      "project/src/input_model.py": "03191bf0500bbe45d377ab9863945b3efb25f48f20b89fbbd1da48324da564fa",
+      "project/src/jobs.py": "1089257a03563093776e4c6fedf589745bb5587a98573d2fa6fef1fdfc5c7e62",
+      "project/src/label_editor.py": "3c23414a1137fb100bd4b7df62a4395994d876719997c844f7351245cc8ef8e6",
+      "project/src/label_ui.py": "d90a20629eba6f3a379ac542bf7da81726f79d2c2b247d42f06905e0d0976036",
+      "project/src/preview.py": "84363729adf11236b9a4bc08cf3d2c34a2aa6646f6766f4c35828d0410a0d3f0",
+      "project/src/settings_store.py": "7a64dff20d0b95cca03e82bed43ee8c666bae09a120801b17b0bf9ba9edac507",
+      "project/src/text_bitmap.py": "63e9835d76ae472a1a8992518677718689e5e75b1a51dab9e225377be70b264e",
+      "project/src/update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+      "project/src/update_notice.py": "aec4e3606cec6e390288ab69c33ed0c9dd0628071eecca91cd590ccc5ea985e5",
+      "project/src/working_data.py": "3b11efae86276997b0bc7d76bd962a721286a4c618df4f9eabe9887f33dfe494"
+    },
+    "packaged_files_verified": 1125,
+    "release_published": false
+  },
+  "tests": {
+    "product": {
+      "run": 99,
+      "passed": 99,
+      "ignored_tk_exceptions": 0,
+      "log_sha256": "d51c8b5c5807c3698dd44a2b375bb46a96e3dbc6c723fd76deec07e6a507e471"
+    },
+    "release": {
+      "run": 16,
+      "passed": 15,
+      "skipped": 1,
+      "skip_reason": "Windows symlink privilege unavailable",
+      "log_sha256": "9d424e973b68cdf9a321cf557e41ee683cb782e1bc7975149a9d751c30d635ce"
+    },
+    "harness": {
+      "run": 22,
+      "passed": 22,
+      "log_sha256": "a8166a4ac9acdf6dc690f9aa0da5458cc87a3838b3e7cff489dbe73ac3e5ac2d"
+    },
+    "independent_review_remaining_findings": 0,
+    "repository_and_public_documents": "PASS"
+  },
+  "gui": [
+    {
+      "name": "editor-source-inventory",
+      "status": "PASS",
+      "steps": 3,
+      "seconds": 1.322,
+      "summary_sha256": "88576b7f17d6e2409ca77a7ecab66a1d9ce70aef0884e83eb0f1ae49f44e0f58",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 1149,
+          "sha256": "4315CFD398847D5AF5BD5303883ABC9F49306F07BCCB3B675BC28A7936AB3445"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 783,
+          "sha256": "E113DF38666886EC89C2193271B3F7CA63BC9C6BFC3D5A2FF3424CB4A6404CC8"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 36387,
+          "sha256": "FCC44266511F91EA8663D96A5B8755D31119D9DB835A7E643AE18148F44CA32B"
+        }
+      ]
+    },
+    {
+      "name": "editor-source-manual",
+      "status": "PASS",
+      "steps": 11,
+      "seconds": 5.189,
+      "summary_sha256": "078f9732bfddae6f8b50b649546bf3b6a6312552f751b1cf18b862d146baad06",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 3800,
+          "sha256": "984128004ADC00C81E972CED06B1D1374996C6BB0CBC219C6085737A75601F4B"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 2459,
+          "sha256": "FF3DC5D2BA267AF91E024CA3ECE32EF07D5F7C917030D8B8D7BE7AAC58DEF650"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 40130,
+          "sha256": "38D699F26650D2E1CE7DDD4D2426DC99DAE8E4DA9A80DD42D41565815D8E8CE3"
+        }
+      ]
+    },
+    {
+      "name": "editor-source-update-close",
+      "status": "PASS",
+      "steps": 3,
+      "seconds": 3.618,
+      "summary_sha256": "1ab451d9a6b7d0cc7da222deecd9e35bb4145ac47855e786885bdcd1dd083cd6",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 1188,
+          "sha256": "B7C871A20331C4FC79165F95A0C14EE2532238BDAB4CDBE512ACA4ADE1C5685A"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 883,
+          "sha256": "9A28D2281FE8B4A1D9DD7D7B1FADA99EEF1A4D8F3BCC34365DE37FA8FCF26507"
+        },
+        {
+          "name": "update.png",
+          "bytes": 48625,
+          "sha256": "D6772C681EA07D0C44DDF15B375A1899201F3D454FCE2934A2287522D6A91D15"
+        }
+      ]
+    },
+    {
+      "name": "editor-frozen-help",
+      "status": "PASS",
+      "steps": 3,
+      "seconds": 1.749,
+      "summary_sha256": "4cb3e1a37e744764c6df3e6c6ce17bfef79650840ff94b093163f15234c1f3cc",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 1145,
+          "sha256": "E607577124D57ECCEF48563CFF1F3403DE7D5749BD713A2D14AE86368809720C"
+        },
+        {
+          "name": "help.png",
+          "bytes": 55247,
+          "sha256": "EA4D9C70D6127E4B838A5613175EFC38D6770064A714CBFB6B05ED3C3869C36F"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 780,
+          "sha256": "DF059D3F0709F709BFD9F5596A60A11C159C9CD3AEE5BCE8256E0BCB316F8D0F"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 40631,
+          "sha256": "0488AAEC22834D8B4F58055819E4AC13FFF41CBF4026CA92CFC9C4AACB282E27"
+        }
+      ]
+    },
+    {
+      "name": "editor-frozen-excel",
+      "status": "PASS",
+      "steps": 23,
+      "seconds": 13.503,
+      "summary_sha256": "2cbf2fe5a84d61882f734715cda4a9e14305e3de8c848bee4a4fc2129b73e0af",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 7714,
+          "sha256": "354ECDE9A620CF8091CC701801D689E22A3F6B2C546B5E1E9B58CEDA4E54E732"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 4837,
+          "sha256": "13472FE984846626C5D02BCFB8B1AAFA99407F92170B21F3B83BD604C455182C"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 68684,
+          "sha256": "2254070EBC2231AE2DDB54C06FC3A65C24430CD7606FF9CC435F36BB8856B92B"
+        }
+      ]
+    },
+    {
+      "name": "editor-frozen-final",
+      "status": "PASS",
+      "steps": 24,
+      "seconds": 12.758,
+      "summary_sha256": "9f341fdbc6afbd20bda301df8e68bdf017547c46304b9dae00c24cd23b54b74f",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 7886,
+          "sha256": "1830A8C7F942E2889FB2367A9816978D5AC6F0A1DCC5A660F852D8407182EAC5"
+        },
+        {
+          "name": "editor.png",
+          "bytes": 29697,
+          "sha256": "6C4F3C6D3CCAC632339A2B13E6BCD7EE568EB7487640BE08B108FDC56635409F"
+        },
+        {
+          "name": "help.png",
+          "bytes": 41599,
+          "sha256": "07CE3D385B07F0B5512199BC6CC59A9D399E71FE27EDF0A19197322E2DCC8C82"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 4704,
+          "sha256": "91556765CAABC634F97889389D879C5266B3D027E3CED671997199E2E7E82032"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 28547,
+          "sha256": "08888D9F06938332E88321F1286C5ADB60B6B898E23069D16BCE4C76C9348D03"
+        },
+        {
+          "name": "small-start.png",
+          "bytes": 10388,
+          "sha256": "35EE85CDA9B17E1B952C36452801D2BB0AD0CC4C5E6B13D00C16CF471A79024C"
+        }
+      ]
+    }
+  ],
+  "dxf_readback": [
+    {
+      "name": "editor-source-manual.dxf",
+      "sha256": "ef02a224fceaa799f2562637d8a178958148de997b0b9243eccdfed9902031b1",
+      "labels": 1,
+      "cells": 3,
+      "layout_and_text_match": true,
+      "standard_font_and_colors_7_7": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "editor-frozen-manual.dxf",
+      "sha256": "77a15441e3d692deee28ec9b441566a6ca80df0e2ab4eba3b8d947d2c5f173e1",
+      "labels": 1,
+      "cells": 3,
+      "layout_and_text_match": true,
+      "standard_font_and_colors_7_7": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "editor-frozen-excel.dxf",
+      "sha256": "fe1ad6146916612aa947a46add82a2114cba5d17956a90c2eafa0c26b2a27c93",
+      "labels": 21,
+      "cells": 61,
+      "layout_and_text_match": true,
+      "standard_font_and_colors_7_7": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "editor-frozen-final.dxf",
+      "sha256": "e95eba0d4f206bb7cc2d4beb6523d21a3826d5ba748619e5c5e040183b3b268b",
+      "labels": 1,
+      "cells": 3,
+      "layout_and_text_match": true,
+      "standard_font_and_colors_7_7": true,
+      "audit_errors": 0
+    }
+  ],
+  "original_excel": {
+    "sha256": "c705274ffa5372dc8a513614a47ee9f128ad6de9105490160fe16a77fda44cf5",
+    "bytes": 5311,
+    "byte_and_mtime_preserved": true
+  },
+  "defaults": {
+    "font": "AutoCAD 표준 (Standard)",
+    "box_color": 7,
+    "text_color": 7,
+    "fresh_settings_and_export_readback": "PASS",
+    "existing_user_presets_preserved": true
+  },
+  "ui": {
+    "simplified_header_and_basic_settings": "VISUALLY_REVIEWED",
+    "full_text_button_replaced_by_common_editor": true,
+    "pagination_row_edit_add_right": true,
+    "footer_version_and_credits_removed": true,
+    "help_credits": "VISUALLY_REVIEWED",
+    "update_badge": {
+      "status": "PASS",
+      "source_checker": "Synthetic available 0.2.3 response; no such release was published",
+      "auto_popup": false,
+      "manual_popup": true
+    },
+    "small_window": {
+      "outer_size": [
+        960,
+        540
+      ],
+      "host_dpi": 96,
+      "status": "VISUALLY_REVIEWED_WITH_ACTUAL_KEYBOARD_FLOW",
+      "global_display_settings_changed": false
+    }
+  },
+  "working_data": {
+    "no_excel_add_edit_export": "PASS",
+    "import_edit_add_export": "PASS",
+    "shared_modal": "PASS",
+    "literal_leading_zeros_and_korean": "PASS",
+    "source_errors_preserved": "REGRESSION_PASS",
+    "discard_and_cancel_protection": "REGRESSION_PASS",
+    "stale_layout_export_blocked": "REGRESSION_PASS",
+    "home_end_return": "REAL_FROZEN_KEYBOARD_PASS",
+    "double_click": {
+      "mapped_tk_handler": "PASS",
+      "physical_os_double_click": "NOT_RUN",
+      "reason": "Shared selector-only runner has no double-click action"
+    }
+  },
+  "corrected_observations": [
+    {
+      "kind": "Product keyboard navigation",
+      "detail": "Tk Treeview lacked initial Home/End selection; explicit page-edge selection added and verified"
+    },
+    {
+      "kind": "Repeated GUI fixture finalization",
+      "detail": "First 99-test build failed with popup Tk Variable finalizers on a worker; popup variables replaced by Label text and previous fixtures collected on owner thread. Corrected build passed without ignored exceptions."
+    },
+    {
+      "kind": "UIA profile transport",
+      "detail": "UTF-8 stdin and exact selectors corrected. Native save after an invalid slash path required real keyboard change notification; final full recipe uses an absolute Windows path and keyboard edit before Enter."
+    }
+  ],
+  "open_gates": [
+    "Physical mouse double-click gesture",
+    "Actual novice-user evaluation",
+    "Actual Windows 150% and 200% scaling",
+    "Issue14 real CAD, second PC, original alignment and rights"
+  ],
+  "private_evidence_root": ".local/issue20",
+  "notes": "Synthetic fixtures only. Public record contains hashes and counts; raw screenshots and profiles stay private. Existing QC, originals and public version 0.2.2 preserved."
+}

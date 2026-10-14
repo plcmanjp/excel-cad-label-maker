@@ -1,4 +1,5 @@
 from pathlib import Path
+import gc
 from queue import Empty
 import sys
 import threading
@@ -17,6 +18,7 @@ RELEASE = ReleaseInfo("0.2.0", "v0.2.0", release_page_url("v0.2.0"), "app.zip")
 
 class UpdateNoticeTests(unittest.TestCase):
     def setUp(self):
+        gc.collect()  # Retire destroyed Tk fixtures before starting new workers.
         self.root = tk.Tk()
         self.root.withdraw()
         self.addCleanup(self.root.destroy)
@@ -39,10 +41,15 @@ class UpdateNoticeTests(unittest.TestCase):
             time.sleep(.01)
         self.fail("GUI condition timed out")
 
-    def test_newer_result_shows_real_dialog_and_later_closes_it(self):
+    def test_newer_result_marks_button_and_user_opens_dialog(self):
         notice = self.notifier(UpdateResult("available", RELEASE))
+        normal_color = notice.button.cget("background")
         notice.check()
-        self.pump(lambda: notice.dialog is not None)
+        self.pump(lambda: not notice._active)
+        self.assertIsNone(notice.dialog)
+        self.assertNotEqual(notice.button.cget("background"), normal_color)
+        self.assertEqual(notice.button.cget("text"), "새 버전 확인")
+        notice.button.invoke()
         self.assertEqual(notice.dialog.title(), "새 버전 알림")
         self.assertIsNone(self.root.grab_current())
         def descendants(widget):
@@ -94,8 +101,9 @@ class UpdateNoticeTests(unittest.TestCase):
         notice = UpdateNotifier(self.root, self.parent, checker=checker, auto_check=False)
         notice.check()
         notice.check()
-        self.pump(lambda: notice.dialog is not None)
+        self.pump(lambda: not notice._active)
         checker.assert_called_once()
+        notice.button.invoke()
         dialog = notice.dialog
         notice.show_notice(RELEASE)
         self.assertIs(notice.dialog, dialog)
@@ -106,7 +114,9 @@ class UpdateNoticeTests(unittest.TestCase):
             notice.check()
             self.pump(lambda: notice._pending is not None)
             self.assertIsNone(notice.dialog)
-        self.pump(lambda: notice.dialog is not None)
+        self.pump(lambda: not notice._active)
+        self.assertIsNone(notice.dialog)
+        self.assertEqual(notice.button.cget("text"), "새 버전 확인")
 
     def test_worker_completion_after_close_does_not_touch_tk(self):
         started, release = threading.Event(), threading.Event()

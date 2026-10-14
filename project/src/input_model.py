@@ -83,11 +83,12 @@ class InputOptions:
 class Label:
     texts: tuple
     addresses: tuple
+    origin: str = "excel"
 
 
 @dataclass(frozen=True)
 class Analysis:
-    source: WorkbookInput
+    source: WorkbookInput | None
     options: InputOptions
     applied_range: str
     labels: tuple

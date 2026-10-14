@@ -8,16 +8,19 @@ import webbrowser
 
 from app_version import APP_VERSION
 from update_check import UpdateResult, check_for_update, release_page_url
+from accessibility import caption
 
 
 class UpdateNotifier:
-    def __init__(self, root, parent, *, current_version=APP_VERSION, checker=check_for_update, auto_check=True):
+    def __init__(self, root, parent, *, current_version=APP_VERSION, checker=check_for_update, auto_check=True, modal_scope=None):
         self.root, self.current_version, self.checker = root, current_version, checker
         self.status = tk.StringVar(value=f"앱 버전 {current_version}")
         self.frame = ttk.Frame(parent)
-        self.frame.pack(fill="x", pady=(8, 0))
-        ttk.Label(self.frame, textvariable=self.status).pack(side="left")
-        self.button = ttk.Button(self.frame, text="업데이트 확인", command=lambda: self.check(manual=True))
+        self.frame.pack(side="right")
+        self.available_release = None
+        self.button = tk.Button(self.frame, text="업데이트 확인", command=lambda: self.check(manual=True),
+                                background="#eef1f5", activebackground="#e0e5ec", relief="flat", borderwidth=1,
+                                padx=10, pady=3, font=("맑은 고딕", 9))
         self.button.pack(side="right")
         self._queue = Queue()
         self._active = self._closed = False
@@ -25,6 +28,7 @@ class UpdateNotifier:
         self._after_id = None
         self._startup_id = None
         self._defer_depth = 0
+        self.modal_scope = modal_scope or self.defer_notices
         self.dialog = None
         root.bind("<Destroy>", self._on_destroy, add="+")
         if auto_check:
@@ -49,11 +53,15 @@ class UpdateNotifier:
     def check(self, manual=False):
         if self._active or self._closed:
             return
+        if manual and self.available_release is not None:
+            self.show_notice(self.available_release)
+            return
         if self._startup_id is not None:
             self.root.after_cancel(self._startup_id)
             self._startup_id = None
         self._active = True
-        self.button.configure(state="disabled")
+        self.button.configure(state="disabled", text="확인 중...")
+        caption(self.button, "업데이트 확인 중")
         self.status.set("업데이트 확인 중...")
         # The worker never touches a Tk object, even when the window has closed.
         threading.Thread(target=self._worker, args=(manual,), daemon=True).start()
@@ -83,17 +91,28 @@ class UpdateNotifier:
         self._pending = None
         self._active = False
         self.button.configure(state="normal")
-        if result.status == "available" and result.release is not None:
+        if result.status == "available" and result.release is not None and self._trusted_page(result.release):
+            self.available_release = result.release
             self.status.set(f"새 버전 {result.release.version} 사용 가능")
-            self.show_notice(result.release)
+            if manual:
+                self.show_notice(result.release)
         elif result.status == "current" and result.release is not None:
+            self.available_release = None
             self.status.set(f"새 정식 버전 없음 (공개 {result.release.version})")
             if manual:
-                messagebox.showinfo("업데이트 확인", "설치된 앱보다 새로운 정식 버전이 없습니다.", parent=self.root)
+                with self.modal_scope():
+                    messagebox.showinfo("업데이트 확인", "설치된 앱보다 새로운 정식 버전이 없습니다.", parent=self.root)
         else:
             self.status.set("업데이트 확인 불가. 앱은 계속 사용할 수 있습니다.")
             if manual:
-                messagebox.showinfo("업데이트 확인", "지금은 업데이트를 확인할 수 없습니다.\n잠시 후 다시 확인해 주세요.", parent=self.root)
+                with self.modal_scope():
+                    messagebox.showinfo("업데이트 확인", "지금은 업데이트를 확인할 수 없습니다.\n잠시 후 다시 확인해 주세요.", parent=self.root)
+        available = self.available_release is not None
+        self.button.configure(text="새 버전 확인" if available else "업데이트 확인",
+                              background="#dbe7ff" if available else "#eef1f5",
+                              foreground="#134ba5" if available else "#222222",
+                              activebackground="#c8daff" if available else "#e0e5ec")
+        caption(self.button, self.button.cget("text"))
 
     def show_notice(self, release):
         if not self._trusted_page(release):

@@ -13,7 +13,7 @@ from openpyxl import load_workbook
 import xlrd
 
 CAD_COLORS = {
-    "기본 (White/Black, 7)": 7, "빨강 (Red, 1)": 1,
+    "기본(검정)": 7, "빨강 (Red, 1)": 1,
     "노랑 (Yellow, 2)": 2, "초록 (Green, 3)": 3,
     "하늘 (Cyan, 4)": 4, "파랑 (Blue, 5)": 5,
     "분홍 (Magenta, 6)": 6,
@@ -128,9 +128,9 @@ class LabelSettings:
     cols_per_row: int = 5
     text_scale: float = 0.45
     auto_fit: bool = True
-    font_key: str = "맑은 고딕 (Malgun Gothic)"
-    box_color: int = 4
-    text_color: int = 2
+    font_key: str = "AutoCAD 표준 (Standard)"
+    box_color: int = 7
+    text_color: int = 7
     min_text_height: float = 2.5
 
     def __post_init__(self):
@@ -256,7 +256,7 @@ def create_drawing(blocks, settings):
 
 def generate_dxf_string(excel_path, cell_w=60, cell_h=15, gap_x=20, gap_y=20,
                         cols_per_row=5, text_scale=0.45, auto_fit=True,
-                        font_key="맑은 고딕 (Malgun Gothic)", box_color=4, text_color=2):
+                        font_key="AutoCAD 표준 (Standard)", box_color=7, text_color=7):
     settings = LabelSettings(cell_w, cell_h, gap_x, gap_y, cols_per_row,
                              text_scale, auto_fit, font_key, box_color, text_color)
     blocks = extract_blocks_auto(excel_path)
