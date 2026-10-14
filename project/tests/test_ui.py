@@ -193,7 +193,8 @@ class UiTests(unittest.TestCase):
         import label_ui
         actual = label_ui.read_workbook
         def delayed(path, sheet=None, token=None):
-            if Path(path) == self.file:
+            # Windows TEMP may use an 8.3 alias; selection resolves that alias.
+            if Path(path).resolve() == self.file.resolve():
                 started.set()
                 if not release.wait(2):
                     raise AssertionError("read timeout")
