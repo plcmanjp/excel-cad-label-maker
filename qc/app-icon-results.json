@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/plcmanjp/excel-cad-label-maker/issues/5",
+  "branch": "feature/issue-3-release-update-notice",
+  "base_commit": "f450f983057e34ebda92b8cb8918e4fe7417c4d9",
+  "app_version": "0.2.0.dev1",
+  "generation_tool": "image_gen built-in",
+  "prompt_file": "Project/P001-excel-cad-label/src/assets/README.md",
+  "source_png_dimensions": [1254, 1254],
+  "source_corner_alpha": 0,
+  "ico_sizes": [16, 20, 24, 32, 40, 48, 64, 96, 128, 256],
+  "png_sha256": "de49beecf8b88293bf5f6ca9b6b85a68dbf7f141c555a04ddb4057085d6bbd77",
+  "ico_sha256": "2f3a13e348021f36d758d9b5b31012e7caedddbeae409bb78e5853c4816e480c",
+  "normal_exe_sha256": "dee105282fe8a8483d244b1e8998087399d64e4d4bdea136b091f3d0fe1ab457",
+  "qc_exe_sha256": "2415e72edf19c2be01c2faf5c13c37d4925b34527461205b59164b1cd5609e81",
+  "regression": {
+    "product_passed": 33,
+    "build_guards_passed": 2,
+    "harness_passed": 22,
+    "baseline_release_passed": 6,
+    "public_repository": "PASS",
+    "independent_delta_review": "PASS"
+  },
+  "normal_build": {
+    "pe_icon_frames_match_source": 10,
+    "packaged_tk_icon_matches_source": true,
+    "receipt_file_count": 1901,
+    "actual_exe_startup": "PASS",
+    "actual_titlebar_abc_icon": "PASS",
+    "actual_explorer_small_icon": "PASS",
+    "actual_explorer_large_icon": "PASS",
+    "startup_update_check_current": "PASS"
+  },
+  "separate_qc_build": {
+    "pe_icon_frames_match_source": 10,
+    "packaged_tk_icon_matches_source": true,
+    "receipt_file_count": 1901,
+    "gui_retest_performed": false
+  },
+  "scope": {
+    "original_0_1_0_unchanged": true,
+    "main_merged": false,
+    "public_release_published": false
+  }
+}

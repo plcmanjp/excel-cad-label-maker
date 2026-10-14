@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/plcmanjp/excel-cad-label-maker/issues/3",
+  "branch": "feature/issue-3-release-update-notice",
+  "base_commit": "d06ca475be267d08d610762b4a5bf096927d3bf0",
+  "app_version": "0.2.0.dev1",
+  "normal_exe_sha256": "6bfdb7ef2d9495bd9e0438f0d7e2ea6be3487e9f3e6a91fff429702346dea495",
+  "qc_exe_sha256": "22ca0ba0f0494faf2d38ee6bfd11b4a346c994ee3b5e038e980bf4cc3a3860f4",
+  "normal_and_qc_product_sources_identical": true,
+  "source_sha256": {
+    "app_version.py": "96f5ed43d6dca435d5ae8c09c8984fe7d3c7882f7e6e4a51fe093a64d83b36ac",
+    "converter.py": "4ab084c51669826cdbc6fb9dd146a5905d40316783c45daea80fe962d50f6e87",
+    "excel_cad_label.py": "12cde4d29be7814d0b9d7bb6e6924cf1ea686aaae7e0822c170eaf7e4908cbe0",
+    "update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+    "update_notice.py": "01649d3e6f5a223d1dab1e428eb6b3d2bbff0527932ac4699524f79288cb9d04"
+  },
+  "regression": {
+    "product": {"passed": 33, "failed": 0},
+    "build_guards": {"passed": 2, "failed": 0},
+    "harness": {"passed": 22, "failed": 0},
+    "baseline_release": {"passed": 6, "failed": 0},
+    "public_repository": "PASS",
+    "independent_review": "PASS",
+    "normal_and_qc_package_hashes": "PASS"
+  },
+  "real_github_api": {
+    "endpoint": "https://api.github.com/repos/plcmanjp/excel-cad-label-maker/releases/latest",
+    "published_version": "0.1.0",
+    "normal_version_result": "current",
+    "qc_comparison_version": "0.0.1",
+    "qc_result": "available",
+    "authentication_token_used": false,
+    "release_mutated_for_test": false
+  },
+  "normal_exe_gui": {
+    "startup_network_lookup": "PASS",
+    "startup_no_update_popup": "PASS",
+    "manual_no_new_release_dialog": "PASS"
+  },
+  "separate_qc_exe_gui": {
+    "uses_same_product_code_with_qc_comparison_version": true,
+    "real_api_new_version_popup": "PASS",
+    "later_closes_notice_preserves_app": "PASS",
+    "manual_check_reopens_notice": "PASS",
+    "release_button_opens_actual_chrome_tab": "PASS",
+    "observed_browser_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.1.0",
+    "release_heading_and_windows_asset_observed": true
+  },
+  "scope": {
+    "automatic_install": false,
+    "main_merged": false,
+    "new_release_published": false,
+    "baseline_0_1_0_replaced": false
+  }
+}

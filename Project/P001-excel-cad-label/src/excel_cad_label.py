@@ -4,27 +4,34 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
 from tkinterdnd2 import COPY, DND_FILES, REFUSE_DROP, TkinterDnD
+from app_version import APP_VERSION
+from update_check import check_for_update
+from update_notice import UpdateNotifier
 from converter import (CAD_COLORS, CAD_FONTS, LabelSettings, create_drawing,
                        extract_blocks_auto, save_drawing, select_dropped_file,
                        validate_excel_path)
 
-APP_TITLE = "Excel CAD Label Maker (개발 빌드)"
+APP_TITLE = f"Excel CAD Label Maker {APP_VERSION} (개발 빌드)"
 
 
 class App:
-    def __init__(self, root):
+    def __init__(self, root, *, current_version=APP_VERSION, update_checker=check_for_update, check_updates=True):
         self.root = root
         root.title(APP_TITLE)
+        root.iconbitmap(default=str(Path(__file__).resolve().parent / "assets" / "app-icon.ico"))
         root.minsize(620, 650)
         self.excel_path = tk.StringVar()
         self.status = tk.StringVar(value="Excel 파일을 놓거나 파일 찾기를 눌러 시작하세요.")
         self.auto_fit = tk.BooleanVar(value=True)
         self.entries = {}
         self.create_widgets()
+        self.updates = UpdateNotifier(root, self.outer, current_version=current_version,
+                                       checker=update_checker, auto_check=check_updates)
         self.register_drop_targets(root)
 
     def create_widgets(self):
         outer = ttk.Frame(self.root, padding=16)
+        self.outer = outer
         outer.pack(fill="both", expand=True)
         ttk.Label(outer, text="Excel 파일로 덕트 라벨 만들기",
                   font=("맑은 고딕", 15, "bold")).pack(anchor="w")
@@ -105,8 +112,9 @@ class App:
         return COPY
 
     def on_browse(self):
-        value = filedialog.askopenfilename(parent=self.root, title="Excel 파일 선택",
-                                           filetypes=[("Excel 파일", "*.xlsx *.xls")])
+        with self.updates.defer_notices():
+            value = filedialog.askopenfilename(parent=self.root, title="Excel 파일 선택",
+                                               filetypes=[("Excel 파일", "*.xlsx *.xls")])
         if value:
             try:
                 self.select_file(value)
@@ -120,6 +128,10 @@ class App:
         self.run_button.configure(state="disabled")
 
     def on_generate(self):
+        with self.updates.defer_notices():
+            self._generate()
+
+    def _generate(self):
         try:
             values = {key: int(entry.get()) if key == "cols_per_row" else float(entry.get())
                       for key, entry in self.entries.items()}

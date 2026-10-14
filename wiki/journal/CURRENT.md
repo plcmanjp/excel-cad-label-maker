@@ -2,7 +2,7 @@
 
 ## 목표
 
-- [Issue #2](https://github.com/plcmanjp/excel-cad-label-maker/issues/2)의 복구 앱과 Excel 드래그 앤 드롭 UX를 개발 기준선으로 유지하고 CAD 및 권리 확인을 진행한다.
+- [Issue #5](https://github.com/plcmanjp/excel-cad-label-maker/issues/5)의 ABC 흰 라벨 앱 아이콘을 생성하고 개발 EXE 및 Tk 창에 적용해 빌드와 실제 실행을 검증한다.
 
 ## 현재 상태
 
@@ -11,6 +11,8 @@
 
 - 원본 소스의 현재 파일명은 excel_cad_label.py이며 manifest와 Git 원본 보존 속성이 같은 경로를 가리킨다. 파일 내용의 SHA-256은 원본과 동일하다.
 - 별도 `src/` 복구 앱, Python 3.13.15 `.venv`, 의존성 잠금과 실행 및 Windows 개발 빌드가 구성되어 있다. `dist/Excel_CAD_Label_Dev/`는 공개 릴리스가 아닌 로컬 개발 앱이다.
+- Issue #3의 `feature/issue-3-release-update-notice`에서 0.2.0.dev1 업데이트 알림 구현과 로컬 및 실제 GUI 검증을 완료했다. 정상 EXE와 검수 EXE는 같은 제품 소스를 사용하며 검수용 버전은 별도 진입점에서만 주입한다. main 병합과 신규 공개 릴리스는 별도 경계다.
+- Issue #5의 투명 PNG와 10개 크기의 ICO를 개발 EXE 및 Tk 창에 적용했다. 정상 및 QC 빌드, 실제 앱과 탐색기의 아이콘 관찰을 완료했으며 결과는 `qc/app-icon-results.json`에 있다.
 
 ## 주요 결정
 
@@ -21,6 +23,8 @@
 
 - 하네스 22개, 릴리스 경계 6개와 등록 훅 4조건이 통과했다. 공개 경계 검사와 독립 검수 및 보정 delta 검수를 통과했다. 초기 main과 tag의 GitHub Actions가 성공했다.
 - 제품 18개, 하네스 22개 및 기준 릴리스 경계 6개 검사를 통과했다. 실제 탐색기 드래그로 한글과 공백이 있는 합성 Excel을 선택하고 빌드 EXE로 DXF 저장을 확인했다. 상세와 hash는 `qc/development-build.json`에 있다.
+- Issue #3 제품 33개, 빌드 보호 2개, 하네스 22개와 기준 릴리스 6개 및 독립 검수가 통과했다. 실제 API, 정상 EXE의 무알림과 수동 확인, 검수 EXE의 팝업 및 나중에와 Chrome 릴리스 페이지 열기를 확인했다. 버전 입력 구분과 hash는 `qc/update-notice-results.json`에 있다. 해당 브랜치의 원격 CI 결과는 GitHub Actions에서 확인한다.
+- Issue #5의 기존 63개 검사, 공개 경계 및 독립 delta 검수가 통과했다. 정상 및 QC EXE의 10개 실제 PE 아이콘 리소스와 포함 ICO가 원본과 일치한다. 실제 정상 앱 제목 표시줄과 탐색기 작은 및 큰 아이콘에서 ABC를 확인했다.
 
 ## 미해결 사항
 
@@ -31,4 +35,4 @@
 
 1. 합성 DXF를 실제 사용 CAD에서 열고 한글, 글꼴, mm 규격 및 레이어를 확인한다.
 2. 원본 빌드 자료와 구체적인 수정, 상업 이용 및 추가 재배포 조건을 확인한다.
-3. 별도 PC 실행과 Issue #2의 남은 수용 조건을 확인한 뒤 신규 공개 버전 범위를 결정한다.
+3. PR #4의 업데이트 알림 및 아이콘과 Issues #3, #5의 검증 기록을 확인해 main 반영을 판단하고, Issue #2의 남은 조건을 확인한 뒤 신규 공개 버전 범위를 결정한다.
