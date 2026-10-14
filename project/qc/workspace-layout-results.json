@@ -14,7 +14,7 @@
     "release_and_baseline": 12,
     "passed": 68,
     "skipped": 1,
-    "skip_reason": "Native symlink creation requires privilege; remote Windows CI pending"
+    "skip_reason": "Native symlink creation requires local privilege; remote Windows CI ran and passed it"
   },
   "protected_before_after_hashes": {
     "files": 68,
@@ -59,5 +59,42 @@
   },
   "repository_and_doc_links": "PASS",
   "existing_public_releases_modified": false,
-  "private_evidence": ".local/layout-qc/"
+  "private_evidence": ".local/layout-qc/",
+  "remote_ci": {
+    "branch_run": 38516980803,
+    "pr_run": 38517021549,
+    "main_run": 38517225202,
+    "passed": 69,
+    "skipped": 0,
+    "result": "PASS",
+    "implementation_head": "bbf2a10e3843833d0a1c6575734e42cf2254e8ba",
+    "merge_commit": "49714469d8cb72aaa96399a97b79c00ae778ddea"
+  },
+  "integration": {
+    "pull_request": 9,
+    "state": "MERGED",
+    "issue_state": "CLOSED",
+    "merge_commit": "49714469d8cb72aaa96399a97b79c00ae778ddea"
+  },
+  "main_packaging": {
+    "source_commit": "49714469d8cb72aaa96399a97b79c00ae778ddea",
+    "source_dirty": false,
+    "output": "release/artifacts/layout-qc-4971446",
+    "sha256": "88e282c324103aac9f40b95576bb8c023dfcc87cb99ec052aeac361e6e17990c",
+    "exe_sha256": "6a328a44f531c9b4002014b8cf40ea13d14aaa9bdb867a5d0cfafff1d40039f4",
+    "members": 1905,
+    "all_member_hashes": "PASS",
+    "published": false
+  },
+  "existing_release_readback": {
+    "v0.1.0": {
+      "zip_asset_id": 638810616,
+      "sha256": "c37cdf49f41a07e87bd339cbfb72675dee89dc3fb64cba354c35af249d05a7e4"
+    },
+    "v0.2.0": {
+      "zip_asset_id": 639261220,
+      "sha256": "ae7a8515bf1418503fca8c59ce109c45952e83f59ef84e7764cafc37f5475b6a"
+    },
+    "result": "PASS: remote IDs, sizes and digest preserved"
+  }
 }

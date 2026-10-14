@@ -2,11 +2,11 @@
 
 ## 목표
 
-- [Issue #8](https://github.com/plcmanjp/excel-cad-label-maker/issues/8)의 wiki, project와 release 경로 재구성을 검증하고 main에 반영한다.
+- 정리된 개발과 배포 경로를 유지하고 [Issue #2](https://github.com/plcmanjp/excel-cad-label-maker/issues/2)의 실제 CAD, 별도 PC 및 원본 이용 조건을 확인한다.
 
 ## 현재 상태
 
-- `refactor/issue-8-workspace-layout`에서 문서는 wiki, 개발 자산은 project, 배포 자산은 release로 정리했다. 새 경로의 소스 및 EXE 실행, 개발과 정식 및 별도 QC 빌드와 독립 검수가 통과했고 원격 CI와 main 반영이 남아 있다.
+- [Issue #8](https://github.com/plcmanjp/excel-cad-label-maker/issues/8)의 경로 정리를 [PR #9](https://github.com/plcmanjp/excel-cad-label-maker/pull/9)로 main에 반영했다. 문서는 wiki, 개발 자산은 project, 배포 자산은 release에서 관리한다. .venv와 .local은 루트에 유지한다.
 - [v0.2.0](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.0)이 최신 정식 GitHub Release다. Excel 드래그 앤 드롭, UTF-8 DXF, GitHub 업데이트 알림과 ABC 흰 라벨 아이콘을 포함한다.
 - PR #4와 #7을 main에 병합했다. 릴리스 소스 및 tag commit은 `df1581f28088c1f5f4f6b9e0a3248572beb4fca5`다. main에서 빌드한 ZIP과 checksum을 게시하고 원격 재다운로드 hash를 대조했다.
 - 개발환경은 Python 3.13.15 `.venv`와 고정 의존성을 사용한다. 정식 빌드와 개발 및 별도 QC 빌드를 구분하며 원시 QC, EXE와 ZIP은 Git에서 제외한다.
@@ -19,7 +19,8 @@
 
 ## 검증 결과
 
-- 경로 재구성 로컬 검사 69개 중 68개가 통과했다. native symlink 1개는 로컬 권한 부족으로 건너뛰었으며 이번 변경의 CI에서 확인한다. 문서 링크와 하네스, 68개 보호 파일 hash 및 불변 자료의 Git byte 대조가 PASS다. 상세는 `project/qc/workspace-layout-results.json`에 기록했다.
+- 경로 재구성의 PR 및 병합 main Windows CI 69개가 통과했고 native symlink 검사도 실행됐다. 새 경로의 소스 및 EXE 실행과 개발, 정식 및 별도 QC 빌드, 문서 링크와 보호 파일 대조 및 독립 검수가 PASS다. 상세는 `project/qc/workspace-layout-results.json`에 기록했다.
+- 깨끗한 병합 main의 실제 ZIP 1,905개 파일과 receipt hash를 확인했다. 이 검증 ZIP은 로컬에서만 보관하며 기존 GitHub v0.1.0과 v0.2.0의 자산 ID, 크기 및 digest는 보존됐다.
 - 릴리스 main의 Windows CI 69개 검사가 통과했다. 로컬에서 권한 부족으로 건너뛴 native symlink 검사도 CI에서 실제 통과했다. 공개 검수와 artifact 독립 대조가 PASS다.
 - 최종 ZIP의 EXE를 실행해 실제 Explorer 파일 드롭, 파일 선택과 DXF 저장을 확인했다. 4개 라벨, TEXT와 LWPOLYLINE 각각 7개, mm 및 AC1024, 한글과 숫자 읽기 일치 및 audit 오류 0개다.
 - 실제 공개 latest API가 0.2.0을 반환한다. 이전 0.2.0.dev1 앱의 수동 및 재시작 자동 업데이트 팝업에서 실제 새 릴리스를 확인했다. 게시 ZIP과 checksum 재다운로드 및 기존 v0.1.0 보존을 확인했다.
@@ -31,6 +32,6 @@
 
 ## 다음 작업
 
-1. 경로 재구성 commit 및 push 후 원격 Windows CI에서 이번 변경의 69개 검사 결과를 확인한다.
-2. 검증된 PR을 main에 반영하고 Issue #8의 완료 근거와 journal을 정리한다.
-3. Issue #2의 실제 CAD, Python 없는 별도 PC 및 원본 이용 조건 확인을 이어간다.
+1. 합성 DXF를 실제 사용하는 CAD에서 열어 한글, 글꼴, mm 규격과 레이어를 확인한다.
+2. Python 없는 별도 Windows PC에서 ZIP 전체 압축 해제와 EXE 및 DXF 생성을 확인한다.
+3. 원본 빌드 자료와 구체적인 이용 조건을 확보하고 Issue #2의 남은 조건을 정리한다.
