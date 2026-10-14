@@ -2,6 +2,7 @@
 import ast
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import sys
@@ -39,8 +40,13 @@ def main():
         if not (ROOT / '.agents/agents' / (adapter.stem + '.md')).is_file():
             errors.append('role missing: ' + adapter.name)
     tomllib.loads((ROOT / '.codex/config.toml').read_text(encoding='utf-8'))
-    ignored = {'.git','.local','dist','build','__pycache__'}
-    for path in ROOT.rglob('*'):
+    ignored = {'.git','.local','.venv','venv','.cache','dist','build','__pycache__'}
+    # Prune local environments before traversal; dependency files are not public sources.
+    paths = []
+    for directory, folders, files in os.walk(ROOT):
+        folders[:] = [name for name in folders if name not in ignored]
+        paths.extend(Path(directory) / name for name in files)
+    for path in paths:
         rel = path.relative_to(ROOT)
         if any(part in ignored for part in rel.parts) or not path.is_file() or rel.as_posix() == '.codex/hooks.json':
             continue
@@ -54,6 +60,8 @@ def main():
             continue
         if re.search(r'[A-Za-z]:[\\/](?:OneDrive|Users)', text):
             errors.append('private machine path: ' + rel.as_posix())
+        if rel.parts[:2] == ('third_party', 'notices'):
+            continue  # Preserved external legal originals, not authored UI prose.
         if rel.parts[0] not in {'.agents','.codex','wiki','Project'} and path.suffix in {'.md','.txt'}:
             if re.search('[\u2014\u2013\u2015\u00b7\u30fb\u2022]', text):
                 errors.append('display punctuation: ' + rel.as_posix())

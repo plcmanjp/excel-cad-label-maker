@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "build_type": "development-build",
+  "public_release": false,
+  "baseline_replaced": false,
+  "python": "3.13.15",
+  "source_sha256": {
+    "converter.py": "4ab084c51669826cdbc6fb9dd146a5905d40316783c45daea80fe962d50f6e87",
+    "excel_cad_label.py": "7fb61deb0e76ee18fd3cded69940ac2532c502a00a260b950530563a7110cf99"
+  },
+  "exe_sha256": "795b8293bbd4e50097c15c512358a2aeb744e59d7d1d34c92055b36dd20f5dc0",
+  "local_checks": {
+    "product_regression": {"passed": 18, "failed": 0},
+    "session_start_regression": {"passed": 22, "failed": 0},
+    "baseline_release_boundaries": {"passed": 6, "failed": 0},
+    "build_refusal_guards": {"passed": 2, "failed": 0, "cases": 3},
+    "repository_boundary": "PASS",
+    "pinned_dependencies": "PASS",
+    "windows_build": "PASS",
+    "onedrive_readonly_rebuild": "PASS",
+    "notice_hashes_verified": 63
+  },
+  "physical_explorer_drop": {
+    "fixture_generator": "scripts/make-sample.py",
+    "fixture_name": "한글 공백 라벨.xlsx",
+    "fixture_sha256": "b90aabd0e4ecda20aa34e0b9f0394e12c3032b88056db0c6b2bf6a7e2a71913d",
+    "engine_sha256": "a7cd3aee9e371c330904471bd3f4f10bf7b505856eb96940625a00236008889e",
+    "transport": "INPUT_COMPLETED",
+    "input_browse_dialog_used": false,
+    "source_unchanged": true,
+    "protected_outputs_unchanged_during_drop": true,
+    "product_selection_visually_observed": true,
+    "generate_button_enabled_visually_observed": true
+  },
+  "built_exe_save": {
+    "status": "PASS",
+    "labels": 4,
+    "text_entities": 7,
+    "box_entities": 7,
+    "dxfversion": "AC1024",
+    "unicode_roundtrip": "EXACT",
+    "ezdxf_audit_errors": 0,
+    "output_sha256": "5aedfcae12cc0afa90d57a39a84b22d1fca69ffd9e38cf7df75547e0c61fbbad"
+  },
+  "unverified": [
+    "CAD application opening and rendering",
+    "original source to original EXE correspondence",
+    "original EXE third-party dependency inventory",
+    "original work modification and commercial redistribution terms"
+  ],
+  "unsupported": ["native DWG export"]
+}

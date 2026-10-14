@@ -28,3 +28,6 @@
 
 # Archival input: preserve supplied bytes, including original whitespace
 Project/P001-excel-cad-label/original/excel_cad_label.py -text -whitespace
+
+# Third-party license and copyright originals are preserved as received.
+third_party/notices/** -text -whitespace
