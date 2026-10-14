@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import re
+import runpy
 import sys
 import tomllib
 
@@ -14,6 +15,10 @@ ICON_SIGNATURES = {'app-icon.png': b'\x89PNG\r\n\x1a\n', 'app-icon.ico': b'\x00\
 
 def main():
     errors = []
+    hook = runpy.run_path(str(ROOT / '.agents/hooks/session_start_status.py'))
+    current = (ROOT / 'wiki/journal/CURRENT.md').read_text(encoding='utf-8')
+    if 'INVALID STRUCTURE:' in hook['build_brief'](current):
+        errors.append('CURRENT structure invalid; check UTF-8 authoring and required headings')
     visible_roots = {'AGENTS.md', 'README.md', 'wiki', 'project', 'release'}
     for path in ROOT.iterdir():
         if not path.name.startswith('.') and path.name not in visible_roots:

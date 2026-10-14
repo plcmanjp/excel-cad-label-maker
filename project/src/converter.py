@@ -9,7 +9,8 @@ import unicodedata
 
 import ezdxf
 from ezdxf.enums import TextEntityAlignment
-import pandas as pd
+from openpyxl import load_workbook
+import xlrd
 
 CAD_COLORS = {
     "기본 (White/Black, 7)": 7, "빨강 (Red, 1)": 1,
@@ -46,30 +47,76 @@ def select_dropped_file(tk, data):
     return validate_excel_path(paths[0])
 
 
+def _excel_rows(path):
+    if path.suffix.lower() == ".xlsx":
+        book = load_workbook(path, read_only=True, data_only=True, keep_links=False)
+        try:
+            sheet = book.worksheets[0]
+            # Some exporters report incorrect bounds; match the previous Excel reader.
+            sheet.reset_dimensions()
+            for row in sheet.iter_rows():
+                yield [None if cell.data_type == "e" else cell.value for cell in row]
+        finally:
+            book.close()
+    else:
+        book = xlrd.open_workbook(path, on_demand=True)
+        try:
+            sheet = book.sheet_by_index(0)
+            for row in range(sheet.nrows):
+                values = []
+                for cell in sheet.row(row):
+                    value = cell.value
+                    if cell.ctype in {xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK, xlrd.XL_CELL_ERROR}:
+                        value = None
+                    elif cell.ctype == xlrd.XL_CELL_BOOLEAN:
+                        value = bool(value)
+                    elif cell.ctype == xlrd.XL_CELL_DATE:
+                        try:
+                            parsed = xlrd.xldate_as_datetime(value, book.datemode)
+                            anchor = (1904, 1, 1) if book.datemode else (1899, 12, 31)
+                            value = parsed.time() if (parsed.year, parsed.month, parsed.day) == anchor else parsed
+                        except OverflowError:
+                            pass
+                    values.append(value)
+                yield values
+        finally:
+            book.release_resources()
+
+
+def _label_text(value):
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        return ""
+    if isinstance(value, float) and value.is_integer():
+        text = str(int(value))
+    else:
+        text = str(value).strip()
+    # A cell is one label line. Control characters must not enter DXF tags.
+    return " ".join(text.splitlines())
+
+
 def extract_blocks_auto(excel_path):
-    path = validate_excel_path(excel_path)
-    frame = pd.read_excel(path, header=None, dtype=object, keep_default_na=False,
-                          engine="openpyxl" if path.suffix.lower() == ".xlsx" else "xlrd")
-    blocks = []
-    for column in frame.columns:
-        block = []
-        for value in frame[column]:
-            if pd.isna(value):
-                text = ""
-            elif isinstance(value, float) and value.is_integer():
-                text = str(int(value))
-            else:
-                text = str(value).strip()
-            # A cell is one label line. Control characters must not enter DXF tags.
-            text = " ".join(text.splitlines())
+    columns, active, boolean_numbers = [], [], []
+    for row in _excel_rows(validate_excel_path(excel_path)):
+        while len(columns) < len(row):
+            columns.append([])
+            active.append([])
+            boolean_numbers.append({})
+        for column in range(len(columns)):
+            value = row[column] if column < len(row) else None
+            # The former object reader interns equal bool/0/1 values per column.
+            # Preserve its displayed labels even when those Excel types are mixed.
+            if isinstance(value, (bool, int, float)) and value in (0, 1):
+                value = boolean_numbers[column].setdefault(value, value)
+            text = _label_text(value)
             if text:
-                block.append(text)
-            elif block:
-                blocks.append(block)
-                block = []
+                active[column].append(text)
+            elif active[column]:
+                columns[column].append(active[column])
+                active[column] = []
+    for column, block in enumerate(active):
         if block:
-            blocks.append(block)
-    return blocks
+            columns[column].append(block)
+    return [block for column in columns for block in column]
 
 
 @dataclass(frozen=True)

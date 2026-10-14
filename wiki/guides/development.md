@@ -17,7 +17,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/setup-dev.ps
 powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/run-dev.ps1
 ~~~
 
-`project/requirements-dev.lock.txt`는 실제 검증 환경의 직접 및 간접 의존성을 고정합니다. pandas 3.0.6, openpyxl 3.1.5, xlrd 2.0.2, ezdxf 1.4.4, tkinterdnd2 0.6.4와 PyInstaller 6.22.3을 사용합니다. xlwt는 합성 `.xls` 검사 파일 생성용이며 앱의 읽기 엔진은 xlrd입니다. `.venv`는 개발과 검증에 사용할 수 있고 Git에서 제외됩니다.
+`project/requirements-dev.lock.txt`는 실제 검증 환경의 직접 및 간접 의존성을 고정합니다. openpyxl 3.1.5, xlrd 2.0.2, ezdxf 1.4.4, tkinterdnd2 0.6.4와 PyInstaller 6.22.3을 사용합니다. Excel 엔진을 직접 읽으며 pandas와 그 전용 의존성은 설치 목록에서 제외합니다. xlwt는 합성 `.xls` 검사 파일 생성용입니다. `.venv`는 개발과 검증에 사용할 수 있고 Git에서 제외됩니다.
 
 ## 제품 검사와 Windows 개발 빌드
 
@@ -30,7 +30,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps
 
 재빌드 전 실행 중인 개발 앱을 닫으세요. 스크립트는 실행 중인 앱과 빌드 경로의 junction 및 symlink를 거부합니다. 생성된 출력 폴더의 OneDrive 읽기 전용 속성은 경로 검사를 통과한 뒤 처리합니다.
 
-`project/tests/`는 제품과 빌드 보호 검사 35개를 함께 관리합니다. 빌드 스크립트가 이 검사를 실행하며 CI에서는 별도 배포 검사 12개와 하네스 검사 22개를 더해 총 69개를 확인합니다.
+`project/tests/`는 제품과 빌드 보호 검사 39개를 함께 관리합니다. 빌드 스크립트가 이 검사를 실행하며 CI에서는 별도 배포 검사 16개와 하네스 검사 22개를 더해 총 77개를 확인합니다. 로컬 Windows의 symlink 권한이 없으면 해당 배포 검사 1개는 건너뛰고 CI 결과와 구분합니다.
+
+사용자용 README, NOTICE와 CREDITS는 빌드에서 Markdown 표시를 제거한 `.txt`로 제공합니다. 외부 고지의 `.md`는 내용의 byte를 유지하며 출력 이름만 `.txt`로 바꾸고 출력 provenance를 갱신합니다. 배포 패키저는 Markdown 파일이 남아 있으면 거부합니다.
+
+Windows x64와 Python 3.13의 Tk 8.6에 필요한 TkDnD만 `project/scripts/pyinstaller-hooks/`의 hook으로 수집합니다. numpy 등 ezdxf 필수 의존성은 유지합니다. 종류와 대안 및 측정 범위는 [의존성 검토](../reference/runtime-dependencies.md)에서 확인합니다.
 
 `build-receipt.json`은 Python과 의존성 버전, Git commit 및 변경 여부, 소스와 패키지 파일의 SHA-256을 기록합니다. 같은 소스와 의존성으로 빌드 절차를 반복할 수 있다는 뜻이며, EXE 바이트가 항상 동일하다는 뜻은 아닙니다. 다른 PC의 깨끗한 환경 검증은 GitHub Actions의 Windows `product` 작업 결과로 구분합니다.
 

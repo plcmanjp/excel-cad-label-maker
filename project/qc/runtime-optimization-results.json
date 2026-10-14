@@ -1,0 +1,198 @@
+{
+  "issue": 12,
+  "type": "runtime-optimization-and-plain-materials-qc",
+  "base_commit": "0d9a85a0ea18ec0bbf8680597a72b64ba8659895",
+  "changes": {
+    "removed_runtime": "pandas",
+    "removed_lock_dependencies": [
+      "pandas",
+      "python-dateutil",
+      "six",
+      "tzdata"
+    ],
+    "excel_readers": [
+      "openpyxl read_only,data_only,keep_links=False",
+      "xlrd on_demand"
+    ],
+    "retained_ezdxf_dependencies": [
+      "numpy",
+      "fonttools",
+      "pyparsing",
+      "typing_extensions"
+    ],
+    "tkdnd_target": "Windows AMD64, Tk 8.6, win-x64",
+    "guides": "Plain UTF-8 TXT",
+    "legal_notices": "Original bytes preserved, renamed output and provenance, collisions refused before write"
+  },
+  "reader_comparison": {
+    "differential_workbooks": 49,
+    "result": "PASS",
+    "benchmark": {
+      "rows": 2000,
+      "columns": 10,
+      "repeats": 5,
+      "warm_reader": {
+        "baseline": {
+          "seconds": [
+            0.11926460001268424,
+            0.11629569999058731,
+            0.11562470000353642,
+            0.12754640000639483,
+            0.11425059998873621
+          ],
+          "median_seconds": 0.11629569999058731,
+          "blocks": 2500
+        },
+        "candidate": {
+          "seconds": [
+            0.1098278000135906,
+            0.11513439999544062,
+            0.10969569999724627,
+            0.11024290000204928,
+            0.11628950000158511
+          ],
+          "median_seconds": 0.11024290000204928,
+          "blocks": 2500
+        }
+      }
+    }
+  },
+  "converter_import": {
+    "scope": "Fresh Python process converter import; OS disk cache not flushed; not a frozen GUI startup measurement",
+    "python": "3.13.15",
+    "repeats": 7,
+    "samples_seconds": {
+      "baseline": [
+        0.7116862000257242,
+        0.6907660999859218,
+        0.6929353000014089,
+        0.6964769000187516,
+        0.7018652000115253,
+        0.6773283000220545,
+        0.6796309999772348
+      ],
+      "candidate": [
+        0.5926927000109572,
+        0.5856177999812644,
+        0.5884740999899805,
+        0.5872593999956734,
+        0.574190000013914,
+        0.5724513999884948,
+        0.5732110999815632
+      ]
+    },
+    "medians_seconds": {
+      "baseline": 0.6929353000014089,
+      "candidate": 0.5856177999812644
+    }
+  },
+  "initial_candidate": {
+    "folder_bytes": 65536853,
+    "files": 1128,
+    "largest_groups": [
+      [
+        "numpy.libs",
+        21164112
+      ],
+      [
+        "Excel_CAD_Label.exe",
+        8907839
+      ],
+      [
+        "numpy",
+        6355968
+      ],
+      [
+        "python313.dll",
+        6135008
+      ],
+      [
+        "libcrypto-3.dll",
+        5238520
+      ],
+      [
+        "_tcl_data",
+        3162778
+      ],
+      [
+        "tcl86t.dll",
+        1839896
+      ],
+      [
+        "tk86t.dll",
+        1589528
+      ],
+      [
+        "base_library.zip",
+        1409168
+      ],
+      [
+        "ucrtbase.dll",
+        1361448
+      ],
+      [
+        "ezdxf",
+        1006080
+      ],
+      [
+        "_tk_data",
+        851433
+      ]
+    ],
+    "md_files": [],
+    "tkdnd_platforms": [
+      "win-x64"
+    ],
+    "exe_sha256": "1277b8eac499a89132a75edda55be252f95dd8c59ba590371f9602bfe345e8b8",
+    "source_state": "Working branch before final XLS date rounding correction",
+    "baseline_folder_bytes": 87078780
+  },
+  "initial_candidate_gui_qc": {
+    "native_visual": "PASS: startup, icon, Korean Excel selected, four labels saved",
+    "physical_drop": "PASS: observed Explorer item to measured UIA drop target",
+    "save_dialog": "PASS: master selector runner filename readback and save click",
+    "drawing": {
+      "status": "PASS",
+      "drawing_sha256": "120cac11b95e2b0a0467cd8b1d1cbd13a3c171a87ef3ee3ca7b1d25989d8a88a",
+      "labels": 4,
+      "text_entities": 7,
+      "box_entities": 7,
+      "baseline_labels_positions_styles_equal": true,
+      "dxf_version": "AC1024",
+      "millimeters": true,
+      "audit_errors": 0,
+      "source_sha256": "b90aabd0e4ecda20aa34e0b9f0394e12c3032b88056db0c6b2bf6a7e2a71913d"
+    },
+    "caveat": "This EXE predates the final date boundary correction; final clean-main build QC remains pending"
+  },
+  "local_tests": {
+    "product_and_guards": 39,
+    "release": 16,
+    "harness": 22,
+    "passed": 76,
+    "skipped": 1,
+    "skip_reason": "Native symlink creation privilege unavailable locally"
+  },
+  "original_icon_notices_and_published_archive_hashes": {
+    "protected_files": 68,
+    "result": "PASS"
+  },
+  "independent_review": "PASS: cumulative review and delta resolution of XLS date rounding and TXT collision findings",
+  "final_main_build": "PENDING",
+  "public_assets_modified": false,
+  "remaining_issue_2_gates": [
+    "Actual CAD acceptance",
+    "Separate Python-free PC",
+    "Original executable/source relationship",
+    "Specific original modification/commercial/redistribution terms"
+  ],
+  "private_evidence": ".local/runtime-qc/",
+  "development_build": {
+    "output": "project/dist/Excel_CAD_Label_Dev",
+    "result": "PASS",
+    "exe_sha256": "19704bbdf0b071cb7042bf84f9d89daddb3156993edbe87c69ca61828a4309a3",
+    "markdown_files": 0,
+    "pe_icon_frames": 10,
+    "tk_icon_matches": true
+  }
+}

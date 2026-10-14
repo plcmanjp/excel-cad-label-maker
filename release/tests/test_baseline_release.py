@@ -54,10 +54,10 @@ class ReleaseBoundaryTests(unittest.TestCase):
         archive = next((self.root / 'release/artifacts/baseline-build').glob('*.zip'))
         first = archive.read_bytes()
         with zipfile.ZipFile(archive) as package:
-            self.assertEqual(package.read('Excel-CAD-Label-Maker/README.md'),
-                             (self.root / 'release/package/README-baseline.md').read_bytes())
-            self.assertIn('Excel-CAD-Label-Maker/CREDITS.md', package.namelist())
-            self.assertIn('Excel-CAD-Label-Maker/NOTICE.md', package.namelist())
+            self.assertEqual(package.read('Excel-CAD-Label-Maker/README.txt'),
+                             b'Synthetic fixture\n')
+            self.assertIn('Excel-CAD-Label-Maker/CREDITS.txt', package.namelist())
+            self.assertIn('Excel-CAD-Label-Maker/NOTICE.txt', package.namelist())
         self.invoke()
         self.assertEqual(first, archive.read_bytes())
         sums = (self.root / 'release/artifacts/baseline-build/SHA256SUMS.txt').read_text()

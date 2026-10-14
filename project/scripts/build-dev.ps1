@@ -35,6 +35,8 @@ try {
         }
     }
     if ($CheckOnly) { Write-Output 'PASS: build path and process guards'; return }
+    & .venv/Scripts/python.exe -B -c "import os,struct,sys,tkinter; assert sys.platform == 'win32' and struct.calcsize('P') == 8 and os.environ.get('PROCESSOR_ARCHITECTURE', '').upper() == 'AMD64', 'Windows x64 build target required'; assert tkinter.Tcl().call('info','tclversion') == '8.6', 'Tk 8.6 build target required'"
+    if ($LASTEXITCODE -ne 0) { throw 'Unsupported Windows build target.' }
     # OneDrive may mark generated directories read-only. PyInstaller cannot remove them.
     foreach ($entry in $generatedEntries) {
         if ($entry.Attributes -band [System.IO.FileAttributes]::ReadOnly) {
@@ -46,16 +48,16 @@ try {
     $iconPath = Join-Path $repoRoot 'project/src/assets/app-icon.ico'
     & .venv/Scripts/python.exe -m PyInstaller --noconfirm --windowed --onedir --noupx `
         --icon $iconPath --add-data "$iconPath;assets" `
-        --name $appName --collect-all tkinterdnd2 --hidden-import openpyxl `
+        --name $appName --additional-hooks-dir project/scripts/pyinstaller-hooks --exclude-module pandas --hidden-import openpyxl `
         --hidden-import xlrd --specpath project/build --distpath $distRoot --workpath project/build/pyinstaller `
         project/src/excel_cad_label.py
     if ($LASTEXITCODE -ne 0) { throw 'Windows build failed.' }
-    Copy-Item -LiteralPath release/third_party -Destination "$devOutput/third_party" -Recurse -Force
-    Copy-Item -LiteralPath wiki/reference/third-party.md -Destination "$devOutput/third_party/README.md" -Force
-    Copy-Item -LiteralPath release/package/NOTICE.md,release/package/CREDITS.md -Destination $devOutput -Force
+    $materialArgs = @('--output', $devOutput)
+    if ($Release) { $materialArgs += '--release' }
+    & .venv/Scripts/python.exe -B release/scripts/package-materials.py @materialArgs
+    if ($LASTEXITCODE -ne 0) { throw 'Plain text materials failed.' }
     if ($Release) {
         $releaseConfig = Get-Content -LiteralPath release/app-release.json -Raw -Encoding UTF8 | ConvertFrom-Json
-        Copy-Item -LiteralPath release/package/README-Windows.md -Destination "$devOutput/README.md" -Force
         [System.IO.File]::WriteAllText((Join-Path $devOutput 'VERSION'), ($releaseConfig.version + "`n"), [System.Text.UTF8Encoding]::new($false))
     }
     & .venv/Scripts/python.exe -B project/scripts/check-app-icon.py --output $devOutput --exe-name "$appName.exe"

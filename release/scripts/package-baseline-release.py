@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import runpy
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -10,6 +11,7 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 def main():
+    plain_text = runpy.run_path(str(Path(__file__).with_name('package-materials.py')))['plain_text']
     manifest = json.loads((ROOT / 'release/baseline/manifest.json').read_text(encoding='utf-8'))
     version = (ROOT / 'release/baseline/VERSION').read_text(encoding='utf-8').strip()
     if version != manifest['version'] or version != '0.1.0':
@@ -29,9 +31,12 @@ def main():
     name = f'Excel-CAD-Label-Maker-{version}-windows-x64.zip'
     archive = output / name
     members = {manifest['binary_name']: binary,
-               'README.md': (ROOT / 'release/package/README-baseline.md').read_bytes()}
+               'README.txt': plain_text((ROOT / 'release/package/README-baseline.md').read_text(encoding='utf-8')).encode('utf-8')}
     for relative in ['release/package/CREDITS.md', 'release/package/NOTICE.md', 'release/baseline/VERSION', 'release/baseline/manifest.json']:
-        members[Path(relative).name] = (ROOT / relative).read_bytes()
+        if Path(relative).suffix == '.md':
+            members[Path(relative).with_suffix('.txt').name] = plain_text((ROOT / relative).read_text(encoding='utf-8')).encode('utf-8')
+        else:
+            members[Path(relative).name] = (ROOT / relative).read_bytes()
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as package:
         for member, data in members.items():
             info = zipfile.ZipInfo('Excel-CAD-Label-Maker/' + member, date_time=(2026, 1, 1, 0, 0, 0))

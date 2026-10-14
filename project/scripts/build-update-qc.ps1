@@ -2,6 +2,8 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 Push-Location -LiteralPath $repoRoot
 try {
+    & .venv/Scripts/python.exe -B -c "import os,struct,sys,tkinter; assert sys.platform == 'win32' and struct.calcsize('P') == 8 and os.environ.get('PROCESSOR_ARCHITECTURE', '').upper() == 'AMD64', 'Windows x64 build target required'; assert tkinter.Tcl().call('info','tclversion') == '8.6', 'Tk 8.6 build target required'"
+    if ($LASTEXITCODE -ne 0) { throw 'Unsupported Windows QC build target.' }
     foreach ($ancestor in @('.local', '.local/update-qc', '.local/update-qc/builds')) {
         $path = Join-Path $repoRoot $ancestor
         if ((Test-Path -LiteralPath $path) -and (Get-Item -LiteralPath $path -Force).LinkType) {
@@ -13,14 +15,13 @@ try {
     $iconPath = Join-Path $repoRoot 'project/src/assets/app-icon.ico'
     & .venv/Scripts/python.exe -m PyInstaller --windowed --onedir --noupx `
         --icon $iconPath --add-data "$iconPath;assets" `
-        --name Update_Notice_QC --paths project/src --collect-all tkinterdnd2 `
+        --name Update_Notice_QC --paths project/src --additional-hooks-dir project/scripts/pyinstaller-hooks --exclude-module pandas `
         --hidden-import openpyxl --hidden-import xlrd --specpath $runRoot `
         --distpath "$runRoot/dist" --workpath "$runRoot/work" project/qc/update-notice-gui.py
     if ($LASTEXITCODE -ne 0) { throw 'QC Windows build failed.' }
     $output = Join-Path $runRoot 'dist/Update_Notice_QC'
-    Copy-Item -LiteralPath release/third_party -Destination "$output/third_party" -Recurse
-    Copy-Item -LiteralPath wiki/reference/third-party.md -Destination "$output/third_party/README.md"
-    Copy-Item -LiteralPath release/package/NOTICE.md,release/package/CREDITS.md -Destination $output
+    & .venv/Scripts/python.exe -B release/scripts/package-materials.py --output $output
+    if ($LASTEXITCODE -ne 0) { throw 'Plain text QC materials failed.' }
     & .venv/Scripts/python.exe -B project/scripts/check-app-icon.py --output $output --exe-name Update_Notice_QC.exe
     if ($LASTEXITCODE -ne 0) { throw 'Packaged QC icon verification failed.' }
     & .venv/Scripts/python.exe -B release/scripts/build-receipt.py --output $output --exe-name Update_Notice_QC.exe --build-type update-qc-build
