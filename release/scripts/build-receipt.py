@@ -25,17 +25,17 @@ if __name__ == "__main__":
         raise SystemExit("Development executable is missing; receipt refused")
     receipt = {
         "type": args.build_type, "baseline_version": "0.1.0",
-        "app_version": runpy.run_path(str(ROOT / "project/P001-excel-cad-label/src/app_version.py"))["APP_VERSION"],
+        "app_version": runpy.run_path(str(ROOT / "project/src/app_version.py"))["APP_VERSION"],
         "baseline_replacement": False, "python": platform.python_version(),
         "platform": platform.platform(),
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "source_dirty": bool(subprocess.check_output(["git", "--no-optional-locks", "status", "--porcelain"], cwd=ROOT)),
         "sources": {str(p.relative_to(ROOT)).replace("\\", "/"): digest(p)
-                    for p in (ROOT / "project/P001-excel-cad-label/src").glob("*.py")},
+                    for p in (ROOT / "project/src").glob("*.py")},
         "assets": {p.relative_to(ROOT).as_posix(): digest(p)
-                   for p in (ROOT / "project/P001-excel-cad-label/src/assets").glob("app-icon.*")},
+                   for p in (ROOT / "project/src/assets").glob("app-icon.*")},
         "entrypoint": {"path": "project/qc/update-notice-gui.py" if args.build_type == "update-qc-build"
-                       else "project/P001-excel-cad-label/src/excel_cad_label.py"},
+                       else "project/src/excel_cad_label.py"},
         "lock_sha256": digest(ROOT / "project/requirements-dev.lock.txt"),
         "dependencies": {d.metadata["Name"]: d.version for d in importlib.metadata.distributions()},
         "files": {p.relative_to(output).as_posix(): digest(p) for p in output.rglob("*")

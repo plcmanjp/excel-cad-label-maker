@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 
 if not getattr(sys, "frozen", False):
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "project/P001-excel-cad-label/src"))
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "project/src"))
 from app_version import APP_VERSION
 from excel_cad_label import App
 from tkinterdnd2 import TkinterDnD

@@ -41,14 +41,14 @@ try {
             $entry.Attributes = $entry.Attributes -band (-bnot [System.IO.FileAttributes]::ReadOnly)
         }
     }
-    & .venv/Scripts/python.exe -B -m unittest discover -s project/P001-excel-cad-label/tests -v
+    & .venv/Scripts/python.exe -B -m unittest discover -s project/tests -v
     if ($LASTEXITCODE -ne 0) { throw 'Product tests failed.' }
-    $iconPath = Join-Path $repoRoot 'project/P001-excel-cad-label/src/assets/app-icon.ico'
+    $iconPath = Join-Path $repoRoot 'project/src/assets/app-icon.ico'
     & .venv/Scripts/python.exe -m PyInstaller --noconfirm --windowed --onedir --noupx `
         --icon $iconPath --add-data "$iconPath;assets" `
         --name $appName --collect-all tkinterdnd2 --hidden-import openpyxl `
         --hidden-import xlrd --specpath project/build --distpath $distRoot --workpath project/build/pyinstaller `
-        project/P001-excel-cad-label/src/excel_cad_label.py
+        project/src/excel_cad_label.py
     if ($LASTEXITCODE -ne 0) { throw 'Windows build failed.' }
     Copy-Item -LiteralPath release/third_party -Destination "$devOutput/third_party" -Recurse -Force
     Copy-Item -LiteralPath wiki/reference/third-party.md -Destination "$devOutput/third_party/README.md" -Force

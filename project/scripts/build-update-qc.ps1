@@ -10,10 +10,10 @@ try {
     }
     $runRoot = Join-Path $repoRoot ('.local/update-qc/builds/' + [guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Path $runRoot | Out-Null
-    $iconPath = Join-Path $repoRoot 'project/P001-excel-cad-label/src/assets/app-icon.ico'
+    $iconPath = Join-Path $repoRoot 'project/src/assets/app-icon.ico'
     & .venv/Scripts/python.exe -m PyInstaller --windowed --onedir --noupx `
         --icon $iconPath --add-data "$iconPath;assets" `
-        --name Update_Notice_QC --paths project/P001-excel-cad-label/src --collect-all tkinterdnd2 `
+        --name Update_Notice_QC --paths project/src --collect-all tkinterdnd2 `
         --hidden-import openpyxl --hidden-import xlrd --specpath $runRoot `
         --distpath "$runRoot/dist" --workpath "$runRoot/work" project/qc/update-notice-gui.py
     if ($LASTEXITCODE -ne 0) { throw 'QC Windows build failed.' }

@@ -8,7 +8,7 @@ import struct
 import pefile
 
 ROOT = Path(__file__).resolve().parents[2]
-ASSETS = ROOT / "project/P001-excel-cad-label/src/assets"
+ASSETS = ROOT / "project/src/assets"
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
 

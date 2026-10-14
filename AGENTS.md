@@ -7,7 +7,7 @@ Canonical instructions for the public development and release repository. This h
 - Original developer nickname: 직장인. Fork maintainer and continuing developer: plcmanjp. Preserve both credits.
 - One repository owns development and GitHub Releases. Work instructions: GitHub Issues in plcmanjp/excel-cad-label-maker. CURRENT is progress only.
 - Version 0.1.0 distributes the supplied original executable unchanged. Never claim it was rebuilt from the imported source.
-- Original source in project/P001-excel-cad-label/original/ is preserved as received. It has syntax damage. A repaired implementation requires a separate approved product task.
+- Original source in project/original/ is preserved as received. It has syntax damage. A repaired implementation requires a separate approved product task.
 - DXF output is supported by the baseline. Native DWG export is not implemented or verified.
 
 ## Startup

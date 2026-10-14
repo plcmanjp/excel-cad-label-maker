@@ -3,9 +3,9 @@
 흰색 라벨지에 진한 ABC를 적은 Excel CAD Label Maker 개발 앱 아이콘입니다. [Issue #5](https://github.com/plcmanjp/excel-cad-label-maker/issues/5)의 사용자 지시로 생성했습니다.
 
 - 생성 도구: 내장 `image_gen`, CLI 또는 API 키를 사용하지 않았습니다.
-- [app-icon.png](../../project/P001-excel-cad-label/src/assets/app-icon.png): 생성된 투명 배경 PNG 원본입니다. 흰색 라벨은 불투명합니다.
-- [app-icon.ico](../../project/P001-excel-cad-label/src/assets/app-icon.ico): PNG 프레임을 담은 16, 20, 24, 32, 40, 48, 64, 96, 128, 256px Windows 아이콘입니다.
-- [manifest.json](../../project/P001-excel-cad-label/src/assets/manifest.json): 원본과 ICO의 SHA-256 및 프레임 크기를 기록합니다.
+- [app-icon.png](../../project/src/assets/app-icon.png): 생성된 투명 배경 PNG 원본입니다. 흰색 라벨은 불투명합니다.
+- [app-icon.ico](../../project/src/assets/app-icon.ico): PNG 프레임을 담은 16, 20, 24, 32, 40, 48, 64, 96, 128, 256px Windows 아이콘입니다.
+- [manifest.json](../../project/src/assets/manifest.json): 원본과 ICO의 SHA-256 및 프레임 크기를 기록합니다.
 
 ICO 변환은 Windows의 System.Drawing을 사용하는 `project/scripts/make-app-icon.ps1`로 재현합니다. 이미지의 내용은 바꾸지 않고 크기와 형식을 변환합니다. 추가 Python 패키지는 필요하지 않습니다.
 

@@ -9,7 +9,7 @@ import sys
 import tomllib
 
 ROOT = Path(__file__).resolve().parents[2]
-ICON_ROOT = Path('project/P001-excel-cad-label/src/assets')
+ICON_ROOT = Path('project/src/assets')
 ICON_SIGNATURES = {'app-icon.png': b'\x89PNG\r\n\x1a\n', 'app-icon.ico': b'\x00\x00\x01\x00'}
 
 def main():
@@ -18,6 +18,9 @@ def main():
     for path in ROOT.iterdir():
         if not path.name.startswith('.') and path.name not in visible_roots:
             errors.append('misplaced root asset: ' + path.name)
+    for relative in ('project/src/excel_cad_label.py', 'project/original/excel_cad_label.py', 'project/tests/test_converter.py'):
+        if not (ROOT / relative).is_file():
+            errors.append('flat app layout missing: ' + relative)
     current_docs = [ROOT / 'README.md', ROOT / 'project/INDEX.md', ROOT / 'release/INDEX.md', ROOT / 'wiki/INDEX.md']
     for folder in ('guides', 'reference', 'harness'):
         current_docs.extend((ROOT / 'wiki' / folder).glob('*.md'))
@@ -42,6 +45,8 @@ def main():
     except (OSError, ValueError, KeyError, TypeError):
         errors.append('icon asset manifest missing or invalid')
     manifest = json.loads((ROOT / 'release/baseline/manifest.json').read_text(encoding='utf-8'))
+    if manifest['source_path'] != 'project/original/excel_cad_label.py':
+        errors.append('baseline source path must use the flat app layout')
     if (ROOT / 'release/baseline/VERSION').read_text().strip() != manifest['version']:
         errors.append('version mismatch')
     raw = (ROOT / manifest['source_path']).read_bytes()

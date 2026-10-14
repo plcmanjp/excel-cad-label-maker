@@ -24,10 +24,10 @@ class AppReleaseTests(unittest.TestCase):
         self.git = patch.object(packager, "git_snapshot", return_value=self.snapshot)
         self.git.start()
         self.addCleanup(self.git.stop)
-        self.source = "project/P001-excel-cad-label/src/excel_cad_label.py"
-        self.asset = "project/P001-excel-cad-label/src/assets/app-icon.ico"
+        self.source = "project/src/excel_cad_label.py"
+        self.asset = "project/src/assets/app-icon.ico"
         sources = {self.source: b"# synthetic entrypoint\n", self.asset: b"synthetic icon",
-                   "project/P001-excel-cad-label/src/app_version.py": b"APP_VERSION = '0.2.0'\n",
+                   "project/src/app_version.py": b"APP_VERSION = '0.2.0'\n",
                    "project/requirements-dev.lock.txt": b"synthetic lock\n"}
         for name, data in sources.items():
             self.write(self.root / name, data)

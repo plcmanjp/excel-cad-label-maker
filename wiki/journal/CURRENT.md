@@ -2,10 +2,11 @@
 
 ## 목표
 
-- 정리된 개발과 배포 경로를 유지하고 [Issue #2](https://github.com/plcmanjp/excel-cad-label-maker/issues/2)의 실제 CAD, 별도 PC 및 원본 이용 조건을 확인한다.
+- [Issue #10](https://github.com/plcmanjp/excel-cad-label-maker/issues/10)에 따라 앱 소스와 검사를 project 바로 아래로 평면화하고 실행과 빌드 및 패키징 경로를 검증한다.
 
 ## 현재 상태
 
+- `refactor/issue-10-flat-project`에서 project/original과 project/src로 이동했고 제품 검사를 project/tests의 빌드 보호 검사와 합쳤다. 이동 byte 보존과 로컬 검사, 개발 및 정식 빌드와 flat receipt 및 독립 검수가 통과했고 원격 CI와 main 반영이 남아 있다.
 - [Issue #8](https://github.com/plcmanjp/excel-cad-label-maker/issues/8)의 경로 정리를 [PR #9](https://github.com/plcmanjp/excel-cad-label-maker/pull/9)로 main에 반영했다. 문서는 wiki, 개발 자산은 project, 배포 자산은 release에서 관리한다. .venv와 .local은 루트에 유지한다.
 - [v0.2.0](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.2.0)이 최신 정식 GitHub Release다. Excel 드래그 앤 드롭, UTF-8 DXF, GitHub 업데이트 알림과 ABC 흰 라벨 아이콘을 포함한다.
 - PR #4와 #7을 main에 병합했다. 릴리스 소스 및 tag commit은 `df1581f28088c1f5f4f6b9e0a3248572beb4fca5`다. main에서 빌드한 ZIP과 checksum을 게시하고 원격 재다운로드 hash를 대조했다.
@@ -19,6 +20,7 @@
 
 ## 검증 결과
 
+- 평면화의 로컬 검사 69개 중 68 PASS, native symlink 1개는 권한 부족 SKIP다. 제품과 빌드 보호 35, 배포 12 및 하네스 22개를 관리하며 CI의 중복 실행을 제거했다. 13개 이동 파일의 기준 Git byte와 보호 hash 68개가 일치했다. 상세는 `project/qc/flat-project-results.json`에 기록했다.
 - 경로 재구성의 PR 및 병합 main Windows CI 69개가 통과했고 native symlink 검사도 실행됐다. 새 경로의 소스 및 EXE 실행과 개발, 정식 및 별도 QC 빌드, 문서 링크와 보호 파일 대조 및 독립 검수가 PASS다. 상세는 `project/qc/workspace-layout-results.json`에 기록했다.
 - 깨끗한 병합 main의 실제 ZIP 1,905개 파일과 receipt hash를 확인했다. 이 검증 ZIP은 로컬에서만 보관하며 기존 GitHub v0.1.0과 v0.2.0의 자산 ID, 크기 및 digest는 보존됐다.
 - 릴리스 main의 Windows CI 69개 검사가 통과했다. 로컬에서 권한 부족으로 건너뛴 native symlink 검사도 CI에서 실제 통과했다. 공개 검수와 artifact 독립 대조가 PASS다.
@@ -32,6 +34,6 @@
 
 ## 다음 작업
 
-1. 합성 DXF를 실제 사용하는 CAD에서 열어 한글, 글꼴, mm 규격과 레이어를 확인한다.
-2. Python 없는 별도 Windows PC에서 ZIP 전체 압축 해제와 EXE 및 DXF 생성을 확인한다.
-3. 원본 빌드 자료와 구체적인 이용 조건을 확보하고 Issue #2의 남은 조건을 정리한다.
+1. 평면화 변경을 commit 및 push하고 원격 Windows CI에서 native symlink를 포함한 69개 검사 결과를 확인한다.
+2. 누적 diff 독립 검수와 원격 CI를 통과한 PR을 main에 반영하고 Issue #10 완료 근거를 기록한다.
+3. Issue #2의 실제 CAD, Python 없는 별도 PC 및 원본 이용 조건 확인을 이어간다.

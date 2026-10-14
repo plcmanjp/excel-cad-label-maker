@@ -54,7 +54,7 @@ def package_build(root, build, output):
             "Stable release version and tag required")
     require(config["release_type"] == "recovered-source-build" and config["original_baseline_replaced"] is False,
             "Recovered build must preserve the original baseline")
-    app_version = runpy.run_path(str(root / "project/P001-excel-cad-label/src/app_version.py"))["APP_VERSION"]
+    app_version = runpy.run_path(str(root / "project/src/app_version.py"))["APP_VERSION"]
     require(version == app_version == (build / "VERSION").read_text(encoding="utf-8").strip(),
             "Release version mismatch")
     receipt_bytes = (build / "build-receipt.json").read_bytes()
@@ -64,7 +64,7 @@ def package_build(root, build, output):
             "Release receipt or commit mismatch")
     require(receipt["lock_sha256"] == digest((root / "project/requirements-dev.lock.txt").read_bytes()), "Dependency lock mismatch")
     entrypoint = receipt["entrypoint"]
-    require(entrypoint["path"] == "project/P001-excel-cad-label/src/excel_cad_label.py"
+    require(entrypoint["path"] == "project/src/excel_cad_label.py"
             and entrypoint["sha256"] == digest((root / entrypoint["path"]).read_bytes()), "Entrypoint mismatch")
     for group in ("sources", "assets"):
         require(bool(receipt[group]), "Source or icon assets missing from receipt")
