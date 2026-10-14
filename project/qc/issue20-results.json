@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/plcmanjp/excel-cad-label-maker/issues/20",
+  "status": "IMPLEMENTED_LOCAL_VERIFIED_WITH_OPEN_ENVIRONMENT_GATES",
+  "environment": {
+    "product_python": "3.13.15",
+    "windows": "Windows-11-10.0.26300-SP0",
+    "tk": "8.6.15",
+    "harness_python": "3.14.3",
+    "uia_python": "3.13.15",
+    "host_display_pixels": [
+      2560,
+      1440
+    ],
+    "host_dpi": 96
+  },
+  "build": {
+    "type": "development-build",
+    "version": "0.2.2",
+    "baseline_commit": "d8fa53c07ed1fc198e2e8b4beadf1996be50d3f5",
+    "dirty_at_build": true,
+    "exe_sha256": "1f1047c2a19d3f72c087399d1e5b71689b3093e03e86a07ba798571ede1eaf00",
+    "receipt_sha256": "deed43c2b1696ede5091eb3c09c83213633986355fed6fafb1968d295da02f7f",
+    "sources": {
+      "project/src/accessibility.py": "fbbcdfd1de6290d20b3758101ee0c1bacef3e926e1a458c4a90b11beefe95496",
+      "project/src/app_version.py": "421b9db70963594517fbef29c0be51505954334cb4ab8d62d81ff2021f3c02df",
+      "project/src/converter.py": "fca824bfd56526908f3da6efd520af99126e58fca0d7b7b7a94955f60d1b958d",
+      "project/src/excel_cad_label.py": "ce6bd3b4de04a11947bf31b12027598c2163bef8411781240f72071799c681db",
+      "project/src/input_model.py": "222cdc3096b52ae83cda5aba50ed8032e135a40f314b13786d1eb878c920fc70",
+      "project/src/jobs.py": "1089257a03563093776e4c6fedf589745bb5587a98573d2fa6fef1fdfc5c7e62",
+      "project/src/label_ui.py": "ab2f5f025389fbb94ce87a94bfd7cb8d6894cd978bba141c95e58257a389a0d5",
+      "project/src/preview.py": "84363729adf11236b9a4bc08cf3d2c34a2aa6646f6766f4c35828d0410a0d3f0",
+      "project/src/settings_store.py": "7a64dff20d0b95cca03e82bed43ee8c666bae09a120801b17b0bf9ba9edac507",
+      "project/src/text_bitmap.py": "63e9835d76ae472a1a8992518677718689e5e75b1a51dab9e225377be70b264e",
+      "project/src/update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+      "project/src/update_notice.py": "5c29de17236d2a08f37b20f32ed4df7d8ac6b46151efebc29421b89a94833c4e"
+    },
+    "packaged_files_verified": 1125,
+    "release_published": false
+  },
+  "tests": {
+    "product": {
+      "run": 81,
+      "passed": 81
+    },
+    "release": {
+      "run": 16,
+      "passed": 15,
+      "skipped": 1,
+      "skip_reason": "Windows symlink creation privilege unavailable"
+    },
+    "harness": {
+      "run": 22,
+      "passed": 22
+    },
+    "repository_and_public_documents": "PASS",
+    "independent_review_remaining_findings": 0
+  },
+  "gui": [
+    {
+      "name": "final-source",
+      "status": "PASS",
+      "seconds": 6.868,
+      "steps": 15,
+      "summary_sha256": "224c88994d370231531adfed2faacf0871855815693d6245744cb707b00df27c",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 5011,
+          "sha256": "D3A2518FA1427E69D29D6094921B13D60AECAFAEBB93793961973592EEA3920F"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 3302,
+          "sha256": "752D490E6542EDC53C901E6CCB3138DDCCBE22E9D0D0967F220D9852B980F0EA"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 53865,
+          "sha256": "3DA6E0B98ABB888DD1C32ACF3BF872173D89327B2B4E90D2197957D67D42E1A6"
+        },
+        {
+          "name": "tree.json",
+          "bytes": 12404,
+          "sha256": "E2CAD87BD7B5DB7FC749138B32DE5F28A0670BAF52192086A4CCDA9E0E54196F"
+        }
+      ]
+    },
+    {
+      "name": "final-first",
+      "status": "PASS",
+      "seconds": 6.086,
+      "steps": 15,
+      "summary_sha256": "ec656bd5d752efdd60ed8be5022f33044f0932064725a36d09ae55b51bd7eadd",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 5026,
+          "sha256": "81A63F0833B1F23B07E59CDE6A29322EA54998D0862D0187BF3DFCD90E47930A"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 3302,
+          "sha256": "868A305343C0F688BED5B9781031F02952C1080E10DB151473A4DBB1657BD3A8"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 57024,
+          "sha256": "8F91A3B7664AF42240DF2BB8118CB32E460A94B06B12842FA2B7D25742F66807"
+        },
+        {
+          "name": "tree.json",
+          "bytes": 12482,
+          "sha256": "2F172BDA4CB9E58C4D8FBFA7025FE0C5D5B93F2BCDA2D89FFA59BDAFC7E1D6F2"
+        }
+      ]
+    },
+    {
+      "name": "final-modal",
+      "status": "PASS",
+      "seconds": 6.557,
+      "steps": 18,
+      "summary_sha256": "6de0c82ecd4ad9fcb31172697e8bc6d94b9f1f598ea06dfbc093d0b3c1873e61",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 5988,
+          "sha256": "112B4730A82E0748CBA8F37BE0F90D257AB49DDBEDAB87257E700617E36E4A95"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 3891,
+          "sha256": "0476FBCB878E88C25C8BF2E608F3C517619904840B082E4228F686DED4B23E1D"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 59240,
+          "sha256": "204009109E320CA293D13C86AEC64AC2023089882D67F55F6C850DBD09C81942"
+        },
+        {
+          "name": "tree.json",
+          "bytes": 12480,
+          "sha256": "878889804F50D2BCAE50FCC6ABC147BE246B7AD5346E69DCD6CE2B966D2BF274"
+        }
+      ]
+    },
+    {
+      "name": "final-dropped",
+      "status": "PASS",
+      "seconds": 3.849,
+      "steps": 7,
+      "summary_sha256": "e085617a838142f9c0cff50d2ae5cb5dd00199291559e0f14e91a6b8d2bf38e7",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 2478,
+          "sha256": "2BC8F5E6B43FCF536816ED3728401EC2B2C14BACBC1B28AE01689910CAD16E78"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 1688,
+          "sha256": "AA9CDB0ABEF327978CA8773D6128818C161CA817A98D49C57C52E76AF1660D14"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 59022,
+          "sha256": "0F6023E636B916E2D7F2FB8E4599D4042F71ECDE87D7267F031978612910A548"
+        },
+        {
+          "name": "tree.json",
+          "bytes": 12486,
+          "sha256": "89BE7A7C920DE6F7AD86D945AEE9F06D519A64AE5B2770FD375413E0BDA9C601"
+        }
+      ]
+    },
+    {
+      "name": "final-restart",
+      "status": "PASS",
+      "seconds": 6.197,
+      "steps": 15,
+      "summary_sha256": "258095ac39ec941ecae742e562c5b046babf1006c97a1a2a5050d26f078a3a82",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 5028,
+          "sha256": "D989EB85CFA99444EF9BF5455FF8BB8419DE03D697BEE37482266CE96424083F"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 3304,
+          "sha256": "7FF0BD74F54D3EE84510FC1E4E04B510C27276DD7BD1A4B41957E6A655319955"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 58497,
+          "sha256": "3B079D46BED76F85E42F1DA210287BA3676D0B8D3423655896408CC2AA40F290"
+        },
+        {
+          "name": "tree.json",
+          "bytes": 12481,
+          "sha256": "3FD9439A80FB8D05D6A6C54197B82F1F7BA88C56050EEF5E3A8603B88744BD52"
+        }
+      ]
+    },
+    {
+      "name": "refusal-win32",
+      "status": "PASS",
+      "seconds": 3.44,
+      "steps": 4,
+      "summary_sha256": "4a7cde80d78bbd50bf236dab0582cf7a50cf8d26828c8531c9b6ef9003197a68",
+      "artifacts": [
+        {
+          "name": "actions.jsonl",
+          "bytes": 1538,
+          "sha256": "80B596B347B488A86652569890F66C76F7CEB754D664588AC0A7C7481BFD10DF"
+        },
+        {
+          "name": "resolved-profile.json",
+          "bytes": 1075,
+          "sha256": "8CFDB6F894ABA7F3301BA0CB1F85A04398922C111BAD0EF7E68C10C201BA72CE"
+        },
+        {
+          "name": "screen.png",
+          "bytes": 70441,
+          "sha256": "4336D18138B24E59BB963A5FD37F686626530619FF927FA21C8B3719E8184D74"
+        }
+      ]
+    }
+  ],
+  "physical_drop": [
+    {
+      "scope": "source-drop",
+      "transport": "INPUT_COMPLETED",
+      "product_acceptance": "PASS",
+      "summary": "라벨 20개, 총 60칸, 확인 0건 | drop20!A1:A80",
+      "source_unchanged": true,
+      "outputs_unchanged": true,
+      "receipt_sha256": "a26168204de29813b9bf0111679a8acf774393d1e270bab6f9d0a013f4467b9f",
+      "engine_sha256": "a7cd3aee9e371c330904471bd3f4f10bf7b505856eb96940625a00236008889e"
+    },
+    {
+      "scope": "frozen-drop",
+      "transport": "INPUT_COMPLETED",
+      "product_acceptance": "PASS",
+      "summary": "라벨 20개, 총 60칸, 확인 0건 | frozen_drop!A1:A80",
+      "source_unchanged": true,
+      "outputs_unchanged": true,
+      "receipt_sha256": "400ed5e8887535e06b1bcbf730e07e341296dafb6289071cf733d244791dcb7c",
+      "engine_sha256": "a7cd3aee9e371c330904471bd3f4f10bf7b505856eb96940625a00236008889e"
+    }
+  ],
+  "dxf_readback": [
+    {
+      "name": "final-first.dxf",
+      "sha256": "47a2e9067be8431e5101b20ae781df44aada374d912a085809a9d4ef645a55b4",
+      "labels": 20,
+      "cells": 60,
+      "width_mm": 60,
+      "layout_and_text_match": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "final-source.dxf",
+      "sha256": "57f107b42a6cb287c21ca9931b6bce0c9976e778eca0017c7508083cc27f5814",
+      "labels": 20,
+      "cells": 60,
+      "width_mm": 60,
+      "layout_and_text_match": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "final-custom.dxf",
+      "sha256": "0b2510df371e53b74611744e345a8f4627ac41015224e835704c08f333c858cb",
+      "labels": 20,
+      "cells": 60,
+      "width_mm": 75,
+      "layout_and_text_match": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "final-dropped.dxf",
+      "sha256": "18a6c5dc91cc0314f83023cf04d6553502cd4cf059bc646d098fc2ed19501152",
+      "labels": 20,
+      "cells": 60,
+      "width_mm": 75,
+      "layout_and_text_match": true,
+      "audit_errors": 0
+    },
+    {
+      "name": "final-restart.dxf",
+      "sha256": "efbf05753a2bae5732321c12bc940b2126d1fb6eacbab0dc7ca5643083690102",
+      "labels": 20,
+      "cells": 60,
+      "width_mm": 75,
+      "layout_and_text_match": true,
+      "audit_errors": 0
+    }
+  ],
+  "window_emulation": {
+    "scope": "Window-size emulation at host DPI 96 (100%); 150% and 200% Windows display settings were not exercised",
+    "records": [
+      {
+        "outer_size": [
+          1366,
+          768
+        ],
+        "save_rect": "(L46, T652, R1283, B677)",
+        "save_visible": true,
+        "dpi": 96
+      },
+      {
+        "outer_size": [
+          1280,
+          720
+        ],
+        "save_rect": "(L46, T604, R1197, B629)",
+        "save_visible": true,
+        "dpi": 96
+      },
+      {
+        "outer_size": [
+          960,
+          540
+        ],
+        "save_rect": "(L46, T424, R877, B449)",
+        "save_visible": true,
+        "dpi": 96
+      }
+    ],
+    "invalid_width": "NaN, Ctrl+S returns focus to visible invalid field; corrected to 75",
+    "global_display_settings_changed": false
+  },
+  "gdi_repeat": {
+    "glyph_calls": 600,
+    "before_handles": 157,
+    "after_handles": 157
+  },
+  "native_overwrite_refusal": {
+    "status": "PASS",
+    "protected_dxf_sha256": "47a2e9067be8431e5101b20ae781df44aada374d912a085809a9d4ef645a55b4",
+    "provider": "Win32 fallback after UIA omitted native confirmation"
+  },
+  "acceptance": {
+    "AC01": {
+      "status": "DEVELOPER_PASS_HUMAN_NOT_RUN",
+      "evidence": "Final source 6.868 s and frozen 6.086 s for 20 labels / 60 cells; no advanced settings; developer UIA keyboard flow"
+    },
+    "AC02": {
+      "status": "PASS",
+      "evidence": "File replacement and restart restore width 75 mm, gap 20 mm, columns 5, colors 4/2; restart-to-save UIA recipe 6.197 s; DXF geometry readback"
+    },
+    "AC03": {
+      "status": "PASS",
+      "evidence": "Synthetic XLS/XLSX regression fixtures, baseline mixed numeric/Boolean policy, column order, whitespace and multiline diagnostics"
+    },
+    "AC04": {
+      "status": "PASS_WITH_FORMAT_LIMITS",
+      "evidence": "Input model tests for supported formats, formula cache/error/empty-string cache, merged/hidden/filter, sheet/range/header; XLS formula provenance and filter detection explicitly unsupported"
+    },
+    "AC05": {
+      "status": "PASS",
+      "evidence": "Shared layout unit comparison and five real GUI DXFs reread: text, corners, alignment, height, width, layers, AC1024/mm, audit 0"
+    },
+    "AC06": {
+      "status": "PASS",
+      "evidence": "Long/short text, minimum height, overflow and auto-fit tests; paged full text and diagnostic navigation, bounded 30000-cell preview; CAD font rendering is a reference"
+    },
+    "AC07": {
+      "status": "PASS",
+      "evidence": "Finite and derived-overflow tests; real frozen NaN editing/Ctrl+S returns focus to invalid field, message visible at 960x540"
+    },
+    "AC08": {
+      "status": "PASS",
+      "evidence": "Generation, rapid edits, source SHA drift, duplicate save, cancellation commit boundary, shutdown callback regression tests; real modal reentry probe"
+    },
+    "AC09": {
+      "status": "PASS",
+      "evidence": "Isolated temporary settings: preset CRUD/overwrite/reserved names, modified status, corrupt/unknown schema preservation/recovery and write failures; final restart with width 75 mm"
+    },
+    "AC10": {
+      "status": "PASS",
+      "evidence": "Real native overwrite No and Cancel hash preserved; atomic write failure and pre/post-commit cancellation unit tests"
+    },
+    "AC11": {
+      "status": "PARTIAL",
+      "evidence": "Keyboard-only basic flow; 1366x768, 1280x720 and 960x540 outer-window emulation at host DPI96; error field and save visible",
+      "not_run": "Actual Windows display resolutions with 150% and 200% scaling"
+    },
+    "AC12": {
+      "status": "PASS_WITH_MEASURED_COST",
+      "evidence": "issue20-performance.json: three alternating conversion runs and five alternating frozen startups, UI heartbeat/cancel/viewport counts, full folder bytes; extra two-view parsing and diagnostics cost"
+    },
+    "AC13": {
+      "status": "PASS_WITH_FIELD_GATE",
+      "evidence": "81 product tests including update behavior and real source/frozen keyboard flow; physical drop both modes, icon/notices hashes; CAD and second PC remain Issue14"
+    },
+    "AC14": {
+      "status": "PASS",
+      "evidence": "Usage/README/package guide updated with version distinction, limits and credits; repository/public-doc and display-string checks"
+    }
+  },
+  "open_gates": [
+    "Actual novice-user evaluation",
+    "Actual 150% and 200% Windows DPI/resolution matrix",
+    "Issue14 CAD rendering, second PC, original alignment and rights"
+  ],
+  "observation": {
+    "status": "NOT_REPRODUCED_CAUSE_UNCONFIRMED",
+    "detail": "Earlier automation observed preset/style/advanced/example-dialog changes; instrumented source and final frozen flows preserved settings. Separate native-dialog shortcut reentry was measured and guarded."
+  },
+  "private_evidence_root": ".local/issue20",
+  "notes": "All workbooks, paths and raw UI screenshots are private QC artifacts; public record contains hashes and synthetic counts only. Build is a development candidate at version 0.2.2, not a new release.",
+  "ci": {
+    "status": "PASS",
+    "commit": "8e004a6aa9307a6ab42f5bd08920ab839123acdf",
+    "run_url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38589845254",
+    "jobs": {
+      "verify": "success",
+      "product": "success"
+    },
+    "first_attempt": {
+      "run_url": "https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38589481008",
+      "status": "failure",
+      "cause": "Test delayed-read path comparison missed Windows TEMP 8.3 alias; fixture comparison now resolves both paths"
+    },
+    "product_sources_changed_for_ci_fix": false
+  }
+}

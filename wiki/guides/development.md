@@ -24,6 +24,12 @@ setup-dev.ps1은 .venv를 만들고 project/requirements-dev.lock.txt의 고정 
 
 현재 빌드 대상은 project/src/excel_cad_label.py입니다. project/original은 수정하지 않습니다. 기여할 변경이나 문제는 [Issues](https://github.com/plcmanjp/excel-cad-label-maker/issues)에 작성해 주세요.
 
+input_model.py는 셀 출처와 진단을 보존하고 converter.py의 공통 배치를 미리보기와 DXF가 사용합니다. label_ui.py와 preview.py는 Tk 화면, jobs.py는 취소와 작업 세대 및 최종 파일 교체, settings_store.py는 버전 있는 설정을 관리합니다. text_bitmap.py는 Windows GDI를 이용해 글자의 가로 배율을 미리보기에 적용합니다.
+
+working_data.py는 원본 분석에 수정/추가를 적용하는 메모리 모델이며 label_editor.py는 공통 편집 모달입니다. 원본 Excel에 쓰지 않으며 편집 revision과 렌더링 revision을 대조해 오래된 결과의 저장을 차단합니다.
+
+설정 격리는 실행 프로세스의 EXCEL_CAD_LABEL_SETTINGS_DIR 환경 변수로 지정할 수 있습니다. 테스트와 측정은 임시 경로를 지정하며 실제 사용자 설정을 수정하지 않습니다.
+
 ## 테스트와 빌드
 
 ~~~powershell
