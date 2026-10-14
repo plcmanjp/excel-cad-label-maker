@@ -4,7 +4,7 @@
   "original_developer": "직장인",
   "fork_maintainer": "plcmanjp",
   "redistribution_permission": "confirmed_by_repository_owner",
-  "source_path": "Project/P001-excel-cad-label/original/excel-_cad_label.py",
+  "source_path": "Project/P001-excel-cad-label/original/excel_cad_label.py",
   "source_sha256": "1af3c494969671cce72186c4ebd464d7eecc06c22926ceb9f0e7807f5265e2f0",
   "source_status": "syntax-damaged-original",
   "binary_name": "Excel_Cad_Label.exe",

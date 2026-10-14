@@ -27,4 +27,4 @@
 *.pdf binary
 
 # Archival input: preserve supplied bytes, including original whitespace
-Project/P001-excel-cad-label/original/excel-_cad_label.py -text -whitespace
+Project/P001-excel-cad-label/original/excel_cad_label.py -text -whitespace

@@ -9,6 +9,8 @@
 - [공개 저장소](https://github.com/plcmanjp/excel-cad-label-maker)와 [0.1.0 기준 릴리스](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.1.0)가 공개되어 있다. 초기 구성은 [Issue #1](https://github.com/plcmanjp/excel-cad-label-maker/issues/1)이 소유한다.
 - 900 기반 하네스, 원본 소스, Windows ZIP과 체크섬을 구성했다. 원개발자 직장인, Fork 및 후속 개발자 plcmanjp를 구분하며 공개 재배포 허락을 확인했다.
 
+- 원본 소스의 현재 파일명은 excel_cad_label.py이며 manifest와 Git 원본 보존 속성이 같은 경로를 가리킨다. 파일 내용의 SHA-256은 원본과 동일하다.
+
 ## 주요 결정
 
 - 0.1.0은 제공된 기존 EXE의 변경 없는 기준 배포다. 원본 파일과 EXE hash를 고정하며 재빌드로 표현하지 않는다.

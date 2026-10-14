@@ -4,7 +4,7 @@
 
 ## 현재 개발 기준선
 
-Project/P001-excel-cad-label/original/excel-_cad_label.py는 전달받은 원본입니다. 문법 손상 때문에 제품 실행 또는 빌드 대상이 아닙니다. 원본 파일을 보존하고 복구 구현은 별도 src/와 tests/에 추가합니다. 원본 EXE와 소스의 일치 여부는 확인되지 않았습니다.
+Project/P001-excel-cad-label/original/excel_cad_label.py는 전달받은 원본입니다. 문법 손상 때문에 제품 실행 또는 빌드 대상이 아닙니다. 원본 파일을 보존하고 복구 구현은 별도 src/와 tests/에 추가합니다. 원본 EXE와 소스의 일치 여부는 확인되지 않았습니다.
 
 Python 의존성 목록과 패키징 설정은 재현 가능한 빌드 작업에서 실제 환경을 확인한 뒤 고정합니다. 현재 저장소에는 작동한다고 추정한 requirements.txt나 빌드 명령을 제공하지 않습니다.
 
