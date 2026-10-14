@@ -35,7 +35,8 @@ class AppReleaseTests(unittest.TestCase):
                   "original_baseline_replaced": False, "binary_name": "Excel_CAD_Label.exe"}
         self.write(self.root / "release/app-release.json", json.dumps(config).encode())
         files = {"Excel_CAD_Label.exe": b"SYNTHETIC-NOT-RUNNABLE", "VERSION": b"0.2.0\n",
-                 "_internal/assets/app-icon.ico": sources[self.asset], "third_party/README.md": b"notice\n"}
+                 "_internal/assets/app-icon.ico": sources[self.asset], "third_party/README.txt": b"notice\n",
+                 "README.txt": b"guide\n", "NOTICE.txt": b"rights\n", "CREDITS.txt": b"credits\n"}
         for name, data in files.items():
             self.write(self.build / name, data)
         self.receipt = {"type": "release-build", "source_dirty": False, "source_commit": "synthetic-commit",
@@ -121,6 +122,15 @@ class AppReleaseTests(unittest.TestCase):
             self.invoke()
         self.assertEqual(sums.read_bytes(), b"protected checksum")
         self.assertEqual(list(self.output.iterdir()), [sums])
+
+    def test_even_receipted_markdown_materials_are_refused(self):
+        data = b'# Legacy guide\n'
+        self.write(self.build / 'legacy.md', data)
+        self.receipt['files']['legacy.md'] = packager.digest(data)
+        self.write_receipt()
+        with self.assertRaisesRegex(ValueError, 'Markdown build materials'):
+            self.invoke()
+        self.assertFalse(self.output.exists())
 
     def test_dangling_checksum_link_refused_without_target_creation(self):
         self.output.mkdir()

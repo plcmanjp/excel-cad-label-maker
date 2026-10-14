@@ -1,4 +1,5 @@
 from io import StringIO
+import datetime as dt
 from pathlib import Path
 import sys
 import tempfile
@@ -9,6 +10,8 @@ from unittest.mock import patch
 import ezdxf
 from openpyxl import Workbook
 import xlwt
+import zipfile
+from xml.etree import ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from converter import (LabelSettings, create_drawing, extract_blocks_auto,
@@ -48,6 +51,57 @@ class ConversionTests(unittest.TestCase):
         sheet.write(3, 0, "두 번째")
         book.save(str(path))
         self.assertEqual(extract_blocks_auto(path), [["가나다", "2.5"], ["두 번째"]])
+
+    def test_boolean_numeric_column_identity_matches_previous_reader(self):
+        rows = [[False, 0, True, 1], [0, False, 1, True], ["tail"] * 4]
+        expected = [["False", "False", "tail"], ["0", "0", "tail"],
+                    ["True", "True", "tail"], ["1", "1", "tail"]]
+        self.assertEqual(extract_blocks_auto(self.workbook(rows)), expected)
+        path = self.directory / "bool-numbers.xls"
+        book = xlwt.Workbook(); sheet = book.add_sheet("first")
+        for r, row in enumerate(rows):
+            for c, value in enumerate(row): sheet.write(r, c, value)
+        book.save(str(path))
+        self.assertEqual(extract_blocks_auto(path), expected)
+
+    def test_dates_times_error_cells_and_first_sheet(self):
+        path = self.workbook([[dt.datetime(2026, 1, 2, 3, 4, 5)], [dt.time(3, 4, 5)],
+                              ["#DIV/0!"], ["tail"]])
+        self.assertEqual(extract_blocks_auto(path),
+                         [["2026-01-02 03:04:05", "03:04:05"], ["tail"]])
+        path = self.directory / "date-time.xls"
+        book = xlwt.Workbook(); sheet = book.add_sheet("first")
+        sheet.write(0, 0, dt.datetime(2026, 1, 2, 3, 4, 5), xlwt.easyxf(num_format_str="yyyy-mm-dd hh:mm:ss"))
+        sheet.write(1, 0, dt.time(3, 4, 5), xlwt.easyxf(num_format_str="hh:mm:ss"))
+        book.add_sheet("ignored").write(0, 0, "ignore")
+        book.save(str(path))
+        self.assertEqual(extract_blocks_auto(path), [["2026-01-02 03:04:05", "03:04:05"]])
+
+    def test_cached_formula_incorrect_dimensions_and_close(self):
+        path = self.workbook([["=2+2", "first"], [None, "second"]])
+        with zipfile.ZipFile(path) as archive:
+            entries = {name: archive.read(name) for name in archive.namelist()}
+        xml = ET.fromstring(entries["xl/worksheets/sheet1.xml"])
+        ns = {"x": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+        xml.find("x:sheetData/x:row/x:c[@r='A1']/x:v", ns).text = "4"
+        xml.find("x:dimension", ns).set("ref", "A1:A1")
+        entries["xl/worksheets/sheet1.xml"] = ET.tostring(xml)
+        with zipfile.ZipFile(path, "w") as archive:
+            for name, data in entries.items(): archive.writestr(name, data)
+        self.assertEqual(extract_blocks_auto(path), [["4"], ["first", "second"]])
+        path.unlink()  # The streaming workbook must release its file on Windows.
+
+    def test_xls_date_rounding_at_epoch_matches_previous_reader(self):
+        for epoch1904 in (False, True):
+            book = xlwt.Workbook(); book.dates_1904 = epoch1904
+            sheet = book.add_sheet('first')
+            style = xlwt.easyxf(num_format_str='yyyy-mm-dd hh:mm:ss')
+            sheet.write(0, 0, 0.99999999999, style)
+            sheet.write(1, 0, -1e-11, style)
+            path = self.directory / f'epoch-{epoch1904}.xls'
+            book.save(str(path))
+            date = '1904-01-02' if epoch1904 else '1900-01-01'
+            self.assertEqual(extract_blocks_auto(path), [[date + ' 00:00:00', '00:00:00']])
 
     def test_roundtrip_unicode_dxf_layers_entities_and_units(self):
         texts = ["한글 라벨", "한글과 English 123 😀", "긴 영문 ABC" * 10]

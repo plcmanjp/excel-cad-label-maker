@@ -73,7 +73,7 @@ def package_build(root, build, output):
             reject_links(root, path)
             require(digest(path.read_bytes()) == expected, "Source or asset hash mismatch: " + name)
     require(config["binary_name"] in receipt["files"], "Executable missing from receipt")
-    require((build / "_internal/assets/app-icon.ico").is_file() and (build / "third_party/README.md").is_file(),
+    require((build / "_internal/assets/app-icon.ico").is_file() and (build / "third_party/README.txt").is_file(),
             "Runtime icon or third-party notice missing")
     members = {}
     for name, expected in receipt["files"].items():
@@ -88,6 +88,8 @@ def package_build(root, build, output):
         if path.is_file():
             actual.add(path.relative_to(build).as_posix())
     require(actual == set(members) | {"build-receipt.json"}, "Unlisted or missing package files")
+    require(not any(PurePosixPath(name).suffix.lower() == '.md' for name in actual), 'Markdown build materials are refused')
+    require({'README.txt', 'NOTICE.txt', 'CREDITS.txt'} <= actual, 'Plain user guides are required')
     members["build-receipt.json"] = receipt_bytes
     manifest = dict(config, source_commit=snapshot["commit"],
                     binary_sha256=receipt["files"][config["binary_name"]],
