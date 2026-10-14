@@ -11,7 +11,7 @@ Canonical instructions for the public development and release repository. This h
 - DXF output is supported by the baseline. Native DWG export is not implemented or verified.
 
 ## Startup
-1. In the managed parent checkout, Read ../../AGENTS.md common invariants only. A standalone checkout has no parent dependency. Never load parent-only supervisor rules.
+1. In the managed parent checkout, Read ../AGENTS.md common invariants only. A standalone checkout has no parent dependency. Never load parent-only supervisor rules.
 2. Classify authorization before synchronization or writes. Review or unclear authorization is read-only. Inspect with git --no-optional-locks. Preserve index, HEAD and refs; do not fetch or write records.
 3. Read every rule listed below, wiki/journal/CURRENT.md and the exact assigned GitHub Issue. If Issue access fails, stop dependent work.
 4. For authorized execution, follow git-sync.md. Preserve unrelated work and ask before dependent edits when another session has unexpected changes.
