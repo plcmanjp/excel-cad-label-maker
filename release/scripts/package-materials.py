@@ -77,6 +77,11 @@ def prepare_materials(root, output, release=False):
         reserve(target)
         writes.append((target, content))
 
+    license_source = root / 'LICENSE'
+    if license_source.is_symlink() or license_source.is_junction():
+        raise ValueError('Linked app license source is refused')
+    add_write(output / 'LICENSE.txt', license_source.read_bytes())
+
     provenance = json.loads((root / 'release/third_party/provenance.json').read_text(encoding='utf-8'))
     for source in (root / 'release/third_party/notices').rglob('*'):
         if source.is_symlink() or source.is_junction():

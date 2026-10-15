@@ -18,6 +18,8 @@ class PlainMaterialsTests(unittest.TestCase):
             output = root / 'release/artifacts/app'
             output.mkdir(parents=True)
             (output / 'app.exe').write_bytes(b'SYNTHETIC-EXE')
+            app_license = b'MIT License\r\nSynthetic app license, preserve these bytes.\r\n'
+            (root / 'LICENSE').write_bytes(app_license)
             (output / '_internal').mkdir()
             embedded = b'# Embedded original license\n'
             (output / '_internal/LICENSE.md').write_bytes(embedded)
@@ -33,6 +35,7 @@ class PlainMaterialsTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('# Guide\n\nRead **NOTICE.md** and [credits](CREDITS.md).\n', encoding='utf-8')
             module.prepare_materials(root, output, True)
+            self.assertEqual((output / 'LICENSE.txt').read_bytes(), app_license)
             self.assertEqual((output / 'README.txt').read_text(), 'Guide\n\nRead NOTICE.txt and credits (CREDITS.txt).\n')
             self.assertEqual((output / 'third_party/notices/demo/00-LICENSE.txt').read_bytes(), legal)
             self.assertEqual((output / '_internal/LICENSE.txt').read_bytes(), embedded)
@@ -51,12 +54,13 @@ class PlainMaterialsTests(unittest.TestCase):
             self.assertEqual(sentinel.read_bytes(), b'preserve')
 
     def test_collisions_are_refused_before_any_output_mutation(self):
-        for collision in ['notice', 'case', 'existing', 'embedded', 'provenance']:
+        for collision in ['notice', 'case', 'existing', 'embedded', 'provenance', 'app-license']:
             with self.subTest(collision=collision), tempfile.TemporaryDirectory() as temporary:
                 root = Path(temporary)
                 output = root / 'release/artifacts/app'
                 output.mkdir(parents=True)
                 (output / 'app.exe').write_bytes(b'SYNTHETIC-EXE')
+                (root / 'LICENSE').write_bytes(b'Synthetic app license')
                 notices = root / 'release/third_party/notices/demo'
                 notices.mkdir(parents=True)
                 (notices / '00-LICENSE.md').write_bytes(b'Original markdown')
@@ -70,6 +74,8 @@ class PlainMaterialsTests(unittest.TestCase):
                     target.write_bytes(b'Existing output')
                 elif collision == 'embedded':
                     (output / 'NOTICE.MD').write_bytes(b'Embedded notice')
+                elif collision == 'app-license':
+                    (output / 'LICENSE.TXT').write_bytes(b'Existing app license')
                 else:
                     provenance['demo']['files'] = {'demo/00-LICENSE.md': {}, 'demo/00-LICENSE.txt': {}}
                 (root / 'release/third_party/provenance.json').write_text(json.dumps(provenance))

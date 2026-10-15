@@ -28,15 +28,17 @@ class AppReleaseTests(unittest.TestCase):
         self.asset = "project/src/assets/app-icon.ico"
         sources = {self.source: b"# synthetic entrypoint\n", self.asset: b"synthetic icon",
                    "project/src/app_version.py": b"APP_VERSION = '0.2.0'\n",
-                   "project/requirements-dev.lock.txt": b"synthetic lock\n"}
+                   "project/requirements-dev.lock.txt": b"synthetic lock\n",
+                   "LICENSE": b"SYNTHETIC MIT license\n"}
         for name, data in sources.items():
             self.write(self.root / name, data)
         config = {"version": "0.2.0", "tag": "v0.2.0", "release_type": "recovered-source-build",
-                  "original_baseline_replaced": False, "binary_name": "Excel_CAD_Label.exe"}
+                  "original_baseline_replaced": False, "binary_name": "Excel_CAD_Label.exe", "license": "MIT"}
         self.write(self.root / "release/app-release.json", json.dumps(config).encode())
         files = {"Excel_CAD_Label.exe": b"SYNTHETIC-NOT-RUNNABLE", "VERSION": b"0.2.0\n",
                  "_internal/assets/app-icon.ico": sources[self.asset], "third_party/README.txt": b"notice\n",
-                 "README.txt": b"guide\n", "NOTICE.txt": b"rights\n", "CREDITS.txt": b"credits\n"}
+                 "README.txt": b"guide\n", "NOTICE.txt": b"rights\n", "CREDITS.txt": b"credits\n",
+                 "LICENSE.txt": sources["LICENSE"]}
         for name, data in files.items():
             self.write(self.build / name, data)
         self.receipt = {"type": "release-build", "source_dirty": False, "source_commit": "synthetic-commit",
@@ -65,6 +67,8 @@ class AppReleaseTests(unittest.TestCase):
         with zipfile.ZipFile(archive) as package:
             manifest = json.loads(package.read("Excel-CAD-Label-Maker/release-manifest.json"))
             self.assertEqual(manifest["source_commit"], "synthetic-commit")
+            self.assertEqual(manifest["license"], "MIT")
+            self.assertEqual(package.read("Excel-CAD-Label-Maker/LICENSE.txt"), (self.root / "LICENSE").read_bytes())
             self.assertEqual(manifest["binary_sha256"], packager.digest(package.read("Excel-CAD-Label-Maker/Excel_CAD_Label.exe")))
             for name, expected in manifest["files"].items():
                 self.assertEqual(packager.digest(package.read("Excel-CAD-Label-Maker/" + name)), expected)
@@ -129,6 +133,30 @@ class AppReleaseTests(unittest.TestCase):
         self.receipt['files']['legacy.md'] = packager.digest(data)
         self.write_receipt()
         with self.assertRaisesRegex(ValueError, 'Markdown build materials'):
+            self.invoke()
+        self.assertFalse(self.output.exists())
+
+    def test_missing_app_license_is_refused_before_archive_creation(self):
+        (self.build / 'LICENSE.txt').unlink()
+        del self.receipt['files']['LICENSE.txt']
+        self.write_receipt()
+        with self.assertRaisesRegex(ValueError, 'app license are required'):
+            self.invoke()
+        self.assertFalse(self.output.exists())
+
+    def test_receipted_license_change_or_different_source_license_is_refused(self):
+        path = self.build / 'LICENSE.txt'
+        original = path.read_bytes()
+        path.write_bytes(b'Different terms')
+        self.receipt['files']['LICENSE.txt'] = packager.digest(path.read_bytes())
+        self.write_receipt()
+        with self.assertRaisesRegex(ValueError, 'App license or metadata mismatch'):
+            self.invoke()
+        path.write_bytes(original)
+        self.receipt['files']['LICENSE.txt'] = packager.digest(original)
+        self.write_receipt()
+        (self.root / 'LICENSE').write_bytes(b'Different source terms')
+        with self.assertRaisesRegex(ValueError, 'App license or metadata mismatch'):
             self.invoke()
         self.assertFalse(self.output.exists())
 

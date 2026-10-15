@@ -21,7 +21,7 @@ def main():
     current = (ROOT / 'wiki/journal/CURRENT.md').read_text(encoding='utf-8')
     if 'INVALID STRUCTURE:' in hook['build_brief'](current):
         errors.append('CURRENT structure invalid; check UTF-8 authoring and required headings')
-    visible_roots = {'AGENTS.md', 'README.md', 'wiki', 'project', 'release'}
+    visible_roots = {'AGENTS.md', 'README.md', 'LICENSE', 'wiki', 'project', 'release'}
     for path in ROOT.iterdir():
         if not path.name.startswith('.') and path.name not in visible_roots:
             errors.append('misplaced root asset: ' + path.name)

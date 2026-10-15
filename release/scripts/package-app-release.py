@@ -89,7 +89,12 @@ def package_build(root, build, output):
             actual.add(path.relative_to(build).as_posix())
     require(actual == set(members) | {"build-receipt.json"}, "Unlisted or missing package files")
     require(not any(PurePosixPath(name).suffix.lower() == '.md' for name in actual), 'Markdown build materials are refused')
-    require({'README.txt', 'NOTICE.txt', 'CREDITS.txt'} <= actual, 'Plain user guides are required')
+    require({'README.txt', 'NOTICE.txt', 'CREDITS.txt', 'LICENSE.txt'} <= actual,
+            'Plain user guides and app license are required')
+    license_source = root / 'LICENSE'
+    reject_links(root, license_source)
+    require(config.get('license') == 'MIT' and members['LICENSE.txt'] == license_source.read_bytes(),
+            'App license or metadata mismatch')
     members["build-receipt.json"] = receipt_bytes
     manifest = dict(config, source_commit=snapshot["commit"],
                     binary_sha256=receipt["files"][config["binary_name"]],
