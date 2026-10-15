@@ -7,7 +7,7 @@
 ## 현재 상태
 
 - [0.4.2](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.2)를 정식 latest로 공개했다. [PR #29](https://github.com/plcmanjp/excel-cad-label-maker/pull/29)는 main에 병합됐고 #28은 CLOSED다.
-- 원격과 세 독립 checkout의 병합 feature branch를 검증 후 정리했다. 원래 OneDrive checkout의 미커밋 작업과 중복 worktree 등록은 보존했다. 파일 청소는 #27에서 차단 상태다.
+- 원격과 세 독립 checkout의 병합 feature branch를 검증 후 정리했다. 원래 OneDrive checkout의 미커밋 작업과 중복 worktree 등록은 보존했다. #27의 승인된 C: 중간 파일 32개, 60,988,517bytes를 휴지통에 회수했고 실제 payload와 Git 보존 및 복원 사전 검사를 통과했다. D: 작업 폴더는 보존한다.
 - 배포와 세션 마무리는 [#30](https://github.com/plcmanjp/excel-cad-label-maker/issues/30)이 소유한다. 최종 기록 commit의 CI와 동기화 readback은 해당 완료 댓글에서 확인한다.
 
 ## 주요 결정
@@ -23,12 +23,12 @@
 
 ## 미해결 사항
 
-- #27의 선행 공용 도구 지원 개선은 [부모 #52](https://github.com/plcmanjp/.agents/issues/52)가 소유한다. 공개 origin을 고정하는 manifest v2와 운영 linked 회수/복원을 별도 checkout에서 구현 중이다. 이 독립 배포용 checkout에는 재생성 가능한 PyInstaller 중간 파일만 대상으로 하는 v2 manifest를 추가했다. 원래 checkout의 미커밋 변경과 등록은 보존하며 실제 삭제/휴지통 회수는 아직 0개다.
+- #27의 선행 공용 도구 지원 개선은 [부모 #52](https://github.com/plcmanjp/.agents/issues/52)와 [draft PR #54](https://github.com/plcmanjp/.agents/pull/54)가 소유한다. 공개 manifest v2와 운영 linked 전체 보존 모드를 구현했고 C: 실제 수용 및 독립 검수를 통과했다. 실제 C: 캐시 회수는 완료했으며 원경로에 다시 쓰는 Restore는 실행하지 않았다. D: 수용은 OneDrive 정상화 완료 통보와 새 fixture 검증을 기다린다. 회수한 checkout은 복구 증거 보존을 위해 그대로 두고 진행 기록은 별도 clean checkout에 반영한다.
 - 원래 checkout의 index/HEAD 및 작업 diff 지문은 사전/사후 같지만 원격 추적과 tag refs 변화가 관찰됐다. 이 세션은 그 폴더의 fetch/reset/prune/ref 쓰기를 실행하지 않았고 원인은 미확정이다. 전체 refs 무변경이나 동기화 완료로 판정하지 않는다.
 - #14의 실제 CAD/별도 PC/원본 빌드 대응과 #20의 초보 사용자/실제 OS 배율 검증은 OPEN이다.
 
 ## 다음 작업
 
-1. #27에서 공용 청소 도구 지원/manifest와 원래 checkout 변경 소유권 및 ref 갱신 주체를 확정하고 회수/복원 가능한 계획을 마련한다.
+1. OneDrive 정상화 완료 후 D: 새 fixture의 실제 회수 및 복원 수용을 진행한다. #27의 D: 실제 대상은 정확한 계획과 승인 전까지 보존한다.
 2. #14의 실제 CAD와 별도 PC 및 원본 실행 파일 대응을 확인한다.
 3. #20의 실제 초보 사용자와 OS 배율 150/200%를 검증한다.
