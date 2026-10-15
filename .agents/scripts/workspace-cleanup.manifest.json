@@ -4,7 +4,7 @@
   "repository": "https://github.com/plcmanjp/excel-cad-label-maker.git",
   "blocked_process_names": ["Excel_CAD_Label", "Excel_CAD_Label_Dev", "Update_Notice_QC"],
   "protected_paths": [
-    ".git", ".agents", ".claude", ".codex", ".venv", "venv", "wiki", "release",
+    ".agents", ".claude", ".codex", ".venv", "venv", "wiki", "release",
     "project/original", "project/qc", "project/src", "project/tests", "project/dist",
     ".local/update-qc/latest-build.json"
   ],
