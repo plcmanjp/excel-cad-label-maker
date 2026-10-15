@@ -2,36 +2,34 @@
 
 ## 목표
 
-- [Issue #22](https://github.com/plcmanjp/excel-cad-label-maker/issues/22)의 행 기준 Excel 입력과 스프레드시트 편집을 검증하고 PR을 발행한다.
+- [Issue #22](https://github.com/plcmanjp/excel-cad-label-maker/issues/22)의 구현과 QC를 완료하고 [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)을 검토 대기 상태로 유지한다.
 
 ## 현재 상태
 
-- 기준 main 0867f663372dcc6b91fd81cf383b6b0405866233에서 분기한 feat/issue-22-spreadsheet의 구현과 로컬 QC가 완료됐다. 제품 소스는 고정됐고 commit/push 및 PR CI 확인이 남았다.
-- Writer와 독립 Reviewer의 작업은 종료됐다. Director가 최종 통합, 실제 Excel/소스/EXE 검증과 PR을 소유한다.
-- 새 의존성, 버전 변경, main 병합과 공개 릴리스는 없다. 원본, 기존 배포 자산과 법적 고지 및 과거 QC/journal은 유지한다.
+- feat/issue-22-spreadsheet의 제품 구현 커밋 c80b532를 원격에 반영하고 PR #23을 발행했다. 제품 구현과 로컬/원격 Windows QC가 완료됐다. 최종 진행 기록 커밋의 검사 상태는 PR checks가 기준이다.
+- Writer와 독립 Reviewer의 작업은 종료됐다. 실제 Excel 합성 워크북과 검증용 앱은 닫았으며 원본과 사용자 설정은 유지됐다.
+- main 병합, 버전 변경과 공개 릴리스는 수행하지 않았다. 원본, 기존 배포 자산과 법적 고지 및 과거 QC/journal은 유지한다.
 
 ## 주요 결정
 
 - 새 기본값은 1행=1라벨, 열=한 줄이다. 앞쪽/중간 빈 셀은 유지하고 오른쪽 끝 빈 셀과 전체 빈 행은 제외한다. 기존 설정과 프리셋은 열 방식으로 읽는다.
 - 추가/편집은 공통 그리드와 작업 복사본을 사용한다. 대상 행 수나 용량을 넘는 붙여넣기는 거부하고 취소는 기존 데이터를 보존한다. 원본 Excel에 쓰지 않는다.
-- Excel로 복사할 대상 범위는 텍스트 형식으로 지정한다. 한글 검증은 Unicode 입력이며 native IME 조합 검증과 구분한다.
+- Excel 대상 범위는 텍스트 형식으로 지정한다. 셀 내부 탭/개행은 위치를 안내하고 거부한다. 실제 OS 배율과 native IME 조합은 이번 검증 결과로 확대 판정하지 않는다.
 
 ## 검증 결과
 
-- [로컬 QC 기록](../../../project/qc/issue22-results.json): 제품 128개, 하네스 22개 및 저장소/공개 문서 검사 PASS. 배포 보호 15개 PASS, Windows symlink 권한 부족 1개 SKIP. 독립 검수의 미해결 확정 결함 0개.
-- 실제 Excel과 source/EXE의 6행 3열 왕복에서 18셀 값과 위치가 일치했다. 원본 시트와 가져오기 파일은 유지됐으며 테스트 워크북은 저장하지 않고 닫았다.
-- source/EXE에서 저장한 DXF는 각각 6라벨 17칸과 빈 칸 2개, 문자 및 좌표가 일치한다. audit 오류와 수정은 0개다. 개발용 EXE 빌드와 소스/패키지 1,125파일 해시 대조도 PASS다.
-- 소스의 작은 창과 Tk 100/150/200% 시뮬레이션에서 표 선택 셀과 주요 버튼 표시를 확인했다. OS 배율은 변경하지 않았다. frozen은 표 추가/편집/거부/취소/Excel 왕복/도면 미리보기/저장을 실제 입력으로 확인했다.
-- [성능 기록](../../../project/qc/issue22-performance.json): 10,000행의 붙여넣기 약 0.027초, 배치 약 0.104초, 가시 Canvas 항목 252개 및 DXF audit 오류 0개.
+- [로컬 QC 기록](../../../project/qc/issue22-results.json)과 [성능 기록](../../../project/qc/issue22-performance.json)에 실행 환경, 실제 Excel 18셀 왕복, source/EXE DXF 17칸과 빈 칸 2개, 배율 및 10,000행 측정과 빌드 해시가 있다.
+- 제품 커밋의 [Windows CI](https://github.com/plcmanjp/excel-cad-label-maker/actions/runs/38695062944): 제품 128개, 배포 보호 16개, 하네스 22개, 저장소/공개 문서와 Windows 빌드 PASS. 독립 검수의 미해결 확정 결함 0개.
+- 개발용 EXE의 16개 소스 해시가 커밋된 Git 파일과 정확히 일치한다. 공개 버전은 여전히 0.3.0이며 신규 기능은 PR 검토 대상이다.
 
 ## 미해결 사항
 
-- PR의 최종 head에 대한 원격 CI 확인과 Issue #22 수용 조건 근거 연결이 남았다.
+- PR #23은 OPEN이며 main 병합과 공개 릴리스는 별도 작업이다.
 - Issue #20의 초보 사용자와 실제 OS 배율, Issue #14의 실제 CAD/별도 PC/원본 대응/이용 조건은 별도 OPEN 범위다.
 - 기존 청소 차단 상태는 유지한다. 이번 작업에 파일/캐시/작업트리 청소는 포함하지 않는다.
 
 ## 다음 작업
 
-1. 변경을 commit/push하고 PR을 발행한다.
-2. 원격 Windows CI를 확인하고 실패가 있으면 보완한다.
-3. Issue #22 근거와 최종 진행 기록을 마무리한다.
+1. PR #23의 리뷰와 최종 head 검사 결과를 기준으로 병합 여부를 결정한다.
+2. 별도 사용성/현장 QC는 Issue #20과 #14의 수용 조건으로 진행한다.
+3. 릴리스 작업이 승인되면 버전과 자산을 새로 고정하고 배포 절차를 수행한다.
