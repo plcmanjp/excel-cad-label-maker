@@ -2,14 +2,14 @@
 
 ## 목표
 
-- [Issue #22](https://github.com/plcmanjp/excel-cad-label-maker/issues/22)의 후속 UI 여백 수정과 0.4.0 빌드를 제공하고 [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)에 반영한다.
+- 사용자 승인에 따라 [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)을 main에 병합하고 0.4.0을 정식 배포한다. 완료된 이슈와 병합된 브랜치를 정리한다.
 
 ## 현재 상태
 
 - 사용자 확인 후 안내 영역 오른쪽 여백을 수정하고 앱 버전과 release 설정을 0.4.0으로 맞췄다. 구현, 제품 128개 검사와 개발용 EXE의 실제 화면 확인이 완료됐다. 후속 커밋을 PR #23에 반영했다. 최종 head의 원격 검사 결과는 PR checks가 기준이다.
 - 수정 EXE는 project/dist/Excel_CAD_Label_Dev에 있다. 원래 작업 폴더의 project/dist/Excel_CAD_Label_0.4.0에도 새 폴더로 복사하고 1,125파일 해시를 대조했다.
 - 원래 작업 폴더의 Git index가 OneDrive 오프라인 상태에서 읽기 실패했다. 인덱스와 HEAD는 보존하고 원격 43d42b8에서 만든 OneDrive 밖 독립 체크아웃에서 후속 작업을 수행했다. 원래 작업 폴더의 Git 동기화를 완료로 판정하지 않는다.
-- 공개 버전은 여전히 0.3.0이다. main 병합, Git tag 생성과 공개 릴리스는 수행하지 않았다.
+- 사용자는 요청 번호를 PR #23으로 정정하고 main 병합과 0.4.0 공개 배포를 명시 승인했다. 공개 전 독립 검수에서 ZIP의 이전 열 입력 안내를 발견해 README-Windows와 공개 안내/릴리스 노트를 보정했다. 문서 delta의 남은 finding은 0개이며 정식 패키지 검수는 남았다. 공개 latest는 아직 0.3.0이다.
 
 ## 주요 결정
 
@@ -26,12 +26,12 @@
 
 ## 미해결 사항
 
-- PR #23은 OPEN이며 리뷰와 병합 및 공개 릴리스는 별도다.
+- PR #23에 배포 안내 보정을 반영한 뒤 최종 CI를 확인하고 병합한다. 정식 빌드, ZIP 실제 앱 검증과 독립 패키지 검수 및 원격 readback이 남았다.
 - 원래 OneDrive 저장소의 index 접근 복구가 필요하다. 후속 코드와 원격 결과는 독립 체크아웃을 기준으로 확인한다.
 - Issue #20의 초보 사용자와 실제 OS 배율, Issue #14의 실제 CAD/별도 PC/원본 대응/이용 조건은 별도 OPEN 범위다. 기존 청소 차단 상태도 유지한다.
 
 ## 다음 작업
 
-1. PR #23의 최종 head 검사와 리뷰를 기준으로 병합 여부를 결정한다.
-2. Issue #22의 후속 QC와 사용자 확인 결과를 기준으로 별도 현장 검증을 진행한다.
-3. 원래 저장소는 OneDrive 파일 접근이 복구된 후 원격과 작업 상태를 대조해 동기화한다.
+1. 공개 안내 보정의 CI를 확인하고 PR #23을 main에 병합한다.
+2. clean main의 정식 빌드/ZIP을 검증하고 0.4.0 latest로 공개한 뒤 내려받아 해시를 대조한다.
+3. 완료 이슈와 병합된 브랜치의 정리 결과를 기록한다. 원래 OneDrive index와 worktree의 자료는 보존한다.
