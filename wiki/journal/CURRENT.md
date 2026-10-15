@@ -2,36 +2,32 @@
 
 ## 목표
 
-- 사용자 승인에 따라 [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)을 main에 병합하고 0.4.0을 정식 배포한다. 완료된 이슈와 병합된 브랜치를 정리한다.
+- PR #23의 main 병합과 0.4.0 정식 배포, 완료 이슈와 병합 브랜치 정리를 마친다.
 
 ## 현재 상태
 
-- 사용자 확인 후 안내 영역 오른쪽 여백을 수정하고 앱 버전과 release 설정을 0.4.0으로 맞췄다. 구현, 제품 128개 검사와 개발용 EXE의 실제 화면 확인이 완료됐다. 후속 커밋을 PR #23에 반영했다. 최종 head의 원격 검사 결과는 PR checks가 기준이다.
-- 수정 EXE는 project/dist/Excel_CAD_Label_Dev에 있다. 원래 작업 폴더의 project/dist/Excel_CAD_Label_0.4.0에도 새 폴더로 복사하고 1,125파일 해시를 대조했다.
-- 원래 작업 폴더의 Git index가 OneDrive 오프라인 상태에서 읽기 실패했다. 인덱스와 HEAD는 보존하고 원격 43d42b8에서 만든 OneDrive 밖 독립 체크아웃에서 후속 작업을 수행했다. 원래 작업 폴더의 Git 동기화를 완료로 판정하지 않는다.
-- 사용자는 요청 번호를 PR #23으로 정정하고 main 병합과 0.4.0 공개 배포를 명시 승인했다. 공개 전 독립 검수에서 ZIP의 이전 열 입력 안내를 발견해 README-Windows와 공개 안내/릴리스 노트를 보정했다. 문서 delta의 남은 finding은 0개이며 정식 패키지 검수는 남았다. 공개 latest는 아직 0.3.0이다.
+- [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)은 main의 156b4b9로 병합됐고 Issue #22는 CLOSED다. [0.4.0](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.0)을 정식 latest로 공개하고 두 자산을 다시 내려받아 바이트 동일성을 확인했다.
+- 원격과 OneDrive 밖 독립 빌드 checkout은 main만 남겼다. 병합 이력과 reflog 도달 가능성을 확인하고 검증된 Git bundle 및 refs 기록을 Git 제외 로컬 증거 폴더에 보존했다.
+- 원래 OneDrive 작업 폴더는 Git index 읽기 오류가 있어 로컬 ref와 index, HEAD 및 worktree 자료를 보존했다. 이 폴더의 동기화와 전체 로컬 브랜치 정리는 완료로 판정하지 않는다.
 
 ## 주요 결정
 
-- 1행=1라벨과 공통 표 편집 기능을 기존 공개 버전과 구분하기 위해 0.4.0을 사용한다. 원본 Excel과 기존 설정/프리셋의 호환 계약을 유지한다.
-- 파일 동작 줄은 5개 열을 사용하는데 안내 배경은 4개 열까지만 차지했다. 안내 영역을 마지막 버튼 열까지 확장하며 불필요한 헤더 재배치는 추가하지 않는다.
-- UI 측정과 검증은 격리 설정에서 수행한다. Tk 배율 시뮬레이션과 실제 OS 배율은 구분한다.
+- 1행=1라벨, 열=줄, 중간 빈 셀 보존과 기존 열 입력/설정 호환 계약을 0.4.0으로 배포했다. 안내 영역 오른쪽 여백 수정도 포함한다.
+- 정식 배포물은 clean main 156b4b9에서 빌드했다. 이후 QC/진행 기록 커밋은 배포 tag를 이동하거나 기존 자산을 덮어쓰지 않는다.
 
 ## 검증 결과
 
-- [후속 UI QC](../../../project/qc/issue22-ui-results.json): 수정 전 100%에서 안내 오른쪽 90픽셀 간격이 재현됐다. 수정 후 Tk 100/150/200%의 넓은/좁은 창 전환 및 오른쪽 정렬 3개 검사가 통과했다.
-- 실제 source 640픽셀 창과 설정 보기 전환 후 안내/마지막 버튼의 오른쪽 간격은 모두 0픽셀이다. 0.4.0 EXE의 기본 창과 최대화/복원에서도 안내 배경이 오른쪽 끝까지 채워진다.
-- 제품 128개와 저장소/공개 문서 및 Windows 빌드 PASS. 로컬 배포 보호 15개 PASS와 symlink 권한 부족 1개 SKIP는 원격 CI 결과와 구분한다.
-- 이전 기능의 Excel/DXF 검증은 [기존 QC](../../../project/qc/issue22-results.json)와 [성능 기록](../../../project/qc/issue22-performance.json)에 보존했다. 후속 변경에서 실제 Excel 전체 왕복을 다시 실행했다고 판정하지 않는다.
+- [배포 QC](../../../project/qc/release040-results.json): 제품 128개, 병합 main CI, ZIP 1,129멤버와 해시 및 독립 패키지 검수 PASS. 압축 해제 EXE에서 Excel 파일 선택, 3라벨/8칸의 중간 빈 줄, DXF 저장/재읽기와 원본 불변 및 안내 여백을 확인했다.
+- 공개 자산 byte readback과 실제 이전 공개 0.3.0 EXE의 최신 0.4.0 알림 PASS. 기존 [Excel 기능 QC](../../../project/qc/issue22-results.json)와 [화면 배율 QC](../../../project/qc/issue22-ui-results.json)는 별도 근거다.
 
 ## 미해결 사항
 
-- PR #23에 배포 안내 보정을 반영한 뒤 최종 CI를 확인하고 병합한다. 정식 빌드, ZIP 실제 앱 검증과 독립 패키지 검수 및 원격 readback이 남았다.
-- 원래 OneDrive 저장소의 index 접근 복구가 필요하다. 후속 코드와 원격 결과는 독립 체크아웃을 기준으로 확인한다.
-- Issue #20의 초보 사용자와 실제 OS 배율, Issue #14의 실제 CAD/별도 PC/원본 대응/이용 조건은 별도 OPEN 범위다. 기존 청소 차단 상태도 유지한다.
+- 정식 ZIP의 실제 Explorer 간 드래그는 도구가 다른 창으로 향하는 입력을 차단해 미검증이다. 파일 선택 경로는 통과했으며 드롭 PASS로 확대하지 않는다.
+- Issue #20의 초보 사용자와 실제 OS 배율, Issue #14의 실제 CAD/별도 PC/원본 대응/이용 조건은 OPEN이다. 기존 청소 차단 상태도 유지한다.
+- 원래 OneDrive 저장소의 index 접근 복구와 그 후 로컬 브랜치 정리가 필요하다. 임의 index 재생성이나 worktree 제거를 하지 않는다.
 
 ## 다음 작업
 
-1. 공개 안내 보정의 CI를 확인하고 PR #23을 main에 병합한다.
-2. clean main의 정식 빌드/ZIP을 검증하고 0.4.0 latest로 공개한 뒤 내려받아 해시를 대조한다.
-3. 완료 이슈와 병합된 브랜치의 정리 결과를 기록한다. 원래 OneDrive index와 worktree의 자료는 보존한다.
+1. 실제 사용자 환경에서 Explorer 드롭과 Issue #20의 남은 사용자/OS 배율 검증을 수행한다.
+2. Issue #14의 CAD와 별도 Windows PC 및 권리 조건을 실제 근거로 확인한다.
+3. 원래 OneDrive index가 정상적으로 읽힌 뒤 보존 자료를 확인하고 로컬 Git 동기화와 브랜치 정리를 재개한다.

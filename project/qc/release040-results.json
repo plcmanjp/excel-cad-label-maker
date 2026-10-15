@@ -1,0 +1,42 @@
+{
+  "version": "0.4.0",
+  "tag": "v0.4.0",
+  "source_commit": "156b4b934dcfa7b6e717844e023d7c389807a527",
+  "published_at_utc": "2026-10-15T08:06:07Z",
+  "release_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.0",
+  "archive": "Excel-CAD-Label-Maker-0.4.0-windows-x64.zip",
+  "archive_sha256": "fe73d2a6e4cb1fe2cb1067add9d3a3d7f75db373778b5930b753ae8c5e047142",
+  "archive_bytes": 29620001,
+  "exe_sha256": "78d8f58e9211b0d51581d0892aa861abfc90bc79684e12db994674d443d3f3d1",
+  "checks": {
+    "clean_main_release_receipt": "PASS",
+    "product_tests": {"status": "PASS", "count": 128},
+    "merged_main_ci_run": 38702539537,
+    "zip_integrity_and_all_member_hashes": {"status": "PASS", "members": 1129},
+    "independent_package_review": {"status": "PASS", "unresolved_findings": 0, "legal_originals_verified": 63},
+    "extracted_release_exe": {
+      "startup_version_and_icon": "PASS",
+      "drop_banner_right_edge": "PASS",
+      "file_picker_import": {"status": "PASS", "labels": 3, "cells": 8, "middle_blank_cells": 1},
+      "dxf_save_and_reread": {
+        "status": "PASS", "text_and_geometry_match": true,
+        "audit_errors": 0, "audit_fixes": 0,
+        "bytes": 18238,
+        "sha256": "666824253edbd15f61bf7e3f4965e5742e1541fe35559dbacb493899f3fcc7ff"
+      },
+      "source_workbook_unchanged": "PASS",
+      "manual_update_lookup": "PASS"
+    },
+    "public_latest_tag_notes_and_two_uploaded_assets": "PASS",
+    "public_assets_redownload_byte_comparison": "PASS",
+    "previous_public_030_exe_live_040_notification": "PASS",
+    "live_api_030_to_040": "PASS"
+  },
+  "limits": {
+    "physical_explorer_to_app_drop": "NOT_RUN: Computer Use restricts drag endpoints to the same target window; file picker import was verified instead. No drop PASS is claimed for this release artifact.",
+    "excel_full_clipboard_roundtrip": "Earlier feature QC retained in issue22-results.json; not repeated for the release packaging step.",
+    "novice_user_and_real_os_scaling": "OPEN: Issue #20",
+    "cad_separate_pc_and_original_rights": "OPEN: Issue #14",
+    "original_onedrive_local_branch_cleanup": "BLOCKED: original Git index read error; original refs, index and worktree data preserved. Remote and independent build checkout retain main only."
+  }
+}
