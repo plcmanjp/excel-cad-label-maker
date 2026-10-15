@@ -2,11 +2,12 @@
 
 ## 목표
 
-- 0.4.1 배포 세션을 마무리하고 [Issue #27](https://github.com/plcmanjp/excel-cad-label-maker/issues/27)의 안전한 워크스페이스 청소 재개 조건을 유지한다.
+- [Issue #28](https://github.com/plcmanjp/excel-cad-label-maker/issues/28)의 시작 시 업데이트 팝업을 복원하고 수동 버튼과 모달 지연 동작을 검증한다.
 
 ## 현재 상태
 
 - [0.4.1](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.1)은 MIT와 Arial 기본값을 포함한 정식 latest다. PR #25는 병합됐고 #24, #26은 CLOSED다.
+- fix/issue-28-startup-update에서 자동 조회의 새 버전 결과를 기존 팝업에 연결하고 사용자 설명 및 회귀 검사를 수정했다. 실행 검증은 진행 중이다.
 - 청소 사전 확인은 부분 완료다. 실제 삭제와 휴지통 이동은 0파일, 0bytes이며 #27은 OPEN이다. 원래 작업 폴더는 수정하지 않았고 두 독립 checkout의 작업 기준은 main이다.
 
 ## 주요 결정
@@ -16,7 +17,7 @@
 
 ## 검증 결과
 
-- [정식 배포 검증](../../../project/qc/release041-results.json)과 ab12be0의 원격 CI 38710693104는 PASS다. 최신 release와 로컬 ZIP/EXE hash를 다시 대조했다.
+- 기존 배포와 마무리 기록 d41f074의 원격 CI 38715132086은 PASS다. #28 변경은 별도 검증한다.
 - 원래 checkout의 index, HEAD, refs 및 작업트리 등록 metadata, staged/unstaged diff와 status 지문이 사전 확인 전후 일치했다. 전체 untracked/ignored bytes의 백업이나 검증을 의미하지 않는다.
 
 ## 미해결 사항
@@ -26,6 +27,6 @@
 
 ## 다음 작업
 
-1. #27에서 대상 저장소의 청소 정책과 지원되는 manifest 범위를 확정한다.
-2. 원래 작업 폴더의 변경 소유권과 복구 자료 및 작업트리 연결을 확인한다. 그 전에는 reset, prune이나 자료 회수를 하지 않는다.
-3. 지원 조건이 충족되면 새 inventory와 정확한 휴지통 계획으로 청소 및 복원 검증을 진행한다. #14와 #20의 현장 검증은 해당 환경에서 이어간다.
+1. #28의 회귀 및 제품 검사, 실제 GitHub 조회를 이용한 자동 팝업/수동 재열기와 개발 빌드를 확인하고 PR을 발행한다.
+2. #27에서 청소 정책과 manifest 범위 및 원래 작업 폴더의 변경 소유권과 복구 자료를 확정한다. 그 전에는 reset, prune이나 자료 회수를 하지 않는다.
+3. #14와 #20의 현장 검증은 해당 환경에서 이어간다.

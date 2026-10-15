@@ -41,7 +41,7 @@ class UpdateNoticeTests(unittest.TestCase):
             time.sleep(.01)
         self.fail("GUI condition timed out")
 
-    def test_newer_result_marks_button_and_user_opens_dialog(self):
+    def test_newer_result_opens_notice_and_marks_button(self):
         notice = self.notifier(UpdateResult("available", RELEASE))
         style = ttk.Style(self.root)
         normal_color = style.lookup(notice.button.cget("style"), "foreground")
@@ -49,12 +49,10 @@ class UpdateNoticeTests(unittest.TestCase):
         self.assertEqual(notice.button.cget("text"), "확인 중...")
         self.assertTrue(notice.button.instate(["disabled"]))
         self.pump(lambda: not notice._active)
-        self.assertIsNone(notice.dialog)
+        self.assertEqual(notice.dialog.title(), "새 버전 알림")
         self.assertNotEqual(style.lookup(notice.button.cget("style"), "foreground"), normal_color)
         self.assertTrue(notice.button.instate(["!disabled"]))
         self.assertEqual(notice.button.cget("text"), "새 버전 확인")
-        notice.button.invoke()
-        self.assertEqual(notice.dialog.title(), "새 버전 알림")
         self.assertIsNone(self.root.grab_current())
         def descendants(widget):
             for child in widget.winfo_children():
@@ -65,6 +63,21 @@ class UpdateNoticeTests(unittest.TestCase):
         later = next(w for w in descendants(notice.dialog) if isinstance(w, ttk.Button) and w.cget("text") == "나중에")
         later.invoke()
         self.assertFalse(notice.dialog.winfo_exists())
+
+    def test_startup_opens_one_notice_and_manual_button_reopens_it(self):
+        checker = Mock(return_value=UpdateResult("available", RELEASE))
+        notice = UpdateNotifier(self.root, self.parent, current_version="0.1.0", checker=checker)
+        self.root.deiconify()
+        self.pump(lambda: notice.dialog is not None and notice.dialog.winfo_viewable())
+        checker.assert_called_once_with("0.1.0")
+        first = notice.dialog
+        notice.button.invoke()
+        self.assertIs(notice.dialog, first)
+        first.destroy()
+        notice.button.invoke()
+        self.assertIsNot(notice.dialog, first)
+        self.assertTrue(notice.dialog.winfo_exists())
+        checker.assert_called_once_with("0.1.0")
 
     def test_startup_current_and_failures_do_not_show_message_boxes(self):
         for result in [UpdateResult("current", RELEASE), UpdateResult("unavailable")]:
@@ -96,12 +109,13 @@ class UpdateNoticeTests(unittest.TestCase):
                 self.assertAlmostEqual(dialog_y, parent_y, delta=8)
                 notice.dialog.destroy()
 
-    def test_manual_current_feedback(self):
-        notice = self.notifier(UpdateResult("current", RELEASE))
-        with patch("update_notice.messagebox.showinfo") as message:
-            notice.check(manual=True)
-            self.pump(lambda: not notice._active)
-            message.assert_called_once()
+    def test_manual_current_and_failure_feedback(self):
+        for result in [UpdateResult("current", RELEASE), UpdateResult("unavailable")]:
+            notice = self.notifier(result)
+            with patch("update_notice.messagebox.showinfo") as message:
+                notice.check(manual=True)
+                self.pump(lambda: not notice._active)
+                message.assert_called_once()
 
     def test_no_duplicate_queries_and_no_duplicate_dialogs(self):
         checker = Mock(return_value=UpdateResult("available", RELEASE))
@@ -122,8 +136,24 @@ class UpdateNoticeTests(unittest.TestCase):
             self.pump(lambda: notice._pending is not None)
             self.assertIsNone(notice.dialog)
         self.pump(lambda: not notice._active)
-        self.assertIsNone(notice.dialog)
+        self.assertEqual(notice.dialog.title(), "새 버전 알림")
         self.assertEqual(notice.button.cget("text"), "새 버전 확인")
+
+    def test_existing_grab_defers_automatic_notice_until_released(self):
+        notice = self.notifier(UpdateResult("available", RELEASE))
+        self.root.deiconify()
+        blocker = tk.Toplevel(self.root)
+        self.addCleanup(lambda: blocker.destroy() if blocker.winfo_exists() else None)
+        blocker.update()
+        blocker.grab_set()
+        notice.check()
+        self.pump(lambda: notice._pending is not None)
+        self.assertIsNone(notice.dialog)
+        self.assertIs(self.root.grab_current(), blocker)
+        blocker.grab_release()
+        blocker.destroy()
+        self.pump(lambda: not notice._active)
+        self.assertEqual(notice.dialog.title(), "새 버전 알림")
 
     def test_worker_completion_after_close_does_not_touch_tk(self):
         started, release = threading.Event(), threading.Event()
