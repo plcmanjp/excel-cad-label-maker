@@ -2,31 +2,33 @@
 
 ## 목표
 
-- [Issue #30](https://github.com/plcmanjp/excel-cad-label-maker/issues/30)의 0.4.2 정식 빌드와 공개 후 검증 및 세션 마무리를 완료한다.
+- 공개 0.4.2와 검증 근거를 유지하며, 남은 청소와 현장 검증을 각각의 이슈에서 이어간다.
 
 ## 현재 상태
 
-- [PR #29](https://github.com/plcmanjp/excel-cad-label-maker/pull/29)를 715446731bdc00d48ae41e4df2e96534bff8e286에 병합했고 #28은 CLOSED다. 0.4.2 버전과 시작 업데이트 팝업 및 사용자 안내가 main에 반영됐다.
-- 독립 checkout의 병합 feature branch와 원격 잔여를 정리했다. 전체 history bundle을 독립 bare clone에서 검증했고 main 조상 관계를 확인했다.
-- 공개 latest는 0.4.1이다. 새 clean main 정식 0.4.2 빌드/패키지와 실제 실행을 검증한 뒤 공개한다. 원래 OneDrive checkout의 예상 밖 작업과 중복 등록은 보존한다.
+- [0.4.2](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.2)를 정식 latest로 공개했다. [PR #29](https://github.com/plcmanjp/excel-cad-label-maker/pull/29)는 main에 병합됐고 #28은 CLOSED다.
+- 원격과 세 독립 checkout의 병합 feature branch를 검증 후 정리했다. 원래 OneDrive checkout의 미커밋 작업과 중복 worktree 등록은 보존했다. 파일 청소는 #27에서 차단 상태다.
+- 배포와 세션 마무리는 [#30](https://github.com/plcmanjp/excel-cad-label-maker/issues/30)이 소유한다. 최종 기록 commit의 CI와 동기화 readback은 해당 완료 댓글에서 확인한다.
 
 ## 주요 결정
 
 - 시작 새 버전 팝업과 수동 재열기 및 모달 지연을 유지한다. 비교 버전은 별도 QC 진입점에서만 사용한다.
-- 0.4.2 공개는 현재 사용자 승인 범위다. 기존 공개 자산과 법적 고지 및 검증/복구 자료를 보존한다. 미지원 청소를 우회하지 않는다.
+- 정식 tag의 source는 8498b03412e8a80c844967dca13803b145d11436으로 고정한다. 이후 기록 전용 commit은 공개 자산을 교체하지 않는다. 기존 공개 자산과 법적 고지 및 검증/복구 자료를 보존한다.
+- 0.4.1 사용자는 수동 버튼이나 직접 다운로드로 한 번 갱신해야 한다. 시작 자동 팝업은 0.4.2부터 복원된다. 미지원 청소를 우회하지 않는다.
 
 ## 검증 결과
 
-- 최종 PR head 08db8db의 push CI 38725828637과 PR CI 38725833267 PASS. 독립 소스 delta 검수의 미해결 finding 0개다.
-- [기능 QC](../../../project/qc/issue28-results.json)의 알림 10개/전체 제품 130개와 실제 소스/QC EXE 자동 알림 및 수동 재열기는 PASS다. 새 정식 artifact는 별도 검증한다.
+- [배포 QC](../../../project/qc/release042-results.json)의 제품 130개, 정식 ZIP/EXE와 실제 DXF 저장/재읽기, 별도 frozen QC의 무입력 시작 팝업/수동 재열기, 이전 공개 0.4.1의 새 버전 안내 및 공개 자산 재다운로드 대조는 PASS다. 독립 소스/패키지 검수의 미해결 finding은 0개다.
+- 최종 PR의 push/PR CI와 공식 source main CI 38726264533 PASS. 실제 CAD/물리적 드롭/OS 현장 검증 범위와 로컬 release guard의 symlink 권한 skip 1개는 별도 명시했다.
 
 ## 미해결 사항
 
-- #30의 정식 build/ZIP, 실제 실행/DXF와 독립 artifact 검수, 공개/re-download 검증은 진행 중이다.
-- #27은 청소 manifest 부재와 원래 checkout의 예상 밖 변경 및 실제 운영 linked worktree 미지원으로 OPEN이다. 파일 삭제는 0개다. #14와 #20의 현장 검증도 OPEN이다.
+- #27은 네 checkout의 필수 manifest 부재와 원래 checkout의 예상 밖 변경/중복 등록 및 실제 운영 linked worktree 미지원으로 OPEN이다. 파일 삭제/휴지통 회수는 0개다.
+- 원래 checkout의 index/HEAD 및 작업 diff 지문은 사전/사후 같지만 원격 추적과 tag refs 변화가 관찰됐다. 이 세션은 그 폴더의 fetch/reset/prune/ref 쓰기를 실행하지 않았고 원인은 미확정이다. 전체 refs 무변경이나 동기화 완료로 판정하지 않는다.
+- #14의 실제 CAD/별도 PC/원본 빌드 대응과 #20의 초보 사용자/실제 OS 배율 검증은 OPEN이다.
 
 ## 다음 작업
 
-1. fresh clean main 정식 0.4.2를 빌드/패키징하고 실제 실행과 독립 artifact 검수를 완료한다.
-2. 버전/저장소/commit/자산 hash를 대조해 공개하고 재다운로드 및 이전 앱 업데이트 안내를 확인한다.
-3. #30 완료 기록과 최종 CI를 반영한다. #27/#14/#20은 남은 조건을 유지한다.
+1. #27에서 공용 청소 도구 지원/manifest와 원래 checkout 변경 소유권 및 ref 갱신 주체를 확정하고 회수/복원 가능한 계획을 마련한다.
+2. #14의 실제 CAD와 별도 PC 및 원본 실행 파일 대응을 확인한다.
+3. #20의 실제 초보 사용자와 OS 배율 150/200%를 검증한다.
