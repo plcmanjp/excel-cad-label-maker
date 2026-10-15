@@ -8,7 +8,7 @@
 
 ~~~powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps1 -Release
-& .venv/Scripts/python.exe -B release/scripts/package-app-release.py --output release/artifacts/v0.3.0
+& .venv/Scripts/python.exe -B release/scripts/package-app-release.py --output release/artifacts/v0.4.0
 ~~~
 
 패키저는 앱 버전과 source commit, 소스와 아이콘 및 모든 파일의 SHA-256을 대조합니다. 수정되거나 등록되지 않은 파일, 개발용 빌드, 링크 경로 및 기존 자산 덮어쓰기는 거부합니다. 출력에는 ZIP과 SHA256SUMS.txt가 생성됩니다.

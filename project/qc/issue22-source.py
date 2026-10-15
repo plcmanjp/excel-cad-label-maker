@@ -54,6 +54,8 @@ def main():
                             (("header", app.header), ("update_outer", app.update_frame),
                              ("update_inner", app.updates.frame), ("update_button", app.updates.button),
                              ("help", app.help_button))},
+                 "file_area": {"frame": bounds(app.drop_area.master), "drop": bounds(app.drop_area),
+                               "last_button": bounds(app.drop_area.master.grid_slaves(row=1, column=4)[0])},
                  "os_dpi": ctypes.windll.user32.GetDpiForWindow(root.winfo_id())}
         editor = app.editor
         if editor and editor.winfo_exists() and hasattr(editor, "grid"):

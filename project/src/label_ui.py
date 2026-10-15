@@ -149,7 +149,7 @@ class App:
         file_frame.grid(row=1, column=0, sticky="ew", pady=5)
         file_frame.columnconfigure(0, weight=1)
         self.drop_area = tk.Label(file_frame, text="Excel 파일을 놓거나 행 추가로 시작하세요", background="#eef4fc", foreground="#234b7c", pady=6)
-        self.drop_area.grid(row=0, column=0, columnspan=4, sticky="ew")
+        self.drop_area.grid(row=0, column=0, columnspan=5, sticky="ew")
         self.filename = tk.StringVar(value="선택한 Excel 없음")
         ttk.Label(file_frame, textvariable=self.filename).grid(row=1, column=0, sticky="ew")
         self.browse_button = ttk.Button(file_frame, text="파일 찾기", command=self.on_browse)

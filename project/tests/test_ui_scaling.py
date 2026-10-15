@@ -12,6 +12,16 @@ from label_ui import App
 
 
 class ScalingTests(unittest.TestCase):
+    def assert_top_edges_aligned(self, app):
+        file_frame = app.drop_area.master
+        drop_right = app.drop_area.winfo_x() + app.drop_area.winfo_width()
+        self.assertLessEqual(abs(file_frame.winfo_width() - drop_right), 1)
+        last_button = file_frame.grid_slaves(row=1, column=4)[0]
+        self.assertLessEqual(abs(drop_right - last_button.winfo_x() - last_button.winfo_width()), 1)
+        trailing = app.help_button if app._narrow else app.update_frame
+        header_gap = app.header.winfo_width() - trailing.winfo_x() - trailing.winfo_width()
+        self.assertLessEqual(header_gap, 5)
+
     def assert_visible(self, widget, window):
         self.assertTrue(widget.winfo_ismapped(), str(widget))
         self.assertGreater(widget.winfo_width(), 4)
@@ -31,6 +41,13 @@ class ScalingTests(unittest.TestCase):
             try:
                 app = App(root, check_updates=False, settings_dir=Path(folder))
                 root.geometry("640x420+10+10")
+                root.update()
+                self.assert_top_edges_aligned(app)
+                for width in (round(1120 * percent / 100), round(640 * percent / 100)):
+                    root.geometry(f"{width}x{round(540 * percent / 100)}")
+                    root.update()
+                    self.assert_top_edges_aligned(app)
+                root.geometry("640x420")
                 root.update()
                 app.apply_rows(None, (("AAA", "", "CCC"), ("DDD", "EEE")))
                 deadline = time.monotonic() + 4
