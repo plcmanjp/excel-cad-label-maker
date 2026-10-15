@@ -1,0 +1,50 @@
+{
+  "version": "0.4.1",
+  "tag": "v0.4.1",
+  "license": "MIT",
+  "source_commit": "673d7a626331bc31dac9838f603759235ea2dcbd",
+  "release_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.1",
+  "published_at_utc": "2026-10-15T09:01:41Z",
+  "archive": "Excel-CAD-Label-Maker-0.4.1-windows-x64.zip",
+  "archive_bytes": 29619316,
+  "archive_sha256": "046716e73c0c350245da02858fc2e25c6869d9ab11bdc55871399ccf459bfc16",
+  "exe_sha256": "fe03ace5c6a51c6cddd0f7409ce070552db01978ffc13cac3acdffc54d5436eb",
+  "license_sha256": "7f480cc658b029e3d8f62115121093925bcdce2d33d9eeff5c0af76b57347492",
+  "rights_basis": "Repository owner confirmed assignment of the original source rights. No independent legal review of the assignment agreement is claimed. Preserved original EXE 0.1.0 and third-party components are outside the app MIT grant.",
+  "checks": {
+    "standard_mit_template_text": "PASS",
+    "github_repository_license_detection": "MIT",
+    "product_tests": {"status": "PASS", "count": 128},
+    "harness_tests": {"status": "PASS", "count": 22},
+    "release_guard_tests": {"local_pass": 17, "local_skip_symlink_privilege": 1, "ci_pass": 18},
+    "ci_runs": {"pr": 38708982670, "push": 38708976345, "merged_main": 38709393113},
+    "clean_main_release_receipt": "PASS",
+    "independent_source_and_package_review": {"status": "PASS", "unresolved_findings": 0},
+    "all_zip_member_hashes_and_extracted_bytes": {"status": "PASS", "members": 1130},
+    "receipt_files": {"status": "PASS", "files": 1128},
+    "license_original_bytes_and_mit_manifest": "PASS",
+    "external_original_notices_and_provenance": {"status": "PASS", "originals": 63},
+    "extracted_release_exe_version_icon_and_arial_default": "PASS",
+    "gui_excel_file_picker_and_dxf_save": {"status": "PASS", "labels": 3, "cells": 8, "middle_blank_cells": 1},
+    "gui_dxf_reread": {
+      "status": "PASS", "unicode_text_and_geometry_match": true,
+      "all_text_style": "ARIAL", "font_file": "arial.ttf",
+      "audit_errors": 0, "audit_fixes": 0,
+      "bytes": 18366,
+      "sha256": "3744a461604dee2e06d018709700f5112267d227ae94a49fb2c4cbae137d287c"
+    },
+    "input_workbook_bytes_unchanged": "PASS",
+    "manual_update_lookup": "PASS",
+    "published_tag_notes_latest_and_two_uploaded_assets": "PASS",
+    "public_zip_and_checksum_redownload_byte_comparison": "PASS",
+    "previous_public_040_exe_shows_latest_041_notification": "PASS"
+  },
+  "limits": {
+    "cad_font_display": "Owner reported Arial/Gulim Korean text displays correctly in their CAD. Independent rendering in AutoCAD was not run for this release artifact.",
+    "physical_explorer_drop": "NOT_RUN: cross-window drag is blocked by the Computer Use tool. File-picker import was verified.",
+    "full_excel_clipboard_roundtrip": "Retained earlier issue22-results.json evidence; not repeated for this patch.",
+    "novice_user_and_real_os_scaling": "OPEN: Issue #20",
+    "separate_pc_and_original_build_mapping": "OPEN: Issue #14",
+    "original_onedrive_checkout": "Preserved unexpected staged/unstaged/untracked changes and duplicate worktree registration. No cleanup or synchronization is claimed for that checkout."
+  }
+}
