@@ -16,8 +16,8 @@ import xlrd
 
 from converter import _label_text, validate_excel_path
 from jobs import Cancellation
+from spreadsheet_data import MAX_CELLS, normalize_row, validate_cell
 
-MAX_CELLS = 250_000
 NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 
 
@@ -71,9 +71,10 @@ class InputOptions:
     cell_range: str = ""
     skip_header: bool = False
     mode: str = "legacy"
+    orientation: str = "rows"
 
     def __post_init__(self):
-        if self.mode not in {"legacy", "display"} or type(self.skip_header) is not bool:
+        if self.mode not in {"legacy", "display"} or self.orientation not in {"rows", "columns"} or type(self.skip_header) is not bool:
             raise ValueError("입력 해석 설정을 확인해 주세요.")
         if self.cell_range:
             parse_range(self.cell_range)
@@ -281,9 +282,11 @@ def analyze(source, options=None, token=None):
     for merged in source.merged:
         mc1, mr1, mc2, mr2 = range_boundaries(merged)
         if mc1 <= c2 and mc2 >= c1 and mr1 <= r2 and mr2 >= r1:
-            diagnostics.append(Diagnostic("warning", "merged", "병합 영역은 기준 셀의 값만 읽습니다. 나머지 빈 셀은 라벨 구분에 사용됩니다.", merged))
+            diagnostics.append(Diagnostic("warning", "merged", "병합 영역은 기준 셀의 값만 읽습니다. 나머지는 빈 셀로 처리됩니다.", merged))
     if source.filtered:
         diagnostics.append(Diagnostic("warning", "filter-included", "필터가 있는 시트도 데이터와 숨김 행을 포함합니다. 자동 제외하지 않습니다."))
+    if options.orientation == "rows":
+        return analyze_rows(source, options, selected, diagnostics, (c1, r1, c2, r2), token)
     columns = {}
     for cell in selected:
         columns.setdefault(cell.column, []).append(cell)
@@ -352,6 +355,64 @@ def analyze(source, options=None, token=None):
         flush()
         if seen_bool and seen_number:
             diagnostics.append(Diagnostic("warning", "mixed-boolean", f"{get_column_letter(column)}열의 논리값과 숫자가 섞여 있습니다. 선택한 해석 모드의 출력 문자를 확인해 주세요."))
+    from dataclasses import replace
+    diagnostics = tuple(replace(d, label=address_labels.get(d.address)) for d in diagnostics)
+    applied = f"{get_column_letter(c1)}{r1}:{get_column_letter(c2)}{r2}" if r1 <= r2 else "제목 행 제외 후 빈 범위"
+    return Analysis(source, options, applied, tuple(labels), diagnostics)
+
+
+def analyze_rows(source, options, selected, diagnostics, bounds, token):
+    """Each source row is independent; strings and internal blank cells survive."""
+    c1, r1, c2, r2 = bounds
+    rows = {}
+    for cell in selected:
+        token.check()
+        rows.setdefault(cell.row, {})[cell.column] = cell
+    labels, address_labels = [], {}
+    for row_number, cells in sorted(rows.items()):
+        token.check()
+        values = []
+        last_column = max(cells)
+        for column in range(c1, last_column + 1):
+            token.check()
+            cell = cells.get(column)
+            if cell is None:
+                values.append("")
+                continue
+            value, text = cell.value, ""
+            if cell.kind in {"error", "formula-missing"}:
+                message = "Excel 오류 셀입니다. 원본에서 오류를 수정하고 저장해 주세요." if cell.kind == "error" else "수식의 저장된 결과가 없습니다. Excel에서 계산하고 저장해 주세요."
+                diagnostics.append(Diagnostic("error", cell.kind, message, cell.address))
+            elif type(value) is float and not math.isfinite(value):
+                diagnostics.append(Diagnostic("error", "nonfinite", "유한하지 않은 숫자는 출력할 수 없습니다.", cell.address))
+            else:
+                if cell.formula:
+                    diagnostics.append(Diagnostic("warning", "cached-formula", "저장된 수식 결과를 사용합니다. 최신 계산값인지는 확인할 수 없습니다.", cell.address))
+                if isinstance(value, str):
+                    text = value
+                    if value == "" and (cell.formula or cell.kind == "empty-string"):
+                        diagnostics.append(Diagnostic("warning", "formula-empty" if cell.formula else "empty-string", "저장된 빈 문자열을 빈 셀로 처리합니다.", cell.address))
+                elif options.mode == "display":
+                    text, supported = display_text(value, cell.number_format)
+                    if not supported:
+                        diagnostics.append(Diagnostic("warning", "format-fallback", f"미지원 표시 형식 {cell.number_format!r}: 대체 출력 {text!r}를 확인해 주세요.", cell.address))
+                else:
+                    text = _label_text(value)
+                    if cell.number_format not in {"General", "@"} and value is not None:
+                        formatted, supported = display_text(value, cell.number_format)
+                        if not supported or formatted != text:
+                            diagnostics.append(Diagnostic("warning", "legacy-format", f"기존 해석은 표시 형식을 적용하지 않습니다. 출력 {text!r}를 확인해 주세요.", cell.address))
+                try:
+                    validate_cell(text, row_number - 1, column - 1)
+                except ValueError as error:
+                    diagnostics.append(Diagnostic("error", "cell-control", str(error), cell.address))
+                    text = ""
+            values.append(text)
+        texts = normalize_row(values)
+        if texts:
+            addresses = tuple(f"{get_column_letter(c)}{row_number}" for c in range(c1, c1 + len(texts)))
+            address_labels.update((address, len(labels)) for address in addresses)
+            labels.append(Label(texts, addresses))
     from dataclasses import replace
     diagnostics = tuple(replace(d, label=address_labels.get(d.address)) for d in diagnostics)
     applied = f"{get_column_letter(c1)}{r1}:{get_column_letter(c2)}{r2}" if r1 <= r2 else "제목 행 제외 후 빈 범위"

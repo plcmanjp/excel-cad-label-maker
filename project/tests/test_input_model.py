@@ -55,7 +55,7 @@ class InputModelTests(unittest.TestCase):
             for rows in cases:
                 with self.subTest(suffix=suffix, rows=rows):
                     path = self.workbook(rows, suffix)
-                    result = analyze(read_workbook(path))
+                    result = analyze(read_workbook(path), InputOptions(orientation="columns"))
                     self.assertEqual([list(b) for b in result.blocks], extract_blocks_auto(path))
                     self.assertTrue(all(label.addresses for label in result.labels))
                     self.assertEqual(result.cell_count, sum(map(len, result.blocks)))
@@ -71,10 +71,10 @@ class InputModelTests(unittest.TestCase):
         book.close()
         source = read_workbook(path)
         self.assertEqual(source.sheets, ("first", "second"))
-        selected = analyze(source, InputOptions("A2:B3"))
+        selected = analyze(source, InputOptions("A2:B3", orientation="columns"))
         self.assertEqual(selected.blocks, (("0", "1"), ("A", "B")))
         self.assertEqual(selected.labels[0].addresses, ("A2", "A3"))
-        self.assertEqual(analyze(source, InputOptions("A1:B3", True)).blocks, selected.blocks)
+        self.assertEqual(analyze(source, InputOptions("A1:B3", True, orientation="columns")).blocks, selected.blocks)
         self.assertEqual(analyze(read_workbook(path, "second")).blocks, (("other",),))
         with self.assertRaises(ValueError):
             read_workbook(path, "missing")
@@ -99,8 +99,8 @@ class InputModelTests(unittest.TestCase):
         book.close()
         initial = path.read_bytes()
         source = read_workbook(path)
-        legacy = analyze(source)
-        improved = analyze(source, InputOptions(mode="display"))
+        legacy = analyze(source, InputOptions(orientation="columns"))
+        improved = analyze(source, InputOptions(mode="display", orientation="columns"))
         self.assertEqual(improved.blocks[0], ("001", "001", "1.23", "2026-10-14 08:09:10", "0.12"))
         self.assertNotEqual(legacy.blocks[0], improved.blocks[0])
         codes = {d.code for d in improved.diagnostics}
@@ -127,7 +127,7 @@ class InputModelTests(unittest.TestCase):
         with zipfile.ZipFile(path, "w") as archive:
             for name, data in entries.items():
                 archive.writestr(name, data)
-        result = analyze(read_workbook(path))
+        result = analyze(read_workbook(path), InputOptions(orientation="columns"))
         self.assertEqual(result.blocks, (("4", "tail"), ("text",)))
         self.assertEqual({(d.code, d.address) for d in result.errors}, {("formula-missing", "B1"), ("error", "C1")})
         self.assertIn("cached-formula", {d.code for d in result.diagnostics})
@@ -145,7 +145,7 @@ class InputModelTests(unittest.TestCase):
         sheet.col(1).hidden = True
         book.save(str(path))
         source = read_workbook(path)
-        result = analyze(source, InputOptions(mode="display"))
+        result = analyze(source, InputOptions(mode="display", orientation="columns"))
         self.assertEqual(result.blocks[0], ("001", "2026-10-14"))
         self.assertTrue({"xls-formula-limit", "merged", "hidden-included"} <= {d.code for d in result.diagnostics})
         self.assertFalse(any(cell.formula for cell in source.cells))
@@ -212,7 +212,7 @@ class InputModelTests(unittest.TestCase):
         with zipfile.ZipFile(path, "w") as archive:
             for name, value in entries.items():
                 archive.writestr(name, value)
-        result = analyze(read_workbook(path))
+        result = analyze(read_workbook(path), InputOptions(orientation="columns"))
         self.assertEqual([(d.code, d.address) for d in result.errors], [("formula-missing", "B1")])
         self.assertIn(("formula-empty", "A1"), {(d.code, d.address) for d in result.diagnostics})
 

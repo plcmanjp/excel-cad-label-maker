@@ -18,9 +18,17 @@ class UpdateNotifier:
         self.frame = ttk.Frame(parent)
         self.frame.pack(side="right")
         self.available_release = None
-        self.button = tk.Button(self.frame, text="업데이트 확인", command=lambda: self.check(manual=True),
-                                background="#eef1f5", activebackground="#e0e5ec", relief="flat", borderwidth=1,
-                                padx=10, pady=3, font=("맑은 고딕", 9))
+        style = ttk.Style(root)
+        style.configure("Update.TButton", padding=(10, 3), font=("맑은 고딕", 9),
+                        background="#eef1f5", foreground="#222222")
+        style.map("Update.TButton", background=[("active", "#e0e5ec")],
+                  foreground=[("disabled", "#777777")])
+        style.configure("Available.Update.TButton", font=("맑은 고딕", 9, "bold"),
+                        background="#dbe7ff", foreground="#134ba5")
+        style.map("Available.Update.TButton", background=[("active", "#c8daff")],
+                  foreground=[("disabled", "#777777")])
+        self.button = ttk.Button(self.frame, text="업데이트 확인", command=lambda: self.check(manual=True),
+                                 style="Update.TButton")
         self.button.pack(side="right")
         self._queue = Queue()
         self._active = self._closed = False
@@ -109,9 +117,7 @@ class UpdateNotifier:
                     messagebox.showinfo("업데이트 확인", "지금은 업데이트를 확인할 수 없습니다.\n잠시 후 다시 확인해 주세요.", parent=self.root)
         available = self.available_release is not None
         self.button.configure(text="새 버전 확인" if available else "업데이트 확인",
-                              background="#dbe7ff" if available else "#eef1f5",
-                              foreground="#134ba5" if available else "#222222",
-                              activebackground="#c8daff" if available else "#e0e5ec")
+                              style="Available.Update.TButton" if available else "Update.TButton")
         caption(self.button, self.button.cget("text"))
 
     def show_notice(self, release):

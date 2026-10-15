@@ -21,22 +21,31 @@ def default_directory():
 
 
 def validated(value):
-    expected = set(asdict(LabelSettings())) | {"mode"}
+    expected = set(asdict(LabelSettings())) | {"mode", "orientation"}
     if type(value) is not dict or set(value) != expected:
         raise SettingsError("설정 항목이 현재 버전과 맞지 않습니다.")
     values = value.copy()
     mode = values.pop("mode")
-    if mode not in {"legacy", "display"} or type(values["auto_fit"]) is not bool:
+    orientation = values.pop("orientation")
+    if mode not in {"legacy", "display"} or orientation not in {"rows", "columns"} or type(values["auto_fit"]) is not bool:
         raise SettingsError("입력 해석과 자동 맞춤 설정을 확인해 주세요.")
     try:
         LabelSettings(**values)
     except (ValueError, TypeError) as error:
         raise SettingsError(str(error)) from error
-    return {**asdict(LabelSettings(**values)), "mode": mode}
+    return {**asdict(LabelSettings(**values)), "mode": mode, "orientation": orientation}
 
 
 def defaults():
-    return {**asdict(LabelSettings()), "mode": "legacy"}
+    return {**asdict(LabelSettings()), "mode": "legacy", "orientation": "rows"}
+
+
+def migrate(value, version):
+    if version == 1:
+        if type(value) is not dict or set(value) != set(asdict(LabelSettings())) | {"mode"}:
+            raise SettingsError("이전 설정 항목을 읽을 수 없습니다.")
+        value = {**value, "orientation": "columns"}
+    return validated(value)
 
 
 def preset_name(name):
@@ -60,12 +69,12 @@ class SettingsStore:
                 if self.path.stat().st_size > 256_000:
                     raise SettingsError("설정 파일이 허용 크기를 초과합니다.")
                 data = json.loads(self.path.read_text(encoding="utf-8"))
-                if type(data) is not dict or set(data) != {"version", "last", "presets"} or type(data["version"]) is not int or data["version"] != 1:
+                if type(data) is not dict or set(data) != {"version", "last", "presets"} or type(data["version"]) is not int or data["version"] not in {1, 2}:
                     raise SettingsError("알 수 없는 설정 버전입니다.")
-                last = validated(data["last"])
+                last = migrate(data["last"], data["version"])
                 if type(data["presets"]) is not dict or len(data["presets"]) > 50:
                     raise SettingsError("프리셋 목록을 읽을 수 없습니다.")
-                presets = {preset_name(name): validated(value) for name, value in data["presets"].items()}
+                presets = {preset_name(name): migrate(value, data["version"]) for name, value in data["presets"].items()}
                 self.last, self.presets = last, presets
         except (OSError, ValueError, TypeError) as error:
             self.protected = True
@@ -74,7 +83,7 @@ class SettingsStore:
     def _write(self, last, presets):
         if self.protected:
             raise SettingsError("기존 설정 파일을 보호 중입니다. 설정 복구를 먼저 사용해 주세요.")
-        data = {"version": 1, "last": validated(last), "presets": {preset_name(n): validated(v) for n, v in presets.items()}}
+        data = {"version": 2, "last": validated(last), "presets": {preset_name(n): validated(v) for n, v in presets.items()}}
         if len(presets) > 50:
             raise SettingsError("사용자 프리셋은 최대 50개입니다.")
         temp = None

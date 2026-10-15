@@ -43,11 +43,15 @@ class UpdateNoticeTests(unittest.TestCase):
 
     def test_newer_result_marks_button_and_user_opens_dialog(self):
         notice = self.notifier(UpdateResult("available", RELEASE))
-        normal_color = notice.button.cget("background")
+        style = ttk.Style(self.root)
+        normal_color = style.lookup(notice.button.cget("style"), "foreground")
         notice.check()
+        self.assertEqual(notice.button.cget("text"), "확인 중...")
+        self.assertTrue(notice.button.instate(["disabled"]))
         self.pump(lambda: not notice._active)
         self.assertIsNone(notice.dialog)
-        self.assertNotEqual(notice.button.cget("background"), normal_color)
+        self.assertNotEqual(style.lookup(notice.button.cget("style"), "foreground"), normal_color)
+        self.assertTrue(notice.button.instate(["!disabled"]))
         self.assertEqual(notice.button.cget("text"), "새 버전 확인")
         notice.button.invoke()
         self.assertEqual(notice.dialog.title(), "새 버전 알림")
@@ -70,6 +74,9 @@ class UpdateNoticeTests(unittest.TestCase):
                 self.pump(lambda: not notice._active)
                 self.assertIsNone(notice.dialog)
                 message.assert_not_called()
+                self.assertEqual(notice.button.cget("text"), "업데이트 확인")
+                self.assertEqual(notice.button.cget("style"), "Update.TButton")
+                self.assertTrue(notice.button.instate(["!disabled"]))
 
     def test_notice_is_centered_on_moved_and_resized_parent(self):
         notice = self.notifier(UpdateResult("available", RELEASE))

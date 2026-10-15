@@ -26,7 +26,9 @@ setup-dev.ps1은 .venv를 만들고 project/requirements-dev.lock.txt의 고정 
 
 input_model.py는 셀 출처와 진단을 보존하고 converter.py의 공통 배치를 미리보기와 DXF가 사용합니다. label_ui.py와 preview.py는 Tk 화면, jobs.py는 취소와 작업 세대 및 최종 파일 교체, settings_store.py는 버전 있는 설정을 관리합니다. text_bitmap.py는 Windows GDI를 이용해 글자의 가로 배율을 미리보기에 적용합니다.
 
-working_data.py는 원본 분석에 수정/추가를 적용하는 메모리 모델이며 label_editor.py는 공통 편집 모달입니다. 원본 Excel에 쓰지 않으며 편집 revision과 렌더링 revision을 대조해 오래된 결과의 저장을 차단합니다.
+working_data.py는 원본 분석에 수정/추가를 적용하는 메모리 모델이며 label_editor.py는 공통 편집 모달입니다. spreadsheet_data.py는 문자열 TSV, 행 정규화와 원자적 편집 모델을, spreadsheet.py는 보이는 셀만 그리는 Canvas와 한 개의 Entry를 담당합니다. 원본 Excel에 쓰지 않으며 편집 revision과 렌더링 revision을 대조해 오래된 결과의 저장을 차단합니다.
+
+입력 방향은 InputOptions.orientation의 rows/columns로 설정합니다. 새 설정 v2는 rows를 기본으로 사용하고 기존 v1의 마지막 설정 및 프리셋은 columns로 읽습니다. 읽기만으로 설정 파일을 다시 쓰지 않습니다. TSV 직렬화는 CRLF이며 Windows Tk 클립보드 경계에서는 LF를 전달해 Tk가 CRLF로 변환하게 합니다.
 
 설정 격리는 실행 프로세스의 EXCEL_CAD_LABEL_SETTINGS_DIR 환경 변수로 지정할 수 있습니다. 테스트와 측정은 임시 경로를 지정하며 실제 사용자 설정을 수정하지 않습니다.
 

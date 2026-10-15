@@ -1,6 +1,7 @@
 """In-memory output edits overlay immutable Excel analysis; never write Excel."""
 from dataclasses import replace
 from input_model import Analysis, InputOptions, Label, MAX_CELLS
+from spreadsheet_data import checked_rows, normalize_row
 
 MAX_EDITOR_CHARACTERS = 2_000_000
 
@@ -10,8 +11,9 @@ def parse_label_text(value):
         raise ValueError("한 라벨은 2,000,000자 이내로 입력해 주세요.")
     # Only CR/LF separate cells. Reject DXF control/tag injection and silent trimming.
     lines = tuple(value.replace("\r\n", "\n").replace("\r", "\n").split("\n"))
-    if not lines or any(not line.strip() for line in lines):
-        raise ValueError("빈 줄 없이 한 줄에 한 칸의 문자를 입력해 주세요.")
+    lines = normalize_row(checked_rows((lines,))[0])
+    if not lines:
+        raise ValueError("한 칸 이상 문자를 입력해 주세요.")
     if len(lines) > MAX_CELLS:
         raise ValueError(f"한 라벨은 {MAX_CELLS:,}칸 이내로 입력해 주세요.")
     if any(ord(char) < 32 or ord(char) == 127 for line in lines for char in line):
