@@ -37,6 +37,6 @@
     "excel_full_clipboard_roundtrip": "Earlier feature QC retained in issue22-results.json; not repeated for the release packaging step.",
     "novice_user_and_real_os_scaling": "OPEN: Issue #20",
     "cad_separate_pc_and_original_rights": "OPEN: Issue #14",
-    "original_onedrive_local_branch_cleanup": "BLOCKED: original Git index read error; original refs, index and worktree data preserved. Remote and independent build checkout retain main only."
+    "original_onedrive_local_branch_cleanup": "BLOCKED: index reads initially failed; final read-only status succeeded but exposed unexpected staged/unstaged/untracked changes, duplicate feature worktree registration and a changed HEAD. Original refs, index and worktree data preserved. Remote and independent build checkout retain main only."
   }
 }

@@ -8,7 +8,7 @@
 
 - [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)은 main의 156b4b9로 병합됐고 Issue #22는 CLOSED다. [0.4.0](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.0)을 정식 latest로 공개하고 두 자산을 다시 내려받아 바이트 동일성을 확인했다.
 - 원격과 OneDrive 밖 독립 빌드 checkout은 main만 남겼다. 병합 이력과 reflog 도달 가능성을 확인하고 검증된 Git bundle 및 refs 기록을 Git 제외 로컬 증거 폴더에 보존했다.
-- 원래 OneDrive 작업 폴더는 Git index 읽기 오류가 있어 로컬 ref와 index, HEAD 및 worktree 자료를 보존했다. 이 폴더의 동기화와 전체 로컬 브랜치 정리는 완료로 판정하지 않는다.
+- 원래 OneDrive 작업 폴더는 Git index 읽기 오류 뒤 마지막 읽기 전용 조회가 가능해졌다. 그러나 staged/unstaged/untracked 변경과 같은 feature의 중복 worktree 등록, 이전 관측과 다른 HEAD 0867f66이 확인돼 로컬 ref/index/HEAD/worktree를 보존했다. 변경 원인은 미확정이며 이 폴더의 동기화와 전체 로컬 브랜치 정리는 완료로 판정하지 않는다.
 
 ## 주요 결정
 
@@ -24,10 +24,10 @@
 
 - 정식 ZIP의 실제 Explorer 간 드래그는 도구가 다른 창으로 향하는 입력을 차단해 미검증이다. 파일 선택 경로는 통과했으며 드롭 PASS로 확대하지 않는다.
 - Issue #20의 초보 사용자와 실제 OS 배율, Issue #14의 실제 CAD/별도 PC/원본 대응/이용 조건은 OPEN이다. 기존 청소 차단 상태도 유지한다.
-- 원래 OneDrive 저장소의 index 접근 복구와 그 후 로컬 브랜치 정리가 필요하다. 임의 index 재생성이나 worktree 제거를 하지 않는다.
+- 원래 OneDrive 저장소의 index 접근 안정성과 예상 밖 변경의 소유권/복구 상태 확인 후 로컬 브랜치 정리가 필요하다. 임의 index 재생성이나 worktree 제거를 하지 않는다.
 
 ## 다음 작업
 
 1. 실제 사용자 환경에서 Explorer 드롭과 Issue #20의 남은 사용자/OS 배율 검증을 수행한다.
 2. Issue #14의 CAD와 별도 Windows PC 및 권리 조건을 실제 근거로 확인한다.
-3. 원래 OneDrive index가 정상적으로 읽힌 뒤 보존 자료를 확인하고 로컬 Git 동기화와 브랜치 정리를 재개한다.
+3. 원래 OneDrive의 예상 밖 변경과 중복 worktree 및 복구 자료를 확인한 뒤 로컬 Git 동기화와 브랜치 정리를 재개한다.
