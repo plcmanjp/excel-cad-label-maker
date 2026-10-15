@@ -44,8 +44,8 @@ class WorkflowTests(unittest.TestCase):
 
     def test_corrupt_unknown_invalid_schema_preserved_until_explicit_recovery(self):
         path = self.directory / "settings.json"
-        for contents in [b"bad json", b'{"version":2}', json.dumps({"version": 1, "last": {**defaults(), "cell_w": -1}, "presets": {}}).encode(),
-                         json.dumps({"version": 1, "last": {**defaults(), "customer_path": "secret"}, "presets": {}}).encode()]:
+        for contents in [b"bad json", b'{"version":3}', json.dumps({"version": 2, "last": {**defaults(), "cell_w": -1}, "presets": {}}).encode(),
+                         json.dumps({"version": 2, "last": {**defaults(), "customer_path": "secret"}, "presets": {}}).encode()]:
             path.write_bytes(contents)
             store = SettingsStore(self.directory)
             self.assertTrue(store.protected)
@@ -146,7 +146,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_colliding_reserved_preset_in_disk_is_preserved(self):
         path = self.directory / "settings.json"
-        data = json.dumps({"version": 1, "last": defaults(), "presets": {"마지막 설정": defaults()}}, ensure_ascii=False).encode("utf-8")
+        data = json.dumps({"version": 2, "last": defaults(), "presets": {"마지막 설정": defaults()}}, ensure_ascii=False).encode("utf-8")
         path.write_bytes(data)
         store = SettingsStore(self.directory)
         self.assertTrue(store.protected)

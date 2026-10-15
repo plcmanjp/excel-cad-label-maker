@@ -94,6 +94,7 @@ class UiTests(unittest.TestCase):
         self.assertIn("유지", self.app.status.get())
 
     def test_warnings_confirm_once_and_change_invalidates_confirmation(self):
+        self.app.orientation.set("기존 열 방식")
         book = Workbook()
         book.active.append(["A\nB"])
         book.save(self.file)
@@ -316,6 +317,7 @@ class UiTests(unittest.TestCase):
         self.assertIn("A201", self.app.selection_info.get())
 
     def test_single_long_label_preview_and_detail_are_bounded(self):
+        self.app.orientation.set("기존 열 방식")
         book = Workbook()
         for index in range(3000):
             book.active.append([f"LINE {index}"])
@@ -331,7 +333,8 @@ class UiTests(unittest.TestCase):
         self.app.edit_selected()
         dialogs = [child for child in self.root.winfo_children() if child.winfo_class() == "Toplevel"]
         self.assertEqual(len(dialogs), 1)
-        self.assertEqual(len(self.app.editor.text.get("1.0", "end-1c").splitlines()), 3000)
+        self.assertEqual(len(self.app.editor.grid.model.rows[0]), 3000)
+        self.assertLess(len(self.app.editor.grid.canvas.find_all()), 500)
         dialogs[0].destroy()
 
     def test_example_cannot_overwrite_pending_first_or_replacement_input(self):
@@ -388,6 +391,22 @@ class UiTests(unittest.TestCase):
             for node in ast.walk(ast.parse(source.read_text(encoding="utf-8"))):
                 if isinstance(node, ast.Constant) and isinstance(node.value, str):
                     self.assertFalse(forbidden.intersection(node.value), (source.name, node.lineno))
+
+    def test_header_reflow_keeps_update_progress_and_schedules_no_redraw(self):
+        button = self.app.updates.button
+        button.configure(text="확인 중...", state="disabled", style="Available.Update.TButton")
+        before = tuple(str(button.cget(key)) for key in ("text", "state", "style"))
+        self.root.update_idletasks()
+        with patch.object(self.app, "schedule_idle", wraps=self.app.schedule_idle) as schedule, patch.object(self.app.updates, "check") as check:
+            self.app._narrow = True
+            self.app._layout_panels()
+            self.root.update_idletasks()
+            self.app._narrow = False
+            self.app._layout_panels()
+            self.root.update_idletasks()
+            check.assert_not_called()
+            schedule.assert_not_called()
+        self.assertEqual(tuple(str(button.cget(key)) for key in ("text", "state", "style")), before)
 
     def test_preview_refits_after_hidden_tab_is_shown_and_keeps_manual_zoom(self):
         self.app.select_file(self.file)

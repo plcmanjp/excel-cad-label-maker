@@ -1,0 +1,85 @@
+{
+  "status": "LOCAL_PASS",
+  "app_version": "0.4.0",
+  "issue": 22,
+  "pull_request": 23,
+  "product_tests_passed": 128,
+  "tests_seconds": 39.488,
+  "pre_fix_reproduction": {
+    "scaling_percent": [
+      100,
+      150,
+      200
+    ],
+    "drop_right_gap_px": [
+      90,
+      123,
+      112
+    ]
+  },
+  "post_fix_geometry_tests": {
+    "percent": [
+      100,
+      150,
+      200
+    ],
+    "transitions": "minimum -> wide -> narrow; alignment within 1 pixel",
+    "passed": 3
+  },
+  "source_visual": [
+    {
+      "case": "narrow-observed.json",
+      "geometry": "640x420+30+30",
+      "drop_right_gap_px": 0,
+      "last_button_right_gap_px": 0
+    },
+    {
+      "case": "narrow-settings-observed.json",
+      "geometry": "640x420+30+30",
+      "drop_right_gap_px": 0,
+      "last_button_right_gap_px": 0
+    }
+  ],
+  "frozen_visual": {
+    "default_window": "PASS",
+    "maximize_and_restore": "PASS",
+    "title_version": "0.4.0",
+    "drop_background_reaches_last_file_button": "PASS"
+  },
+  "build": {
+    "source_commit": "43d42b8545457cac867460325a731f4d8afa09fe",
+    "source_dirty": true,
+    "sources": {
+      "project/src/accessibility.py": "fbbcdfd1de6290d20b3758101ee0c1bacef3e926e1a458c4a90b11beefe95496",
+      "project/src/app_version.py": "0cf9efb66f72b3d1e26f5b35d9baa5a70bbcc21bbb7fa1231e715ccbf67181df",
+      "project/src/converter.py": "03a489611f016ccb970316898b6213d1dc0ad3dd92a24a956d50eb2856392f6d",
+      "project/src/excel_cad_label.py": "ce6bd3b4de04a11947bf31b12027598c2163bef8411781240f72071799c681db",
+      "project/src/input_model.py": "4428d594cebaa91d473340210cd21b3ddb0e38bcfe7ecc6ce414727e73fda403",
+      "project/src/jobs.py": "1089257a03563093776e4c6fedf589745bb5587a98573d2fa6fef1fdfc5c7e62",
+      "project/src/label_editor.py": "cd9454010f554f3db6a1b3295e6c8a0a5a58e1e4a89e6f70b031d325e0f7174b",
+      "project/src/label_ui.py": "ef88f0201bd783510477bee8e7143ac1d1b1d041d7dfbf4d695e62f99127b94f",
+      "project/src/preview.py": "84363729adf11236b9a4bc08cf3d2c34a2aa6646f6766f4c35828d0410a0d3f0",
+      "project/src/settings_store.py": "d34f08f94f9dedc4e1b6c2260d6cf0a2d4b5001573807397f131c4996ec9dec9",
+      "project/src/spreadsheet.py": "cf770be647a5b313cc0ddb4b7cde5f719e466124dd66f35f12bc8201e3bb940c",
+      "project/src/spreadsheet_data.py": "f1098344299ddf94a701e80b828d9588b68f83a9a1650c3fb79a00fd4dd5aa6c",
+      "project/src/text_bitmap.py": "63e9835d76ae472a1a8992518677718689e5e75b1a51dab9e225377be70b264e",
+      "project/src/update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+      "project/src/update_notice.py": "3a1eb6870ba3d3c35ec4ed91e64d19847f2af100da60f1073eaee75d66bd37f1",
+      "project/src/working_data.py": "fe315145850f9d35f476511a658dc28c36b944f61a4dfc79afa73560de511145"
+    },
+    "exe_bytes": 9026988,
+    "exe_sha256": "eeb9ad581043e004eb28443c5a6fa136c5d52bb6ddf4b4dea86bff1f12728a2b",
+    "packaged_files_verified": 1125
+  },
+  "release_guards": {
+    "passed": 15,
+    "skipped": 1,
+    "skip_reason": "Local Windows symlink privilege; final PR CI records the separate result"
+  },
+  "ci": "Read PR checks for the exact pushed head",
+  "source_workspace": "Isolated checkout used; original OneDrive Git index unreadable and preserved",
+  "not_claimed": [
+    "Public release or main merge",
+    "Actual OS scaling changes"
+  ]
+}

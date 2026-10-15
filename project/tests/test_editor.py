@@ -23,7 +23,8 @@ from working_data import apply_edits, edited_label, parse_label_text
 class WorkingDataTests(unittest.TestCase):
     def test_literal_text_preserves_zeros_and_spaces_and_refuses_empty_controls(self):
         self.assertEqual(parse_label_text("001\r\n 한글 ABC "), ("001", " 한글 ABC "))
-        for value in ("", "a\n\nB", "a\n", "a\tB", "a\x00B", "a\x7fB"):
+        self.assertEqual(parse_label_text("a\n\nB\n"), ("a", "", "B"))
+        for value in ("", "a\tB", "a\x00B", "a\x7fB"):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 parse_label_text(value)
 
@@ -56,8 +57,8 @@ class EditorUiTests(unittest.TestCase):
         self.folder = Path(self.temp.name)
         self.file = self.folder / "synthetic.xlsx"
         book = Workbook()
-        for text in ("FIRST", "001", None, "SECOND"):
-            book.active.append([text])
+        for row in (("FIRST", "001"), (None,), (None,), ("SECOND",)):
+            book.active.append(row)
         book.save(self.file)
         book.close()
         self.root = TkinterDnD.Tk()
@@ -80,8 +81,8 @@ class EditorUiTests(unittest.TestCase):
     def apply_editor(self, text):
         editor = self.app.editor
         self.assertIsInstance(editor, LabelEditor)
-        editor.text.delete("1.0", "end")
-        editor.text.insert("1.0", text)
+        editor.grid.model._commit((tuple(text.split("\n")),))
+        editor.grid.changed()
         editor.apply()
         self.pump()
 
@@ -149,7 +150,7 @@ class EditorUiTests(unittest.TestCase):
 
     def test_cancel_validation_and_modal_shortcuts_leave_data_unchanged(self):
         self.app.add_row()
-        self.app.editor.text.insert("1.0", "cancel me")
+        self.app.editor.grid.paste_text("cancel me")
         with patch("excel_cad_label.filedialog.askopenfilename") as browse:
             self.app._shortcut(self.app.on_browse)
             self.app.select_file(self.file)
@@ -158,10 +159,10 @@ class EditorUiTests(unittest.TestCase):
         self.assertFalse(self.app.has_edits)
         self.app.add_row()
         editor = self.app.editor
-        editor.text.insert("1.0", "a\n\nB")
+        editor.grid.model._commit((("",),))
         editor.apply()
         self.assertTrue(editor.winfo_exists())
-        self.assertIn("빈 줄", editor.error.cget("text"))
+        self.assertIn("입력", editor.error.cget("text"))
         self.assertFalse(self.app.has_edits)
         editor.destroy()
         self.assertEqual(self.app.updates._defer_depth, 0)
@@ -282,7 +283,7 @@ class EditorUiTests(unittest.TestCase):
             release.wait(3)
             return actual(*args)
         with patch("label_ui.compute_layout", side_effect=delayed):
-            self.app.editor.text.insert("1.0", "TWO")
+            self.app.editor.grid.paste_text("TWO")
             self.app.editor.apply()
             until = time.monotonic() + 2
             while not started.is_set() and time.monotonic() < until:
@@ -306,7 +307,7 @@ class EditorUiTests(unittest.TestCase):
         x, y, width, height = self.app.data_tree.bbox("0")
         self.app.edit_from_table(SimpleNamespace(x=x + 10, y=y + height // 2))
         self.assertIsInstance(self.app.editor, LabelEditor)
-        self.assertEqual(self.app.editor.text.get("1.0", "end-1c"), "FIRST\n001")
+        self.assertEqual(self.app.editor.grid.model.rows, (("FIRST", "001"),))
         self.app.editor.destroy()
 
     def test_keyboard_can_select_first_or_last_row_and_edit_without_mouse(self):
@@ -325,7 +326,7 @@ class EditorUiTests(unittest.TestCase):
         self.app.data_tree.event_generate("<Return>")
         self.root.update()
         self.assertIsInstance(self.app.editor, LabelEditor)
-        self.assertEqual(self.app.editor.text.get("1.0", "end-1c"), "FIRST\n001")
+        self.assertEqual(self.app.editor.grid.model.rows, (("FIRST", "001"),))
         self.app.editor.destroy()
 
     def test_destroy_root_with_editor_has_no_callback_errors(self):
@@ -334,6 +335,145 @@ class EditorUiTests(unittest.TestCase):
         self._cleanups.pop()
         self.assertFalse(self.errors)
         self.assertTrue(self.app.closed)
+
+    def test_batch_add_edit_keeps_unselected_labels_and_rejects_overflow(self):
+        self.app.add_row()
+        self.app.editor.grid.paste_text("AAA\t\tCCC\r\nDDD\tEEE\r\nKEEP\r\n")
+        self.app.editor.apply()
+        self.pump()
+        self.assertEqual(self.app.analysis.blocks, (("AAA", "", "CCC"), ("DDD", "EEE"), ("KEEP",)))
+        self.app.data_tree.selection_set(("0", "2"))
+        self.app.list_selected()
+        self.app.edit_selected()
+        grid = self.app.editor.grid
+        self.assertEqual(grid.model.row_limit, 2)
+        original = grid.model.rows
+        with self.assertRaisesRegex(ValueError, "행 추가"):
+            grid.paste_text("a\nb\nc")
+        self.assertEqual(grid.model.rows, original)
+        grid.paste_text("CHANGED\t\tEND\nLAST\t001\t")
+        self.app.editor.apply()
+        self.pump()
+        self.assertEqual(self.app.analysis.blocks, (("CHANGED", "", "END"), ("DDD", "EEE"), ("LAST", "001")))
+        self.assertEqual(tuple(cell.text for cell in self.app.layout.cells), ("CHANGED", "", "END", "DDD", "EEE", "LAST", "001"))
+        self.assertEqual(self.app.edit_revision, self.app.rendered_edit_revision)
+
+    def test_direction_change_decline_and_cancel_restore_direction_and_edits(self):
+        self.app.select_file(self.file)
+        self.pump()
+        self.app.open_editor((0,))
+        self.apply_editor("KEEP")
+        with patch("label_ui.messagebox.askyesno", return_value=False):
+            self.app.orientation.set("기존 열 방식")
+        self.pump()
+        self.assertEqual(self.app.input_options().orientation, "rows")
+        self.assertEqual(self.app.analysis.blocks[0], ("KEEP",))
+        with patch("label_ui.messagebox.askyesno", return_value=True):
+            self.app.orientation.set("기존 열 방식")
+        self.app.cancel()
+        self.assertEqual(self.app.input_options().orientation, "rows")
+        self.assertEqual(self.app.analysis.blocks[0], ("KEEP",))
+
+    def test_grid_keyboard_edit_apply_selection_and_undo_without_clipboard(self):
+        self.root.deiconify()
+        self.app.add_row()
+        editor = self.app.editor
+        grid = editor.grid
+        self.root.update()
+        grid.canvas.focus_force()
+        grid.canvas.event_generate("<F2>")
+        self.root.update()
+        self.assertTrue(grid.editing)
+        grid.entry.delete(0, "end")
+        grid.entry.insert(0, "한글001")
+        grid.entry.event_generate("<Tab>")
+        self.root.update()
+        self.assertEqual(grid.model.get(0, 0), "한글001")
+        self.assertEqual(grid.active, (0, 1))
+        grid.paste_text("B\tC")
+        grid.select(0, 0)
+        grid.canvas.event_generate("<Shift-Right>")
+        self.root.update()
+        self.assertEqual(grid.selection, (0, 0, 0, 1))
+        grid.canvas.event_generate("<Delete>")
+        self.root.update()
+        self.assertEqual(grid.model.rows, (("", "", "C"),))
+        grid.canvas.event_generate("<Control-z>")
+        self.root.update()
+        self.assertEqual(grid.model.rows, (("한글001", "B", "C"),))
+        grid.canvas.event_generate("<Control-y>")
+        self.root.update()
+        self.assertEqual(grid.model.rows, (("", "", "C"),))
+        grid.canvas.event_generate("<F2>")
+        self.root.update()
+        grid.entry.delete(0, "end")
+        grid.entry.insert(0, "EDIT")
+        grid.entry.event_generate("<Control-Return>")
+        self.pump()
+        self.assertIsNone(self.app.editor)
+        self.assertEqual(self.app.analysis.blocks, (("", "EDIT", "C"),))
+
+    def test_blank_edit_refused_cancel_preserves_original_and_add_row_delete_undo(self):
+        self.app.add_row()
+        grid = self.app.editor.grid
+        grid.paste_text("ONE\nTWO\nTHREE")
+        grid.select(1, 0)
+        grid.delete_rows()
+        self.assertEqual(grid.model.rows, (("ONE",), ("THREE",)))
+        grid.history()
+        self.assertEqual(grid.model.rows, (("ONE",), ("TWO",), ("THREE",)))
+        self.app.editor.apply()
+        self.pump()
+        before = self.app.analysis.blocks
+        self.app.open_editor((1,))
+        self.app.editor.grid.clear()
+        self.app.editor.apply()
+        self.assertIsNotNone(self.app.editor)
+        self.assertIn("비어", self.app.editor.error.cget("text"))
+        self.app.editor.destroy()
+        self.assertEqual(self.app.analysis.blocks, before)
+
+    def test_oversized_selected_rectangle_refused_before_creating_modal(self):
+        self.app.add_row()
+        self.apply_editor("OK")
+        with patch("label_ui.checked_rows", side_effect=ValueError("범위를 나누어 주세요.")):
+            self.app.open_editor((0,))
+        self.assertIsNone(self.app.editor)
+        self.assertFalse(self.app.modal_open)
+        self.assertIn("나누어", self.app.status.get())
+        self.assertEqual(self.app.analysis.blocks, (("OK",),))
+
+    def test_main_table_batch_keyboard_selection_keeps_anchor(self):
+        self.app.add_row()
+        self.app.editor.grid.paste_text("ONE\nTWO\nTHREE\nFOUR")
+        self.app.editor.apply()
+        self.pump()
+        self.root.deiconify()
+        self.root.update()
+        table = self.app.data_tree
+        table.focus_force()
+        table.event_generate("<Home>")
+        table.event_generate("<Shift-Down>")
+        self.root.update()
+        self.assertEqual(table.selection(), ("0", "1"))
+        table.event_generate("<Shift-End>")
+        self.root.update()
+        self.assertEqual(table.selection(), ("0", "1", "2", "3"))
+        table.event_generate("<Shift-Up>")
+        self.root.update()
+        self.assertEqual(table.selection(), ("0", "1", "2"))
+        table.event_generate("<End>")
+        table.event_generate("<Shift-Home>")
+        self.root.update()
+        self.assertEqual(table.selection(), ("0", "1", "2", "3"))
+        table.event_generate("<Home>")
+        table.event_generate("<Control-a>")
+        self.root.update()
+        self.assertEqual(table.selection(), ("0", "1", "2", "3"))
+        table.event_generate("<Return>")
+        self.root.update()
+        self.assertEqual(self.app.editor.max_rows, 4)
+        self.app.editor.destroy()
 
 
 if __name__ == "__main__":

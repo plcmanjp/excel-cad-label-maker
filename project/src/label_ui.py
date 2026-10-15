@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 from queue import Empty
 import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog, ttk
+from tkinter import filedialog, messagebox, simpledialog, ttk, font
 
 from app_version import APP_VERSION
 from converter import CAD_COLORS, CAD_FONTS, LabelSettings, compute_layout, drawing_from_layout, save_drawing, select_dropped_file, validate_excel_path
@@ -18,8 +18,10 @@ from update_check import check_for_update
 from update_notice import UpdateNotifier
 from accessibility import caption, expose_buttons
 from input_model import Analysis
-from working_data import apply_edits, edited_label, parse_label_text
+from working_data import apply_edits, edited_label
+from spreadsheet_data import checked_rows, normalize_row, normalize_rows
 from label_editor import LabelEditor, center
+from spreadsheet import display_scale
 
 APP_TITLE = f"Excel CAD Label Maker {APP_VERSION}"
 PAGE_SIZE = 100
@@ -30,8 +32,11 @@ class App:
         self.root = root
         root.title(APP_TITLE)
         root.iconbitmap(default=str(Path(__file__).resolve().parent / "assets" / "app-icon.ico"))
-        root.geometry("1120x760")
-        root.minsize(640, 420)
+        self.display_scale = display_scale(root)
+        root.geometry(f"{min(round(1120 * self.display_scale), root.winfo_screenwidth() - 40)}x{min(round(760 * self.display_scale), root.winfo_screenheight() - 80)}")
+        root.minsize(min(round(640 * self.display_scale), root.winfo_screenwidth() - 40),
+                     min(round(420 * self.display_scale), root.winfo_screenheight() - 80))
+        ttk.Style(root).configure("Treeview", rowheight=max(20, font.nametofont("TkDefaultFont", root).metrics("linespace") + 8))
         self.store = SettingsStore(settings_dir)
         self.jobs = Jobs()
         self.snapshot = self.analysis = self.layout = None
@@ -51,6 +56,7 @@ class App:
         self.notice_scope = None
         self.modal_open = False
         self.selected = None
+        self.table_anchor = None
         self.page = 0
         self.diag_page = 0
         self.diag_filter = tk.StringVar(value="전체")
@@ -70,6 +76,7 @@ class App:
         self.cell_range = tk.StringVar()
         self.skip_header = tk.BooleanVar(value=False)
         self.mode = tk.StringVar(value="기존 해석")
+        self.orientation = tk.StringVar(value="행 방식 (1행 = 1라벨)")
         self.auto_fit = tk.BooleanVar(value=True)
         self.advanced_open = tk.BooleanVar(value=False)
         self.vars, self.entries, self.combos = {}, {}, {}
@@ -79,7 +86,7 @@ class App:
         self.apply_values(self.store.last)
         self._loading = False
         self.register_drop_targets(root)
-        for variable in [*self.vars.values(), self.auto_fit, self.mode, self.cell_range, self.skip_header]:
+        for variable in [*self.vars.values(), self.auto_fit, self.mode, self.orientation, self.cell_range, self.skip_header]:
             variable.trace_add("write", self.settings_changed)
         root.bind("<Control-o>", lambda event: self._shortcut(self.on_browse))
         root.bind("<Control-s>", lambda event: self._shortcut(self.on_generate))
@@ -128,19 +135,21 @@ class App:
         outer.pack(fill="both", expand=True)
         outer.columnconfigure(0, weight=1)
         outer.rowconfigure(2, weight=1)
-        header = ttk.Frame(outer)
+        header = self.header = ttk.Frame(outer)
         header.grid(row=0, column=0, sticky="ew")
-        ttk.Label(header, text="덕트 라벨 만들기", font=("맑은 고딕", 13, "bold")).pack(side="left")
+        header.columnconfigure(0, weight=1)
+        self.heading_label = ttk.Label(header, text="덕트 라벨 만들기", font=("맑은 고딕", 13, "bold"))
+        self.heading_label.grid(row=0, column=0, sticky="w")
         self.update_frame = ttk.Frame(header)
-        self.update_frame.pack(side="right")
-        ttk.Button(header, text="? 도움말", command=self.show_help).pack(side="right", padx=5)
+        self.update_frame.grid(row=0, column=2, sticky="e")
+        self.help_button = ttk.Button(header, text="? 도움말", command=self.show_help)
+        self.help_button.grid(row=0, column=1, padx=5, sticky="e")
         self.settings_button = ttk.Button(header, text="설정 보기", command=self.toggle_settings)
-        self.settings_button.pack(side="right", padx=5)
         file_frame = ttk.Frame(outer)
         file_frame.grid(row=1, column=0, sticky="ew", pady=5)
         file_frame.columnconfigure(0, weight=1)
         self.drop_area = tk.Label(file_frame, text="Excel 파일을 놓거나 행 추가로 시작하세요", background="#eef4fc", foreground="#234b7c", pady=6)
-        self.drop_area.grid(row=0, column=0, columnspan=4, sticky="ew")
+        self.drop_area.grid(row=0, column=0, columnspan=5, sticky="ew")
         self.filename = tk.StringVar(value="선택한 Excel 없음")
         ttk.Label(file_frame, textvariable=self.filename).grid(row=1, column=0, sticky="ew")
         self.browse_button = ttk.Button(file_frame, text="파일 찾기", command=self.on_browse)
@@ -155,7 +164,7 @@ class App:
         self.settings_frame = ttk.Frame(self.body)
         self.settings_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
         self.settings_frame.rowconfigure(0, weight=1)
-        self.settings_canvas = tk.Canvas(self.settings_frame, width=305, highlightthickness=0)
+        self.settings_canvas = tk.Canvas(self.settings_frame, width=round(305 * self.display_scale), highlightthickness=0)
         self.settings_canvas.grid(row=0, column=0, sticky="nsew")
         scroll = ttk.Scrollbar(self.settings_frame, orient="vertical", command=self.settings_canvas.yview)
         scroll.grid(row=0, column=1, sticky="ns")
@@ -201,6 +210,9 @@ class App:
             variable = self.vars[key] = tk.StringVar()
             combo = self.combos[key] = ttk.Combobox(self.advanced, textvariable=variable, values=values, state="readonly", width=28)
             combo.pack(fill="x")
+        ttk.Label(self.advanced, text="Excel 입력 방향").pack(anchor="w")
+        self.orientation_combo = ttk.Combobox(self.advanced, textvariable=self.orientation, values=["행 방식 (1행 = 1라벨)", "기존 열 방식"], state="readonly", width=28)
+        self.orientation_combo.pack(fill="x")
         ttk.Label(self.advanced, text="입력 문자 해석").pack(anchor="w")
         self.mode_combo = ttk.Combobox(self.advanced, textvariable=self.mode, values=["기존 해석", "표시 형식 반영"], state="readonly", width=28)
         self.mode_combo.pack(fill="x")
@@ -220,7 +232,7 @@ class App:
         self.tabs.add(data_frame, text="출력 데이터")
         data_frame.rowconfigure(0, weight=1)
         data_frame.columnconfigure(0, weight=1)
-        self.data_tree = ttk.Treeview(data_frame, columns=("number", "count", "text", "source", "diagnosis"), show="headings", selectmode="browse", height=8)
+        self.data_tree = ttk.Treeview(data_frame, columns=("number", "count", "text", "source", "diagnosis"), show="headings", selectmode="extended", height=8)
         for key, title, width in [("number", "번호", 45), ("count", "칸", 40), ("text", "출력 예정 문자", 260), ("source", "원본 셀", 100), ("diagnosis", "확인", 90)]:
             self.data_tree.heading(key, text=title)
             self.data_tree.column(key, width=width, minwidth=35, stretch=key == "text")
@@ -233,6 +245,12 @@ class App:
         self.data_tree.bind("<Return>", lambda event: self.edit_selected())
         self.data_tree.bind("<Home>", lambda event: self.select_table_edge())
         self.data_tree.bind("<End>", lambda event: self.select_table_edge(last=True))
+        self.data_tree.bind("<Shift-Home>", lambda event: self.select_table_edge(extend=True))
+        self.data_tree.bind("<Shift-End>", lambda event: self.select_table_edge(last=True, extend=True))
+        self.data_tree.bind("<Control-a>", lambda event: self.select_table_all())
+        for key, direction in (("Up", -1), ("Down", 1)):
+            self.data_tree.bind(f"<{key}>", lambda event, delta=direction: self.move_table(delta))
+            self.data_tree.bind(f"<Shift-{key}>", lambda event, delta=direction: self.move_table(delta, extend=True))
         page_row = ttk.Frame(data_frame)
         page_row.grid(row=1, column=0, sticky="ew")
         ttk.Button(page_row, text="이전 100개", command=lambda: self.change_page(-1)).pack(side="left")
@@ -245,7 +263,9 @@ class App:
         self.edit_button.pack(side="right")
         self.preview = Preview(self.tabs, self.select_label)
         self.tabs.add(self.preview, text="도면 미리보기")
-        ttk.Label(self.preview_frame, textvariable=self.selection_info, wraplength=650).grid(row=2, column=0, sticky="ew", pady=3)
+        self.selection_label = ttk.Label(self.preview_frame, textvariable=self.selection_info, wraplength=650)
+        self.selection_label.grid(row=2, column=0, sticky="ew", pady=3)
+        self.preview_frame.bind("<Configure>", lambda event: self.selection_label.configure(wraplength=max(200, event.width - 16)))
         self.diag_tree = ttk.Treeview(self.preview_frame, columns=("severity", "cell", "message"), show="headings", height=3)
         for key, title, width in [("severity", "구분", 65), ("cell", "원본 셀", 90), ("message", "확인할 사항", 450)]:
             self.diag_tree.heading(key, text=title)
@@ -270,7 +290,8 @@ class App:
         self.run_button.grid(row=0, column=0, sticky="ew")
         self.cancel_button = ttk.Button(bottom, text="작업 취소", command=self.cancel, state="disabled")
         self.cancel_button.grid(row=0, column=1, padx=5)
-        ttk.Label(bottom, textvariable=self.save_reason, wraplength=850).grid(row=1, column=0, columnspan=2, sticky="ew")
+        self.save_reason_label = ttk.Label(bottom, textvariable=self.save_reason, wraplength=850)
+        self.save_reason_label.grid(row=1, column=0, columnspan=2, sticky="ew")
         self.status_label = ttk.Label(bottom, textvariable=self.status, wraplength=850)
         self.status_label.grid(row=2, column=0, columnspan=2, sticky="ew")
         self.success_actions = ttk.Frame(bottom)
@@ -330,7 +351,11 @@ class App:
     def _resize(self, event):
         if event.widget is not self.root:
             return
-        narrow = event.width < 950
+        available = max(200, event.width - 32)
+        self.status_label.configure(wraplength=available)
+        self.save_reason_label.configure(wraplength=available)
+        self.selection_label.configure(wraplength=max(200, self.preview_frame.winfo_width() - 16))
+        narrow = event.width < 950 * self.display_scale
         if narrow == self._narrow:
             return
         self._narrow = narrow
@@ -338,6 +363,10 @@ class App:
 
     def _layout_panels(self):
         if self._narrow:
+            self.heading_label.grid(row=0, column=0, sticky="w")
+            self.settings_button.grid(row=0, column=1, padx=5, sticky="e")
+            self.update_frame.grid(row=1, column=0, sticky="w")
+            self.help_button.grid(row=1, column=1, padx=5, sticky="e")
             self.body.columnconfigure(0, weight=1)
             self.body.columnconfigure(1, weight=0)
             if self._show_settings:
@@ -348,14 +377,15 @@ class App:
                 self.settings_frame.grid_remove()
                 self.preview_frame.grid(row=0, column=0, sticky="nsew")
                 self.settings_button.configure(text="설정 보기")
-            if not self.settings_button.winfo_manager():
-                self.settings_button.pack(side="right", padx=5)
         else:
+            self.heading_label.grid(row=0, column=0, sticky="w")
+            self.update_frame.grid(row=0, column=2, sticky="e")
+            self.help_button.grid(row=0, column=1, padx=5, sticky="e")
             self.body.columnconfigure(0, weight=0)
             self.body.columnconfigure(1, weight=1)
             self.settings_frame.grid(row=0, column=0, sticky="nsew")
             self.preview_frame.grid(row=0, column=1, sticky="nsew")
-            self.settings_button.pack_forget()
+            self.settings_button.grid_remove()
         caption(self.settings_button, self.settings_button.cget("text"))
 
     def toggle_settings(self):
@@ -395,6 +425,11 @@ class App:
         self.drop_area.configure(text=f"선택한 파일: {path.name}")
         self.success_actions.grid_remove()
         settings = self.parse_settings()
+        # This read captures the current settings. Consume their pending refresh
+        # so it cannot start a second read or leave the finished result disabled.
+        if self.debounce_id:
+            self.root.after_cancel(self.debounce_id)
+            self.debounce_id = None
         self.pending_read = (path, sheet)
         self.busy = True
         self.confirmed = False
@@ -482,7 +517,8 @@ class App:
         self.update_save_state()
 
     def input_options(self):
-        return InputOptions(self.cell_range.get().strip(), self.skip_header.get(), "display" if self.mode.get() == "표시 형식 반영" else "legacy")
+        return InputOptions(self.cell_range.get().strip(), self.skip_header.get(), "display" if self.mode.get() == "표시 형식 반영" else "legacy",
+                            "columns" if self.orientation.get() == "기존 열 방식" else "rows")
 
     def parse_settings(self):
         self.invalid_field = None
@@ -506,7 +542,7 @@ class App:
                                      box_color=CAD_COLORS[self.vars["box_color"].get()], text_color=CAD_COLORS[self.vars["text_color"].get()])
             self.form_error.set("")
             self.ratio.set(f"높이 대비 {settings.text_scale * 100:g}% (기존 비율 {settings.text_scale:g})")
-            self.advanced_summary.set(f"간격 {settings.gap_x:g}/{settings.gap_y:g} mm, 글자 {settings.cell_h * settings.text_scale:g} mm, 최소 경고 {settings.min_text_height:g} mm, {self.mode.get()}")
+            self.advanced_summary.set(f"간격 {settings.gap_x:g}/{settings.gap_y:g} mm, 글자 {settings.cell_h * settings.text_scale:g} mm, 최소 경고 {settings.min_text_height:g} mm, {self.mode.get()}, {self.orientation.get()}")
             return settings
         except (ValueError, KeyError) as error:
             self.form_error.set(f"입력 오류: {error}")
@@ -526,6 +562,7 @@ class App:
                     self.cell_range.set(self.analysis.options.cell_range)
                     self.skip_header.set(self.analysis.options.skip_header)
                     self.mode.set("표시 형식 반영" if self.analysis.options.mode == "display" else "기존 해석")
+                    self.orientation.set("기존 열 방식" if self.analysis.options.orientation == "columns" else "행 방식 (1행 = 1라벨)")
                     self._loading = False
                     self.pending_edit_reset = False
                 else:
@@ -678,10 +715,12 @@ class App:
             self.cell_range.set(self.analysis.options.cell_range)
             self.skip_header.set(self.analysis.options.skip_header)
             self.mode.set("표시 형식 반영" if self.analysis.options.mode == "display" else "기존 해석")
+            self.orientation.set("기존 열 방식" if self.analysis.options.orientation == "columns" else "행 방식 (1행 = 1라벨)")
             self._loading = False
         self.pending_edit_reset = False
 
     def render_list(self):
+        self.table_anchor = None
         if self.snapshot:
             self.input_frame.pack(before=self.advanced_toggle, fill="x", pady=4)
         else:
@@ -711,16 +750,53 @@ class App:
     def list_selected(self, event=None):
         selected = self.data_tree.selection()
         if selected:
-            self.select_label(int(selected[0]), from_list=True)
+            focus = self.data_tree.focus()
+            row = focus if focus in selected else selected[0]
+            if len(selected) == 1:
+                self.table_anchor = row
+            self.select_label(int(row), from_list=True)
+        else:
+            self.selected = None
+            self.update_edit_state()
 
-    def select_table_edge(self, last=False):
+    def select_table_edge(self, last=False, extend=False):
         rows = self.data_tree.get_children()
         if rows:
-            row = rows[-1] if last else rows[0]
-            self.data_tree.focus(row)
-            self.data_tree.selection_set(row)
-            self.data_tree.see(row)
-            self.select_label(int(row), from_list=True)
+            self.select_table_row(rows[-1] if last else rows[0], extend)
+        return "break"
+
+    def select_table_row(self, row, extend=False):
+        rows = self.data_tree.get_children()
+        if not rows or row not in rows:
+            return "break"
+        if extend:
+            anchor = self.table_anchor if self.table_anchor in rows else self.data_tree.focus()
+            anchor = anchor if anchor in rows else row
+            first, last = sorted((rows.index(anchor), rows.index(row)))
+            self.table_anchor = anchor
+            selected = rows[first:last + 1]
+        else:
+            self.table_anchor = row
+            selected = (row,)
+        self.data_tree.focus(row)
+        self.data_tree.selection_set(selected)
+        self.data_tree.see(row)
+        self.select_label(int(row), from_list=True)
+        return "break"
+
+    def move_table(self, delta, extend=False):
+        rows = self.data_tree.get_children()
+        if rows:
+            focus = self.data_tree.focus()
+            index = rows.index(focus) if focus in rows else (-1 if delta > 0 else len(rows))
+            self.select_table_row(rows[max(0, min(len(rows) - 1, index + delta))], extend)
+        return "break"
+
+    def select_table_all(self):
+        rows = self.data_tree.get_children()
+        if rows:
+            self.table_anchor = rows[0]
+            self.select_table_row(rows[-1], extend=True)
         return "break"
 
     def select_label(self, index, from_list=False):
@@ -739,6 +815,8 @@ class App:
             cells = self.preview.cells_by_label[index]
             dimensions = f", {x2 - x1:g} × {y2 - y1:g} mm, 글자 최소 {min(c.text_height for c in cells):.3f} mm, 가로 배율 {min(c.width_factor for c in cells):.3f}"
         self.selection_info.set(f"라벨 {index + 1}{dimensions}, {self.label_origin(label)}")
+        if from_list and len(self.data_tree.selection()) > 1:
+            self.selection_info.set(self.selection_info.get() + f", 현재 페이지 {len(self.data_tree.selection())}개 선택 (Enter로 함께 편집)")
         self.preview.select(index, center=from_list)
         self.render_diagnostics()
 
@@ -814,8 +892,11 @@ class App:
         return self.open_editor(None)
 
     def edit_selected(self):
-        if self.selected is not None:
-            self.open_editor(self.selected)
+        selected = tuple(sorted(int(value) for value in self.data_tree.selection()))
+        if selected:
+            self.open_editor(selected)
+        elif self.selected is not None:
+            self.open_editor((self.selected,))
         return "break"
 
     def popup_closed(self):
@@ -827,38 +908,59 @@ class App:
             self.update_edit_state()
             self.data_tree.focus_set()
 
-    def open_editor(self, index):
+    def open_editor(self, indices):
         if self.closed or self.busy or self.saving or self.debounce_id or self.modal_open:
             return
-        if index is not None and (not self.analysis or index < 0 or index >= len(self.analysis.labels)):
+        if isinstance(indices, int):
+            indices = (indices,)
+        if indices is not None and (not self.analysis or not indices or
+                any(index < 0 or index >= len(self.analysis.labels) for index in indices)):
             return
-        label = self.analysis.labels[index] if index is not None else None
+        labels = tuple(self.analysis.labels[index] for index in indices) if indices is not None else None
+        if labels:
+            try:
+                checked_rows(tuple(label.texts for label in labels))
+            except ValueError as error:
+                self.status.set(f"편집 창을 열 수 없습니다. {error} 라벨을 나누어 선택하거나 원본을 확인해 주세요.")
+                return
         self.popup_scope = self.dialog_scope()
         self.popup_scope.__enter__()
         try:
-            self.editor = LabelEditor(self.root, texts=label.texts if label else None,
-                                      origin=self.label_origin(label) if label else "새 라벨을 작업 데이터에 추가합니다.",
-                                      on_apply=lambda text: self.apply_label(index, text), on_close=self.popup_closed)
+            origin = (self.label_origin(labels[0]) if len(labels) == 1 else f"선택한 라벨 {len(labels)}개를 표시 순서로 편집합니다. 대상 밖 라벨은 유지합니다.") if labels else "새 라벨을 여러 행으로 입력하거나 Excel에서 붙여넣으세요. 원본 Excel은 변경하지 않습니다."
+            self.editor = LabelEditor(self.root, rows=tuple(label.texts for label in labels) if labels else None,
+                                      max_rows=len(labels) if labels else None, origin=origin,
+                                      on_apply=lambda rows: self.apply_rows(indices, rows), on_close=self.popup_closed)
         except Exception:
             self.popup_closed()
             raise
         self.update_edit_state()
 
-    def apply_label(self, index, value):
+    def apply_rows(self, indices, rows):
         if self.closed or self.busy or self.saving or self.debounce_id:
             raise ValueError("결과 갱신이 끝난 뒤 다시 적용해 주세요.")
-        texts = parse_label_text(value)
+        rows = checked_rows(rows)
+        if indices is not None and (len(rows) != len(indices) or any(not normalize_row(row) for row in rows)):
+            raise ValueError("선택한 라벨마다 한 행을 유지하고 한 칸 이상 입력해 주세요. 새 라벨은 행 추가에서 입력하세요.")
+        rows = normalize_rows(rows)
+        if not rows:
+            raise ValueError("한 행 이상 문자를 입력해 주세요.")
         replacements, additions = self.replacements.copy(), self.additions.copy()
         original_count = len(self.base_analysis.labels) if self.base_analysis else 0
-        if index is None:
-            additions.append(edited_label(texts))
-        elif index < original_count:
-            replacements[index] = edited_label(texts, self.base_analysis.labels[index])
+        if indices is None:
+            additions.extend(edited_label(texts) for texts in rows)
         else:
-            offset = index - original_count
-            if not 0 <= offset < len(additions):
+            if len(set(indices)) != len(indices):
                 raise ValueError("편집할 라벨을 다시 선택해 주세요.")
-            additions[offset] = edited_label(texts, additions[offset])
+            for index, texts in zip(indices, rows):
+                if index < 0:
+                    raise ValueError("편집할 라벨을 다시 선택해 주세요.")
+                if index < original_count:
+                    replacements[index] = edited_label(texts, self.base_analysis.labels[index])
+                else:
+                    offset = index - original_count
+                    if not 0 <= offset < len(additions):
+                        raise ValueError("편집할 라벨을 다시 선택해 주세요.")
+                    additions[offset] = edited_label(texts, additions[offset])
         # Validate capacity before committing the in-memory transaction.
         candidate = apply_edits(self.base_analysis, replacements.items(), additions, self.input_options())
         self.replacements, self.additions = replacements, additions
@@ -1010,7 +1112,8 @@ class App:
         settings = self.parse_settings()
         if settings is None:
             raise SettingsError(self.form_error.get())
-        return {**asdict(settings), "mode": "display" if self.mode.get() == "표시 형식 반영" else "legacy"}
+        return {**asdict(settings), "mode": "display" if self.mode.get() == "표시 형식 반영" else "legacy",
+                "orientation": "columns" if self.orientation.get() == "기존 열 방식" else "rows"}
 
     def apply_values(self, values):
         loading = self._loading
@@ -1023,6 +1126,7 @@ class App:
             self.vars[key].set(next(name for name, number in CAD_COLORS.items() if number == values[key]))
         self.auto_fit.set(values["auto_fit"])
         self.mode.set("표시 형식 반영" if values["mode"] == "display" else "기존 해석")
+        self.orientation.set("기존 열 방식" if values["orientation"] == "columns" else "행 방식 (1행 = 1라벨)")
         self._loading = loading
         self.parse_settings()
         if not loading:
@@ -1145,9 +1249,13 @@ class App:
                 sheet = book.active
                 sheet.title = "라벨 예제"
                 for index in range(20):
-                    for text in (f"LABEL {index + 1:02}", "전원 입력", "확인"):
-                        sheet.append([text])
-                    sheet.append([None])
+                    texts = (f"LABEL {index + 1:02}", "전원 입력", "확인")
+                    if self.input_options().orientation == "columns":
+                        for text in texts:
+                            sheet.append([text])
+                        sheet.append([None])
+                    else:
+                        sheet.append(texts)
                 book.save(value)
                 self.select_file(value)
             except Exception as error:

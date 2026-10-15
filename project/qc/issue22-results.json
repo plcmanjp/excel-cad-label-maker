@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "issue": "https://github.com/plcmanjp/excel-cad-label-maker/issues/22",
+  "status": "LOCAL_PASS",
+  "verified_at": "2026-10-15T15:50:54+09:00",
+  "environment": {
+    "python": "3.13.15",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "excel": "Microsoft 365 Excel 16.0.20430.20146 x64",
+    "os_dpi": 96
+  },
+  "build": {
+    "type": "development-build",
+    "app_version": "0.3.0",
+    "source_commit": "0867f663372dcc6b91fd81cf383b6b0405866233",
+    "source_dirty": true,
+    "sources": {
+      "project/src/accessibility.py": "fbbcdfd1de6290d20b3758101ee0c1bacef3e926e1a458c4a90b11beefe95496",
+      "project/src/app_version.py": "1c7a26668df7f6fb2ab3d527ac213a6fab8a5d0338e364f806cc06be13474411",
+      "project/src/converter.py": "03a489611f016ccb970316898b6213d1dc0ad3dd92a24a956d50eb2856392f6d",
+      "project/src/excel_cad_label.py": "ce6bd3b4de04a11947bf31b12027598c2163bef8411781240f72071799c681db",
+      "project/src/input_model.py": "4428d594cebaa91d473340210cd21b3ddb0e38bcfe7ecc6ce414727e73fda403",
+      "project/src/jobs.py": "1089257a03563093776e4c6fedf589745bb5587a98573d2fa6fef1fdfc5c7e62",
+      "project/src/label_editor.py": "cd9454010f554f3db6a1b3295e6c8a0a5a58e1e4a89e6f70b031d325e0f7174b",
+      "project/src/label_ui.py": "8bf3572c2b6642399a39359f6f2dfbbada851b5fa03d2f6cdd352a7094f7d16e",
+      "project/src/preview.py": "84363729adf11236b9a4bc08cf3d2c34a2aa6646f6766f4c35828d0410a0d3f0",
+      "project/src/settings_store.py": "d34f08f94f9dedc4e1b6c2260d6cf0a2d4b5001573807397f131c4996ec9dec9",
+      "project/src/spreadsheet.py": "cf770be647a5b313cc0ddb4b7cde5f719e466124dd66f35f12bc8201e3bb940c",
+      "project/src/spreadsheet_data.py": "f1098344299ddf94a701e80b828d9588b68f83a9a1650c3fb79a00fd4dd5aa6c",
+      "project/src/text_bitmap.py": "63e9835d76ae472a1a8992518677718689e5e75b1a51dab9e225377be70b264e",
+      "project/src/update_check.py": "90de1c75a098df6b8358343397c1e66032fe79252422faba3381b8203a2b1e02",
+      "project/src/update_notice.py": "3a1eb6870ba3d3c35ec4ed91e64d19847f2af100da60f1073eaee75d66bd37f1",
+      "project/src/working_data.py": "fe315145850f9d35f476511a658dc28c36b944f61a4dfc79afa73560de511145"
+    },
+    "lock_sha256": "172d92e364beb64d7a9dab64326d05ec99f758f7c8bb9147c45f0e50c04281c2",
+    "exe_sha256": "82fc4ca085598f82abccc680c966d5a5d4d7d2ebaea2125955d27805da5c6365",
+    "exe_bytes": 9026986,
+    "receipt_sha256": "b8bf0b84125f4a4043868140d800720aefa972cfe25c5619e82e4770bd1a423b",
+    "packaged_files_verified": 1125
+  },
+  "tests": {
+    "product": {
+      "run": 128,
+      "passed": 128,
+      "seconds": 37.82
+    },
+    "harness": {
+      "run": 22,
+      "passed": 22
+    },
+    "release_guards": {
+      "run": 16,
+      "passed": 15,
+      "skipped": 1,
+      "skip_reason": "Windows symlink privilege unavailable (WinError 1314)"
+    },
+    "repository_and_public_docs": "PASS",
+    "independent_review_remaining_findings": 0,
+    "ci": "Read the pull request checks for the exact pushed head; this file records local execution."
+  },
+  "excel_roundtrip": {
+    "status": "PASS",
+    "range": "A1:C6",
+    "cells": 18,
+    "method": "Real Excel copy/paste through injected keyboard, app cell edit, Excel text-format destination, live COM values readback",
+    "source_returned_rows": [
+      [
+        "수정한글",
+        "BBB",
+        "CCC"
+      ],
+      [
+        "DDD",
+        "EEE",
+        ""
+      ],
+      [
+        "FFF",
+        "",
+        "GGG"
+      ],
+      [
+        "",
+        "선두 빈 칸",
+        "한글"
+      ],
+      [
+        "001",
+        "12345678901234567890",
+        "2026-01-02"
+      ],
+      [
+        "=SUM(A1:A2)",
+        "따옴표 \"확인\"",
+        " 공백 보존 "
+      ]
+    ],
+    "frozen_returned_rows": [
+      [
+        "실행파일검증",
+        "BBB",
+        "CCC"
+      ],
+      [
+        "DDD",
+        "EEE",
+        ""
+      ],
+      [
+        "FFF",
+        "",
+        "GGG"
+      ],
+      [
+        "",
+        "선두 빈 칸",
+        "한글"
+      ],
+      [
+        "001",
+        "12345678901234567890",
+        "2026-01-02"
+      ],
+      [
+        "=SUM(A1:A2)",
+        "따옴표 \"확인\"",
+        " 공백 보존 "
+      ]
+    ],
+    "source_sheet_unchanged": true,
+    "extra_rows_empty": true,
+    "clipboard_newlines": {
+      "crcrlf": 0,
+      "crlf": 6,
+      "lf": 6
+    },
+    "source_file_sha256_unchanged": "4a6e91809e12c880aeba7f13e9b20a55c6ea7e5cf225f4f3b7b2a6aa93a59366"
+  },
+  "source_gui": {
+    "status": "PASS",
+    "steps": [
+      "Excel 6x3 paste",
+      "one-step undo and redo",
+      "double-click and F2 cell edit",
+      "Unicode Korean entry and Tab commit",
+      "cancel preserves working labels",
+      "file import 6 labels / 17 cells",
+      "table Ctrl+A then Enter batch edit",
+      "apply revision matches preview revision",
+      "physical Ctrl+S and native save dialog"
+    ],
+    "input_method": "Injected Unicode text; native IME composition was not asserted"
+  },
+  "frozen_gui": {
+    "status": "PASS",
+    "steps": [
+      "bulk paste and apply",
+      "single-row paste overflow refusal and cancel",
+      "cell edit and copy to Excel",
+      "DXF save and independent readback",
+      "standard-window controls and grid"
+    ],
+    "settings": "Isolated process-specific EXCEL_CAD_LABEL_SETTINGS_DIR"
+  },
+  "scaling": {
+    "scope": "Tk 100/150/200 percent simulation with real keyboard/mouse; OS display setting was not changed",
+    "cases": [
+      {
+        "requested_percent": 100,
+        "tk_scaling": 1.3339898243886428,
+        "os_dpi": 96,
+        "main_geometry": "640x420+30+30",
+        "minimum_size": [
+          640,
+          420
+        ],
+        "editor_geometry": "683x536+8+0",
+        "active_cell_visible_after_paste": true,
+        "state_sha256": "854863667508fef02fbb23a4227766fd6df25eb56507f832259d8bb07b91e485"
+      },
+      {
+        "requested_percent": 150,
+        "tk_scaling": 1.9980334316617503,
+        "os_dpi": 96,
+        "main_geometry": "959x629+30+30",
+        "minimum_size": [
+          959,
+          629
+        ],
+        "editor_geometry": "1002x786+8+0",
+        "active_cell_visible_after_paste": true,
+        "state_sha256": "3495e7e9eba2387559090be7dcc12f82becd8dff63e15ebac61b7654e0cec1a6"
+      },
+      {
+        "requested_percent": 200,
+        "tk_scaling": 2.664044575549,
+        "os_dpi": 96,
+        "main_geometry": "1279x839+30+30",
+        "minimum_size": [
+          1279,
+          839
+        ],
+        "editor_geometry": "1322x1086+8+0",
+        "active_cell_visible_after_paste": true,
+        "state_sha256": "534198687db8d424ee788876690af9f2cdda682f8ad11676bf0a1cd5069c4b6a"
+      }
+    ]
+  },
+  "dxf": {
+    "source": {
+      "status": "PASS",
+      "labels": 6,
+      "cells": 17,
+      "blank_cells": 2,
+      "text_and_geometry_match": true,
+      "audit_errors": 0,
+      "audit_fixes": 0,
+      "settings": "default 60x15 mm cells, 5 labels per row, 20 mm gaps",
+      "dxf_bytes": 21506,
+      "dxf_sha256": "8cf1618951ba1f5983b5e15e16b3e80aa7c0e11a83e6041e0c22d764a1c3218f"
+    },
+    "frozen": {
+      "status": "PASS",
+      "labels": 6,
+      "cells": 17,
+      "blank_cells": 2,
+      "text_and_geometry_match": true,
+      "audit_errors": 0,
+      "audit_fixes": 0,
+      "settings": "default 60x15 mm cells, 5 labels per row, 20 mm gaps",
+      "dxf_bytes": 21537,
+      "dxf_sha256": "54d28c6606fd12eaa3ef64362d7780c3f81e704d4da689b16f863fb238fec069"
+    }
+  },
+  "performance": {
+    "python": "3.13.15",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "scope": "Synthetic model transactions, source Tk viewport and DXF reread; not OS input latency",
+    "samples": [
+      {
+        "rows": 1000,
+        "cells": 3000,
+        "tsv_roundtrip_seconds": 0.0037499000027310103,
+        "paste_seconds": 0.002675199997611344,
+        "single_edit_seconds": 0.0012819999974453822,
+        "undo_redo_seconds": 2.8800001018680632e-05,
+        "capacity_refusal_seconds": 1.8499995348975062e-05,
+        "layout_seconds": 0.010377500002505258,
+        "grid_start_scroll_seconds": 0.1752619000035338,
+        "visible_canvas_items": 252,
+        "dxf_nonempty_texts": 2000,
+        "dxf_audit_errors": 0
+      },
+      {
+        "rows": 10000,
+        "cells": 30000,
+        "tsv_roundtrip_seconds": 0.030530599993653595,
+        "paste_seconds": 0.027268599995295517,
+        "single_edit_seconds": 0.013075100010610186,
+        "undo_redo_seconds": 0.000538099993718788,
+        "capacity_refusal_seconds": 0.00011940000695176423,
+        "layout_seconds": 0.10394319999613799,
+        "grid_start_scroll_seconds": 0.1668403999938164,
+        "visible_canvas_items": 252,
+        "dxf_nonempty_texts": 20000,
+        "dxf_audit_errors": 0
+      }
+    ]
+  },
+  "resolved_qc_defects": [
+    "Windows Tk CRCRLF clipboard row duplication",
+    "stale settings debounce during file read",
+    "main-table batch keyboard selection",
+    "active cell hidden after preview resize",
+    "high-scale minimum window and header visibility",
+    "initial update button paint with themed control"
+  ],
+  "limits": [
+    "250000 rectangular editor cells and 2000000 characters",
+    "embedded cell tabs/newlines rejected with location",
+    "Excel destination must be formatted as text to preserve identifiers",
+    "undo history is bounded"
+  ],
+  "separate_gates": [
+    "Issue 14 real CAD / other PC / original comparison and terms",
+    "Issue 20 novice user and actual OS display scaling"
+  ],
+  "release_published": false,
+  "evidence": [
+    {
+      "path_relative_to_local_qc": "excel-source-after-frozen.json",
+      "bytes": 948,
+      "sha256": "649d7aa0ebdbcb45c2a87f11b358bf3e733dee435ce8fb4fb6fd706c0f741394"
+    },
+    {
+      "path_relative_to_local_qc": "excel-source-before.json",
+      "bytes": 1093,
+      "sha256": "88ac0927127f648c008dadb242b8b554d5be5ee4125d90e366c4e289669b2d69"
+    },
+    {
+      "path_relative_to_local_qc": "excel-source-after.json",
+      "bytes": 982,
+      "sha256": "ecbbd6c7912b736101ab221ac74c94e3a35b956837e1ff85791c43223ef32f74"
+    },
+    {
+      "path_relative_to_local_qc": "excel-returned-final.json",
+      "bytes": 1262,
+      "sha256": "d515ab488ec11ac2c4b8be2fecd2b60de3606575fbd8c52ba6831e4cb94105fb"
+    },
+    {
+      "path_relative_to_local_qc": "clipboard-newlines-final.json",
+      "bytes": 33,
+      "sha256": "be6223272b98b774a66f136d55f8907cc2b3fe86693d48bbbde18e5c644308e2"
+    },
+    {
+      "path_relative_to_local_qc": "source-dxf-verified.json",
+      "bytes": 337,
+      "sha256": "4186007da55c0309edc66185138433bc10854564a8f5fb8e8679773ef67b86ae"
+    },
+    {
+      "path_relative_to_local_qc": "frozen-dxf-verified.json",
+      "bytes": 337,
+      "sha256": "8851f3d43aab62507504d3742ca36ff0d22bf7f850826ce3d5ffcbbd7067ef31"
+    },
+    {
+      "path_relative_to_local_qc": "frozen-excel-returned.json",
+      "bytes": 1224,
+      "sha256": "fbd748ed5c655c19c40cca5a9b1725f7a02c65ea8de42e188134b5f4293df0c8"
+    },
+    {
+      "path_relative_to_local_qc": "source/undo-paste.json",
+      "bytes": 804,
+      "sha256": "7f9480f719938efe34388af2ad48df0cd921dec3ad5142a5a321f4c65f7163b4"
+    },
+    {
+      "path_relative_to_local_qc": "source/redo-paste.json",
+      "bytes": 745,
+      "sha256": "e3df6e851ba08104dce0f7464a0daa81ab73ddab8b6a7cac9c255be52236d022"
+    },
+    {
+      "path_relative_to_local_qc": "source/cancel-preserved.json",
+      "bytes": 326,
+      "sha256": "639921fddf78d0289fa0e2b350293d928b4470cb92d0d7bfba994c82767d5b6a"
+    },
+    {
+      "path_relative_to_local_qc": "build-complete.log",
+      "bytes": 27789,
+      "sha256": "6e204a608542240c2ebd4b78d070df775032ea0eb4adf6b6de32554be2d1f4d3"
+    },
+    {
+      "path_relative_to_local_qc": "source-final.dxf",
+      "bytes": 21506,
+      "sha256": "8cf1618951ba1f5983b5e15e16b3e80aa7c0e11a83e6041e0c22d764a1c3218f"
+    },
+    {
+      "path_relative_to_local_qc": "f.dxf",
+      "bytes": 21537,
+      "sha256": "54d28c6606fd12eaa3ef64362d7780c3f81e704d4da689b16f863fb238fec069"
+    }
+  ]
+}
