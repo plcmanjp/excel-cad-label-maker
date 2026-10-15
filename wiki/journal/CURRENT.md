@@ -23,7 +23,7 @@
 
 ## 미해결 사항
 
-- #27은 네 checkout의 필수 manifest 부재와 원래 checkout의 예상 밖 변경/중복 등록 및 실제 운영 linked worktree 미지원으로 OPEN이다. 파일 삭제/휴지통 회수는 0개다.
+- #27의 선행 공용 도구 지원 개선은 [부모 #52](https://github.com/plcmanjp/.agents/issues/52)가 소유한다. 공개 origin을 고정하는 manifest v2와 운영 linked 회수/복원을 별도 checkout에서 구현 중이다. 이 독립 배포용 checkout에는 재생성 가능한 PyInstaller 중간 파일만 대상으로 하는 v2 manifest를 추가했다. 원래 checkout의 미커밋 변경과 등록은 보존하며 실제 삭제/휴지통 회수는 아직 0개다.
 - 원래 checkout의 index/HEAD 및 작업 diff 지문은 사전/사후 같지만 원격 추적과 tag refs 변화가 관찰됐다. 이 세션은 그 폴더의 fetch/reset/prune/ref 쓰기를 실행하지 않았고 원인은 미확정이다. 전체 refs 무변경이나 동기화 완료로 판정하지 않는다.
 - #14의 실제 CAD/별도 PC/원본 빌드 대응과 #20의 초보 사용자/실제 OS 배율 검증은 OPEN이다.
 

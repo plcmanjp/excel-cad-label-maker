@@ -1,0 +1,47 @@
+{
+  "schema_version": 2,
+  "workspace_id": "excel-cad-label-maker",
+  "repository": "https://github.com/plcmanjp/excel-cad-label-maker.git",
+  "blocked_process_names": ["Excel_CAD_Label", "Excel_CAD_Label_Dev", "Update_Notice_QC"],
+  "protected_paths": [
+    ".git", ".agents", ".claude", ".codex", ".venv", "venv", "wiki", "release",
+    "project/original", "project/qc", "project/src", "project/tests", "project/dist",
+    ".local/update-qc/latest-build.json"
+  ],
+  "protected_file_patterns": [
+    {"root": ".", "pattern": "*.xlsx"},
+    {"root": ".", "pattern": "*.xls"},
+    {"root": ".", "pattern": "*.dxf"},
+    {"root": ".", "pattern": "*.dwg"},
+    {"root": ".", "pattern": "build-receipt.json"},
+    {"root": ".", "pattern": "release-manifest.json"},
+    {"root": ".", "pattern": ".env*"},
+    {"root": ".", "pattern": "*.key"},
+    {"root": ".", "pattern": "*.pem"},
+    {"root": ".", "pattern": "*.pfx"},
+    {"root": ".", "pattern": "*.p12"},
+    {"root": ".", "pattern": "*.jks"},
+    {"root": ".", "pattern": "*.keystore"}
+  ],
+  "candidates": [
+    {
+      "id": "pyinstaller-intermediates",
+      "kind": "exact_paths",
+      "paths": ["project/build/pyinstaller"],
+      "reason": "정식 또는 개발 빌드의 재생성 가능한 PyInstaller 중간 파일이다. 배포물과 receipt는 보존한다.",
+      "source": "project/scripts/build-dev.ps1",
+      "regenerate": "고정 의존성 환경에서 project/scripts/build-dev.ps1을 실행하면 중간 파일이 생성된다.",
+      "min_age_hours": 1
+    },
+    {
+      "id": "update-qc-intermediates",
+      "kind": "named_directories",
+      "roots": [".local/update-qc/builds"],
+      "directory_name": "work",
+      "reason": "업데이트 QC 빌드별 PyInstaller 중간 파일이다. dist와 실행 결과 및 설정은 보존한다.",
+      "source": "project/scripts/build-update-qc.ps1",
+      "regenerate": "고정 의존성 환경에서 project/scripts/build-update-qc.ps1을 실행하면 별도 run의 중간 파일이 생성된다.",
+      "min_age_hours": 1
+    }
+  ]
+}
