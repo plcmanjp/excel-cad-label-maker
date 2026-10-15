@@ -26,6 +26,7 @@ CAD_FONTS = {
     "Arial": ("ARIAL", "arial.ttf"),
     "AutoCAD 표준 (Standard)": ("STANDARD", "txt.shx"),
 }
+DEFAULT_FONT = "Arial"
 
 
 def validate_excel_path(value):
@@ -128,7 +129,7 @@ class LabelSettings:
     cols_per_row: int = 5
     text_scale: float = 0.45
     auto_fit: bool = True
-    font_key: str = "AutoCAD 표준 (Standard)"
+    font_key: str = DEFAULT_FONT
     box_color: int = 7
     text_color: int = 7
     min_text_height: float = 2.5
@@ -256,7 +257,7 @@ def create_drawing(blocks, settings):
 
 def generate_dxf_string(excel_path, cell_w=60, cell_h=15, gap_x=20, gap_y=20,
                         cols_per_row=5, text_scale=0.45, auto_fit=True,
-                        font_key="AutoCAD 표준 (Standard)", box_color=7, text_color=7):
+                        font_key=DEFAULT_FONT, box_color=7, text_color=7):
     settings = LabelSettings(cell_w, cell_h, gap_x, gap_y, cols_per_row,
                              text_scale, auto_fit, font_key, box_color, text_color)
     blocks = extract_blocks_auto(excel_path)

@@ -25,7 +25,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_presets_last_settings_rename_delete_and_overwrite(self):
         store = SettingsStore(self.directory)
-        changed = {**defaults(), "cell_w": 72, "mode": "display"}
+        changed = {**defaults(), "cell_w": 72, "mode": "display", "font_key": "AutoCAD 표준 (Standard)"}
         store.remember(changed)
         store.save("한글 규격", changed)
         with self.assertRaises(SettingsError):
@@ -34,6 +34,7 @@ class WorkflowTests(unittest.TestCase):
         store.rename("한글 규격", "새 규격")
         reloaded = SettingsStore(self.directory)
         self.assertEqual(reloaded.last["cell_w"], 72)
+        self.assertEqual(reloaded.last["font_key"], "AutoCAD 표준 (Standard)")
         self.assertEqual(reloaded.presets["새 규격"], defaults())
         self.assertEqual(set(json.loads(store.path.read_text(encoding="utf-8"))), {"version", "last", "presets"})
         for name in ("", "기본 규격", "마지막 설정", "A\nB", "A" * 61):

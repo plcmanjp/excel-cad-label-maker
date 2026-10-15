@@ -2,32 +2,32 @@
 
 ## 목표
 
-- PR #23의 main 병합과 0.4.0 정식 배포, 완료 이슈와 병합 브랜치 정리를 마친다.
+- [Issue #24](https://github.com/plcmanjp/excel-cad-label-maker/issues/24): 새 기본 글꼴을 Arial로 바꾸고 기존 설정/프리셋의 글꼴을 보존한다.
 
 ## 현재 상태
 
-- [PR #23](https://github.com/plcmanjp/excel-cad-label-maker/pull/23)은 main의 156b4b9로 병합됐고 Issue #22는 CLOSED다. [0.4.0](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.0)을 정식 latest로 공개하고 두 자산을 다시 내려받아 바이트 동일성을 확인했다.
-- 원격과 OneDrive 밖 독립 빌드 checkout은 main만 남겼다. 병합 이력과 reflog 도달 가능성을 확인하고 검증된 Git bundle 및 refs 기록을 Git 제외 로컬 증거 폴더에 보존했다.
-- 원래 OneDrive 작업 폴더는 Git index 읽기 오류 뒤 마지막 읽기 전용 조회가 가능해졌다. 그러나 staged/unstaged/untracked 변경과 같은 feature의 중복 worktree 등록, 이전 관측과 다른 HEAD 0867f66이 확인돼 로컬 ref/index/HEAD/worktree를 보존했다. 변경 원인은 미확정이며 이 폴더의 동기화와 전체 로컬 브랜치 정리는 완료로 판정하지 않는다.
+- 사용자가 AutoCAD에서 표준 글꼴의 한글은 물음표, 굴림과 Arial의 한글은 정상임을 확인하고 Arial 기본값을 선택했다. fix/issue-24-default-arial에서 제품 기본값과 DXF 문자열 API의 출처를 통일하고 관련 검사 및 사용자 안내를 수정했다. 제품 128개와 저장소/공개 문서 및 diff 검사가 통과했고 개발 빌드 검증이 남았다.
+- 공개 latest는 v0.4.0이고 제품 commit은 156b4b9다. 이번 작업은 새 정식 버전의 공개 승인을 포함하지 않으며 기존 tag와 자산을 유지한다.
+- 원래 OneDrive checkout은 예상 밖 staged/unstaged/untracked 변경과 중복 worktree로 보존한다. clean main adc5e9d에서 분기한 OneDrive 밖 독립 checkout에서 수행한다.
 
 ## 주요 결정
 
-- 1행=1라벨, 열=줄, 중간 빈 셀 보존과 기존 열 입력/설정 호환 계약을 0.4.0으로 배포했다. 안내 영역 오른쪽 여백 수정도 포함한다.
-- 정식 배포물은 clean main 156b4b9에서 빌드했다. 이후 QC/진행 기록 커밋은 배포 tag를 이동하거나 기존 자산을 덮어쓰지 않는다.
+- 새 설정만 Arial을 기본으로 사용한다. 기존 마지막 설정과 프리셋의 명시적 Standard/굴림 선택은 유지하며 자동으로 덮어쓰지 않는다.
+- DXF는 AC1024/UTF-8로 한글 문자열을 보존한다. 현재 사용자의 CAD에서 Arial 한글 표시 확인과 모든 CAD/PC에서의 글꼴 호환성은 구분한다.
 
 ## 검증 결과
 
-- [배포 QC](../../../project/qc/release040-results.json): 제품 128개, 병합 main CI, ZIP 1,129멤버와 해시 및 독립 패키지 검수 PASS. 압축 해제 EXE에서 Excel 파일 선택, 3라벨/8칸의 중간 빈 줄, DXF 저장/재읽기와 원본 불변 및 안내 여백을 확인했다.
-- 공개 자산 byte readback과 실제 이전 공개 0.3.0 EXE의 최신 0.4.0 알림 PASS. 기존 [Excel 기능 QC](../../../project/qc/issue22-results.json)와 [화면 배율 QC](../../../project/qc/issue22-ui-results.json)는 별도 근거다.
+- 변경 전 메모리상 DXF 직렬화/재읽기에서 Standard/굴림/맑은 고딕의 합성 한글이 모두 보존됐다. Standard는 txt.shx만 지정하고 bigfont는 비어 있었다. 원본 문자 손상으로 단정하지 않는다.
+- 제품 128개 PASS: 기본 UI/DXF의 Arial, 한글/영문 문자열 보존, 명시적 Standard 출력, 기존 버전의 굴림과 현재 Standard 프리셋/마지막 설정 보존을 확인했다. 저장소/공개 문서와 diff 검사도 PASS다. 개발 빌드 검증이 남았다.
+- 이전 배포의 근거는 project/qc/release040-results.json에 보존했다.
 
 ## 미해결 사항
 
-- 정식 ZIP의 실제 Explorer 간 드래그는 도구가 다른 창으로 향하는 입력을 차단해 미검증이다. 파일 선택 경로는 통과했으며 드롭 PASS로 확대하지 않는다.
-- Issue #20의 초보 사용자와 실제 OS 배율, Issue #14의 실제 CAD/별도 PC/원본 대응/이용 조건은 OPEN이다. 기존 청소 차단 상태도 유지한다.
-- 원래 OneDrive 저장소의 index 접근 안정성과 예상 밖 변경의 소유권/복구 상태 확인 후 로컬 브랜치 정리가 필요하다. 임의 index 재생성이나 worktree 제거를 하지 않는다.
+- Arial 기본 DXF 스타일과 UI, 기존 설정/프리셋 보존 및 개발 빌드를 확인하고 PR에 연결한다.
+- Issue #20의 사용자/실제 OS 배율, #14의 실제 CAD/별도 PC/권리 조건과 원래 checkout 보존 상태는 유지한다.
 
 ## 다음 작업
 
-1. 실제 사용자 환경에서 Explorer 드롭과 Issue #20의 남은 사용자/OS 배율 검증을 수행한다.
-2. Issue #14의 CAD와 별도 Windows PC 및 권리 조건을 실제 근거로 확인한다.
-3. 원래 OneDrive의 예상 밖 변경과 중복 worktree 및 복구 자료를 확인한 뒤 로컬 Git 동기화와 브랜치 정리를 재개한다.
+1. 관련 회귀와 저장소/공개 문서 검사를 실행한다.
+2. 이전 빌드를 덮어쓰지 않는 개발 산출물을 생성하고 receipt 및 DXF 스타일을 확인한다.
+3. 검증 결과를 기록하고 commit/push와 PR을 준비한다.

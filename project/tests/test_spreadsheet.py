@@ -210,7 +210,7 @@ class MigrationTests(unittest.TestCase):
 
     def test_v1_last_and_presets_preserve_column_semantics_without_load_write(self):
         old = {k: v for k, v in defaults().items() if k != "orientation"}
-        old.update(cell_w=73, mode="display")
+        old.update(cell_w=73, mode="display", font_key="굴림 (Gulim)")
         data = {"version": 1, "last": old, "presets": {"내 규격": old}}
         self.path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
         before = self.path.read_bytes()
@@ -226,11 +226,14 @@ class MigrationTests(unittest.TestCase):
     def test_new_install_rows_and_v2_row_and_column_presets(self):
         store = SettingsStore(self.folder)
         self.assertEqual(store.last["orientation"], "rows")
-        store.save("old", {**defaults(), "orientation": "columns"})
+        self.assertEqual(store.last["font_key"], "Arial")
+        store.save("old", {**defaults(), "orientation": "columns", "font_key": "AutoCAD 표준 (Standard)"})
         store.save("new", defaults())
         reloaded = SettingsStore(self.folder)
         self.assertEqual(reloaded.presets["old"]["orientation"], "columns")
+        self.assertEqual(reloaded.presets["old"]["font_key"], "AutoCAD 표준 (Standard)")
         self.assertEqual(reloaded.presets["new"]["orientation"], "rows")
+        self.assertEqual(reloaded.presets["new"]["font_key"], "Arial")
 
     def test_unknown_version_or_direction_or_v1_extra_field_preserves_file(self):
         for version, last in [(3, defaults()), (True, defaults()), (2, {**defaults(), "orientation": "auto"}), (1, defaults())]:
