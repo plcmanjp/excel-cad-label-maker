@@ -14,7 +14,7 @@ Excel에 입력한 글자를 전기함 덕트 라벨용 DXF 도면으로 만드�
 
 Windows 64비트용이며 Python을 별도로 설치할 필요가 없습니다.
 
-0.4.0은 행 기준 Excel 입력과 스프레드시트 편집, 도면 미리보기 및 설정 재사용을 제공합니다. 원본 Excel을 변경하지 않습니다.
+0.4.1은 행 기준 Excel 입력과 스프레드시트 편집, 도면 미리보기 및 설정 재사용을 제공합니다. 새 기본 글꼴은 Arial입니다. 원본 Excel을 변경하지 않습니다.
 
 ## 주요 기능
 
@@ -38,6 +38,6 @@ Windows 64비트용이며 Python을 별도로 설치할 필요가 없습니다.
 
 원개발자: 직장인. 개발 및 관리: [plcmanjp](https://github.com/plcmanjp).
 
-[크레딧](release/package/CREDITS.md)과 [이용 조건](release/package/NOTICE.md)을 확인하세요. 포함 라이브러리의 라이선스는 앱의 third_party 폴더에 있습니다.
+소스코드와 현재 앱은 [MIT 라이선스](LICENSE)로 제공합니다. 상업적 이용, 수정과 재배포를 허용하며 저작권 및 라이선스 고지를 유지해야 합니다. [크레딧](release/package/CREDITS.md)과 [적용 범위 및 이용 조건](release/package/NOTICE.md)을 확인하세요. 보관 원본 EXE와 외부 라이브러리에는 별도 조건이 적용됩니다. 포함 라이브러리의 원문은 앱의 third_party 폴더에 있습니다.
 
 개발에 참여하려면 [개발 안내](wiki/guides/development.md)를 참고하세요.

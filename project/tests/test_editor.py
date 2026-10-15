@@ -88,7 +88,7 @@ class EditorUiTests(unittest.TestCase):
 
     def test_defaults_header_help_and_empty_start(self):
         settings = self.app.parse_settings()
-        self.assertEqual((settings.font_key, settings.box_color, settings.text_color), ("AutoCAD 표준 (Standard)", 7, 7))
+        self.assertEqual((settings.font_key, settings.box_color, settings.text_color), ("Arial", 7, 7))
         self.assertEqual(LabelSettings().box_color, 7)
         self.assertEqual(str(self.app.add_button.cget("state")), "normal")
         self.assertEqual(self.app.data_tree.get_children(), ())

@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 
 USER_DOCUMENTS = (
-    'README.md', 'wiki/INDEX.md', 'wiki/guides/usage.md',
+    'README.md', 'LICENSE', 'wiki/INDEX.md', 'wiki/guides/usage.md',
     'release/package/README-Windows.md', 'release/package/README-baseline.md',
     'release/package/CREDITS.md', 'release/package/NOTICE.md',
     'wiki/reference/third-party.md',

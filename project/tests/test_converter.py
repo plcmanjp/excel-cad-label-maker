@@ -48,7 +48,12 @@ class ConversionTests(unittest.TestCase):
         self.assertEqual(count, 1)
         self.assertEqual(loaded.layers.get("LABEL_BOX").dxf.color, 7)
         self.assertEqual(loaded.layers.get("TEXT_DATA").dxf.color, 7)
-        self.assertEqual(loaded.styles.get("STANDARD").dxf.font, "txt.shx")
+        self.assertEqual(loaded.styles.get("ARIAL").dxf.font, "arial.ttf")
+        self.assertEqual([e.dxf.style for e in loaded.modelspace().query("TEXT")], ["ARIAL"])
+        explicit, _ = generate_dxf_string(self.workbook([["표준 ABC"]]), font_key="AutoCAD 표준 (Standard)")
+        standard = ezdxf.read(StringIO(explicit))
+        self.assertEqual(standard.styles.get("STANDARD").dxf.font, "txt.shx")
+        self.assertEqual([e.dxf.style for e in standard.modelspace().query("TEXT")], ["STANDARD"])
 
     def test_legacy_xls(self):
         path = self.directory / "구형 Excel.xls"
@@ -125,7 +130,8 @@ class ConversionTests(unittest.TestCase):
         self.assertEqual(len(loaded.modelspace().query("LWPOLYLINE")), 3)
         self.assertEqual(loaded.layers.get("LABEL_BOX").dxf.color, 7)
         self.assertEqual(loaded.layers.get("TEXT_DATA").dxf.color, 7)
-        self.assertEqual(loaded.styles.get("STANDARD").dxf.font, "txt.shx")
+        self.assertEqual(loaded.styles.get("ARIAL").dxf.font, "arial.ttf")
+        self.assertTrue(all(e.dxf.style == "ARIAL" for e in loaded.modelspace().query("TEXT")))
         self.assertTrue(all(e.closed for e in loaded.modelspace().query("LWPOLYLINE")))
 
     def test_variable_height_rows_do_not_overlap(self):

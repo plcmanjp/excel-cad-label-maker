@@ -1,7 +1,8 @@
 {
   "schema_version": 1,
-  "version": "0.4.0",
-  "tag": "v0.4.0",
+  "version": "0.4.1",
+  "tag": "v0.4.1",
+  "license": "MIT",
   "release_type": "recovered-source-build",
   "binary_name": "Excel_CAD_Label.exe",
   "baseline_version": "0.1.0",

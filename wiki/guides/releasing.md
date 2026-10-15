@@ -8,7 +8,7 @@
 
 ~~~powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps1 -Release
-& .venv/Scripts/python.exe -B release/scripts/package-app-release.py --output release/artifacts/v0.4.0
+& .venv/Scripts/python.exe -B release/scripts/package-app-release.py --output release/artifacts/v0.4.1
 ~~~
 
 패키저는 앱 버전과 source commit, 소스와 아이콘 및 모든 파일의 SHA-256을 대조합니다. 수정되거나 등록되지 않은 파일, 개발용 빌드, 링크 경로 및 기존 자산 덮어쓰기는 거부합니다. 출력에는 ZIP과 SHA256SUMS.txt가 생성됩니다.
@@ -17,7 +17,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File project/scripts/build-dev.ps
 
 - ZIP을 새 폴더에 압축 해제해 앱 시작, Excel 드롭과 DXF 저장 및 읽기를 확인합니다.
 - 아이콘과 업데이트 조회, 알림의 배치와 키보드 및 버튼 동작을 확인합니다.
-- 사용자 안내는 TXT인지, 외부 고지 원문과 provenance의 hash가 일치하는지 확인합니다.
+- 사용자 안내는 TXT인지, LICENSE.txt가 저장소 LICENSE와 byte 단위로 일치하는지, 외부 고지 원문과 provenance의 hash가 일치하는지 확인합니다.
 - CI와 독립 검수 및 실제 동작 결과를 해당 작업에 연결합니다. CAD 및 별도 PC 실행 결과는 확인한 환경에 한해 기록합니다.
 
 ## 공개와 확인
