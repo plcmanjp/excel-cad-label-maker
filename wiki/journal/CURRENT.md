@@ -2,30 +2,30 @@
 
 ## 목표
 
-- 0.4.1 배포 세션을 마무리하고 [Issue #27](https://github.com/plcmanjp/excel-cad-label-maker/issues/27)의 안전한 워크스페이스 청소 재개 조건을 유지한다.
+- [Issue #30](https://github.com/plcmanjp/excel-cad-label-maker/issues/30)에 따라 PR #29를 병합하고 0.4.2 정식 배포 및 안전한 브랜치 정리와 세션 마무리를 수행한다.
 
 ## 현재 상태
 
-- [0.4.1](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.1)은 MIT와 Arial 기본값을 포함한 정식 latest다. PR #25는 병합됐고 #24, #26은 CLOSED다.
-- 청소 사전 확인은 부분 완료다. 실제 삭제와 휴지통 이동은 0파일, 0bytes이며 #27은 OPEN이다. 원래 작업 폴더는 수정하지 않았고 두 독립 checkout의 작업 기준은 main이다.
+- PR #29의 기존 head 검사는 PASS다. 0.4.2 버전/안내와 릴리스 노트를 준비하며 최종 head 검사 및 독립 검수 후 병합한다.
+- [0.4.1](https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.1)은 정식 latest로 유지한다. 원래 OneDrive checkout의 변경과 #27 청소 차단도 보존한다.
 
 ## 주요 결정
 
-- 미커밋 작업, 원본, 배포물, 검증 근거, 백업과 개발 환경을 보존한다. manifest 부재를 임시 allowlist나 다른 도구로 우회하지 않는다.
-- tag v0.4.1과 공개 자산의 제품 commit은 673d7a6이다. 내부 마무리 기록은 제품과 공개 자산을 바꾸지 않는다.
+- 시작 시 기존 비동기 조회를 한 번 수행하고 새 버전일 때 기존 팝업을 연다. 모달이 열려 있으면 지연하고 최신/조회 실패의 자동 팝업은 표시하지 않는다.
+- 낮은 비교 버전은 기존 별도 QC 진입점에서만 사용한다. 정상 앱에 버전 override를 추가하지 않는다. 현재 지시는 새 0.4.2 공개를 포함하며 기존 공개 자산은 보존한다.
 
 ## 검증 결과
 
-- [정식 배포 검증](../../../project/qc/release041-results.json)과 ab12be0의 원격 CI 38710693104는 PASS다. 최신 release와 로컬 ZIP/EXE hash를 다시 대조했다.
-- 원래 checkout의 index, HEAD, refs 및 작업트리 등록 metadata, staged/unstaged diff와 status 지문이 사전 확인 전후 일치했다. 전체 untracked/ignored bytes의 백업이나 검증을 의미하지 않는다.
+- [Issue #28 결과](../../../project/qc/issue28-results.json): 알림 10개와 전체 제품 130개, 저장소/공개 문서 및 diff 검사, 개발용/별도 업데이트 QC 빌드 PASS.
+- source commit 5178777의 두 clean 빌드에서 각 1,126파일과 소스 hash 및 LICENSE 원문 일치를 확인했다. 소스와 QC EXE의 실제 GitHub 조회 후 자동 팝업/닫기/수동 재열기, 정상 개발 EXE의 최신 상태 수동 안내도 PASS다.
 
 ## 미해결 사항
 
-- 세 checkout에 공용 도구가 요구하는 committed 청소 manifest가 없어 Scan/Plan/Recycle/Restore를 수행하지 않았다. 원래 OneDrive checkout에는 예상 밖 변경과 같은 브랜치를 가리키는 작업 폴더 등록 두 개가 남아 있다. 실제 운영 linked worktree 회수도 공용 도구 지원 밖이다.
-- #14의 CAD/별도 PC/원본 빌드 대응과 #20의 실제 사용자/OS 배율 검증은 OPEN이다. 원개발자 소스 권리 양도에 대한 관리자 확인과 독립 계약 감정은 구분한다.
+- #28은 PR #29 병합으로 종결한다. #30의 fresh main 정식 빌드/ZIP과 실제 실행 및 공개 후 검증은 진행 대상이다.
+- #27은 청소 manifest 부재와 원래 checkout의 예상 밖 변경 및 중복 등록으로 OPEN이다. 실제 삭제는 0개다. #14와 #20의 현장 검증도 OPEN이다.
 
 ## 다음 작업
 
-1. #27에서 대상 저장소의 청소 정책과 지원되는 manifest 범위를 확정한다.
-2. 원래 작업 폴더의 변경 소유권과 복구 자료 및 작업트리 연결을 확인한다. 그 전에는 reset, prune이나 자료 회수를 하지 않는다.
-3. 지원 조건이 충족되면 새 inventory와 정확한 휴지통 계획으로 청소 및 복원 검증을 진행한다. #14와 #20의 현장 검증은 해당 환경에서 이어간다.
+1. #30의 최종 PR 검사와 독립 검수 후 병합하고 fresh clean main의 0.4.2를 빌드/검증/공개한다.
+2. #27의 manifest 범위와 변경 소유권 및 복구 자료를 확정한다. 그 전에는 reset, prune이나 회수를 하지 않는다.
+3. #14와 #20의 현장 검증을 해당 환경에서 이어간다.

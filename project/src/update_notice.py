@@ -102,8 +102,7 @@ class UpdateNotifier:
         if result.status == "available" and result.release is not None and self._trusted_page(result.release):
             self.available_release = result.release
             self.status.set(f"새 버전 {result.release.version} 사용 가능")
-            if manual:
-                self.show_notice(result.release)
+            self.show_notice(result.release)
         elif result.status == "current" and result.release is not None:
             self.available_release = None
             self.status.set(f"새 정식 버전 없음 (공개 {result.release.version})")

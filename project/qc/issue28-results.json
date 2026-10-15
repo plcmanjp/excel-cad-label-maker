@@ -1,0 +1,98 @@
+{
+  "issue": 28,
+  "source_commit": "51787770ac14ee900b47e86553363b489995d988",
+  "base_app_version": "0.4.1",
+  "public_release_changed": false,
+  "environment": {
+    "os": "Windows 11 x64",
+    "python": "3.13.15",
+    "tk": "8.6"
+  },
+  "checks": {
+    "update_notice_regressions": {
+      "status": "PASS",
+      "tests": 10
+    },
+    "all_product_tests": {
+      "status": "PASS",
+      "tests": 130
+    },
+    "repository_public_docs_and_diff": "PASS",
+    "development_build": {
+      "status": "PASS",
+      "type": "development-build",
+      "source_dirty": false,
+      "receipt_files_verified": 1126,
+      "exe_sha256": "b03f363443e2499325fab9df92007843786e7363d677734254b00177e4aa1bbf"
+    },
+    "separate_update_qc_build": {
+      "status": "PASS",
+      "type": "update-qc-build",
+      "source_dirty": false,
+      "receipt_files_verified": 1126,
+      "exe_sha256": "d1d33c55469cfaa79f9874a200bb5677557477306fd86bda2a08c055ec5a2267"
+    },
+    "all_receipt_source_and_payload_hashes_and_license_bytes": "PASS",
+    "live_source_gui": {
+      "status": "PASS",
+      "automatic_popup_without_button_click": true,
+      "manual_reopen": true,
+      "escape_close": true,
+      "later_close": true,
+      "lookup": {
+        "scenario": "live-older",
+        "production_version": "0.4.1",
+        "comparison_version": "0.0.1",
+        "real_github_api": true,
+        "result": {
+          "status": "available",
+          "release": {
+            "version": "0.4.1",
+            "tag": "v0.4.1",
+            "page_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.1",
+            "asset_name": "Excel-CAD-Label-Maker-0.4.1-windows-x64.zip"
+          },
+          "reason": ""
+        }
+      }
+    },
+    "live_frozen_qc_gui": {
+      "status": "PASS",
+      "automatic_popup_without_button_click": true,
+      "manual_reopen": true,
+      "escape_close": true,
+      "later_close": true,
+      "lookup": {
+        "scenario": "live-older",
+        "production_version": "0.4.1",
+        "comparison_version": "0.0.1",
+        "real_github_api": true,
+        "result": {
+          "status": "available",
+          "release": {
+            "version": "0.4.1",
+            "tag": "v0.4.1",
+            "page_url": "https://github.com/plcmanjp/excel-cad-label-maker/releases/tag/v0.4.1",
+            "asset_name": "Excel-CAD-Label-Maker-0.4.1-windows-x64.zip"
+          },
+          "reason": ""
+        }
+      }
+    },
+    "normal_development_exe_current_version": {
+      "status": "PASS",
+      "automatic_popup_absent": true,
+      "manual_current_version_message": true
+    },
+    "startup_single_query_duplicate_dialog_prevention_and_manual_cached_reopen": "PASS: Tk regression",
+    "defer_scope_and_existing_grab_delay_until_released": "PASS: real Tk regression, no native Office dialog interaction",
+    "current_and_unavailable_automatic_checks_silent": "PASS: deterministic regression",
+    "manual_current_and_unavailable_feedback": "PASS: deterministic regression"
+  },
+  "limits": [
+    "The older-version comparison is confined to the dedicated QC entrypoint. No version override was added to the normal app.",
+    "No new stable release or replacement of public 0.4.1 assets was performed.",
+    "Native file-picker timing and physical offline-network switching were not rerun; real Tk deferral/grab and deterministic failure checks are recorded separately.",
+    "Existing workspace cleanup blockers and unrelated local changes are preserved."
+  ]
+}
