@@ -6,7 +6,7 @@ from pathlib import Path
 import subprocess
 import sys
 import shutil
-import tempfile
+from fixture_temp import FixtureDirectory, preserve_for_absence
 import unittest
 from contextlib import redirect_stdout
 from unittest import mock
@@ -34,7 +34,7 @@ def current(overrides=None, order=None):
 class SessionStartTests(unittest.TestCase):
     def run_hook(self, body, source="startup", empty_newer_month=False,
                  directory_newer_journal=False, no_journal=False, sub_cwd=False):
-        with tempfile.TemporaryDirectory(prefix="ORDER056-900-") as directory:
+        with FixtureDirectory() as directory:
             root = Path(directory)
             hook = root / ".agents/hooks/session_start_status.py"
             hook.parent.mkdir(parents=True)
@@ -48,7 +48,7 @@ class SessionStartTests(unittest.TestCase):
                 if directory_newer_journal:
                     (newer / "r999-not-a-file.md").mkdir()
             if no_journal:
-                (journal / "r001-fixture.md").unlink()
+                preserve_for_absence(journal / "r001-fixture.md")
             path = journal.parent / "CURRENT.md"
             if body is True:
                 path.mkdir()
@@ -168,7 +168,7 @@ class SessionStartTests(unittest.TestCase):
 
 class CloneAndFailureTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="ORDER056-900-clone-")
+        self.temp = FixtureDirectory()
         self.addCleanup(self.temp.cleanup)
         self.parent = Path(self.temp.name) / "\ubd80\ubaa8 \uacf5\uac04"
         self.root = self.parent / "\ubcf5\uc81c \uacf5\uac04"
@@ -211,8 +211,8 @@ class CloneAndFailureTests(unittest.TestCase):
             with self.subTest(denied=denied), mock.patch.object(self.module.os, "stat", side_effect=fail):
                 with self.assertRaises(PermissionError):
                     self.module._latest_journal(str(self.root))
-        shutil.rmtree(old.parent)
-        shutil.rmtree(newest)
+        preserve_for_absence(old.parent)
+        preserve_for_absence(newest)
         self.assertIsNone(self.module._latest_journal(str(self.root)))
 
     def test_freshness_states_and_git_failures(self):
@@ -237,7 +237,7 @@ class CloneAndFailureTests(unittest.TestCase):
         self.journal()
         path = self.jdir / "CURRENT.md"
         for case in ("missing", "invalid", "permission", "unicode"):
-            path.unlink(missing_ok=True)
+            preserve_for_absence(path)
             if case == "invalid":
                 path.write_bytes(b"\xff")
             elif case in ("permission", "unicode"):
@@ -252,7 +252,7 @@ class CloneAndFailureTests(unittest.TestCase):
                 text = self.context()
             self.assertIn("UNAVAILABLE", text)
             self.assertIn("JOURNAL: wiki/journal/2026-09/r001-fixture.md", text)
-        path.unlink(missing_ok=True)
+        preserve_for_absence(path)
         original_listdir = self.module.os.listdir
         def denied(target):
             if str(target) == str(self.jdir):
@@ -292,7 +292,7 @@ class CloneAndFailureTests(unittest.TestCase):
                 if parent_source:
                     parent_file.write_text("# Synthetic parent\n", encoding="utf-8")
                 else:
-                    parent_file.unlink(missing_ok=True)
+                    preserve_for_absence(parent_file)
                 outputs = []
                 for cwd in (self.root, child):
                     for source in ("startup", "resume"):
