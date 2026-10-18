@@ -62,7 +62,9 @@ class FixtureTempTests(unittest.TestCase):
                 fixture.create_run()
 
     def test_existing_link_and_reparse_ancestors_rejected(self):
-        base = Path(fixture.tempfile.gettempdir()).absolute()
+        # Windows runners can expose an 8.3 Temp alias; create_run uses its
+        # resolved spelling after validating the actual ancestor chain.
+        base = Path(fixture.tempfile.gettempdir()).resolve(strict=True)
         original = Path.lstat
         for mode, attributes in ((stat.S_IFLNK, 0), (stat.S_IFDIR, 0x400)):
             def observed(path, *args, **kwargs):
